@@ -1,0 +1,58 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <div th:if="${msg != null}">
+        <script>
+            Swal.fire({
+                title: "Confirmación",
+                text: '[[${msg}]]',
+                icon: "success"
+            });
+        </script>
+    </div>
+    <div th:if="${error != null}">
+        <script>
+            Swal.fire({
+                title: "Error",
+                text: '[[${error}]]',
+                icon: "error"
+            });
+        </script>
+    </div>
+
+    <h1>Listado de estado</h1>
+
+    <a th:href="@{/estados/create}" class="btn btn-outline-primary">Nuevo grupo</a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Estado ID</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="item : ${estados}">
+            <td th:text="${item.estadoid}"></td>
+            <td th:text="${item.estado}"></td>
+            <td>
+                <a th:href="@{/estados/details/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/estados/edit/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/estados/remove/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{/estados?page=${pageNumber}}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
