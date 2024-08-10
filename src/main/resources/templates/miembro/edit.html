@@ -1,0 +1,31 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+
+    <h1>Editar miembro</h1>
+    <form th:action="@{/miembros/save}" th:object="${miembro}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del miembro" required>
+                </div>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="cargo">Cargo</label>
+                <textarea class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" required></textarea>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button> |
+    <a th:href="@{/miembros}">Regresar</a>
+    </form>
+</div>
