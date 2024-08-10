@@ -8,12 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "miembros")
-
+@Table(name = "MiembroEquipo")
 public class Miembro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer miembroEquipoId;
 
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
@@ -21,14 +20,13 @@ public class Miembro {
     @NotBlank(message = "El cargo es requerido")
     private String cargo;
 
-    public Integer getId() {
-        return id;
+    public Integer getMiembroEquipoId() {
+        return miembroEquipoId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMiembroEquipoId(Integer miembroEquipoId) {
+        this.miembroEquipoId = miembroEquipoId;
     }
-
     public @NotBlank(message = "El nombre es requerido") String getNombre() {
         return nombre;
     }
