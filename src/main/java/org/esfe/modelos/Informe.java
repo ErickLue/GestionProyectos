@@ -23,15 +23,15 @@ public class Informe {
 
     @ManyToOne
     @JoinColumn(name = "estadoId")
-    private Integer estadoId;
+    private Estado estado;
 
     @ManyToOne
     @JoinColumn(name = "proyectoId")
-    private Integer  proyectoId;
+    private Proyecto  proyecto;
 
     @ManyToOne
     @JoinColumn(name = "usuarioId")
-    private Integer usuarioId;
+    private Usuario usuario;
 
     public Integer getInformeId() {
         return informeId;

@@ -1,20 +1,20 @@
 package org.esfe.modelos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "ProyectoMiembro")
 public class ProyectoMiembro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id;
 
     @ManyToOne
     @JoinColumn(name = "proyectoId")
-    private Integer  proyectoId;
+    private Proyecto proyecto;
 
     @ManyToOne
     @JoinColumn(name = "miembroEquipoId")
-    private Integer  miembroEquipoId;
+    private Miembro miembro;
 
 }

@@ -15,8 +15,8 @@ public class Tarea {
     private String nombre;
     @NotBlank(message = "La descripcion es requerido")
     private String descripcion;
-    @NotBlank(message = "El estado es requerido")
-    private String estado;
+    @NotBlank(message = "El estadoTarea es requerido")
+    private String estadoTarea;
     @NotBlank(message = "La prioridad es requerido")
     private String prioridad;
     @NotBlank(message = "La fecha Inicio es requerido")
@@ -28,7 +28,7 @@ public class Tarea {
 
     @ManyToOne
     @JoinColumn(name = "estadoId")
-    private Estado estados;
+    private Estado estado;
 
 
     @ManyToOne
@@ -47,6 +47,13 @@ public class Tarea {
         this.tareaid = tareaid;
     }
 
+    public String getEstadoTarea() {
+        return estadoTarea;
+    }
+
+    public void setEstadoTarea(String estadoTarea) {
+        this.estadoTarea = estadoTarea;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -63,15 +70,7 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getPrioridad() {
+      public String getPrioridad() {
         return prioridad;
     }
 
@@ -101,5 +100,29 @@ public class Tarea {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public Miembro getMiembroEquipo() {
+        return miembroEquipo;
+    }
+
+    public void setMiembroEquipo(Miembro miembroEquipo) {
+        this.miembroEquipo = miembroEquipo;
     }
 }
