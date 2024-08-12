@@ -2,6 +2,7 @@ package org.esfe.modelos;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -15,18 +16,18 @@ public class Proyecto {
     private String nombre;
     @NotBlank(message = "La descripcion es requerido")
     private String descripcion;
-    @NotBlank(message = "El presupuesto es requerido")
+    @NotNull(message = "El presupuesto es requerido")
     private Double presupuesto;
     @NotBlank(message = "La prioridad es requerido")
     private String prioridad;
-    @NotBlank(message = "La fecha Inicio es requerido")
+    @NotNull(message = "La fecha Inicio es requerido")
     private Date fechaInicio;
-    @NotBlank(message = "La fecha Fin es requerido")
+    @NotNull(message = "La fecha Fin es requerido")
     private Date fechaFin;
 
     @ManyToOne
     @JoinColumn(name = "estadoId")
-    private Integer estadoId;
+    private Estado estado;
 
     public Integer getProyectoId() {
         return proyectoId;
@@ -84,11 +85,11 @@ public class Proyecto {
         this.fechaFin = fechaFin;
     }
 
-    public Integer getEstadoId() {
-        return estadoId;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public void setEstadoId(Integer estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

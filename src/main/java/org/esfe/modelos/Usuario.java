@@ -14,18 +14,18 @@ public class Usuario {
     private String nombre;
 
     @NotBlank (message = "El correo electronico es necesario")
-    private String Correo;
+    private String correo;
 
     @NotBlank (message = "La contraseña es necesaria")
     private String contraseña;
 
     @ManyToOne
     @JoinColumn(name = "estadoId")
-    private Integer estadoId;
+    private Estado estadoId;
 
     @ManyToOne
     @JoinColumn(name = "rolId")
-    private Integer rolId;
+    private Rol rolId;
 
     public Integer getUsuarioId() {
         return usuarioId;
@@ -44,11 +44,11 @@ public class Usuario {
     }
 
     public String getCorreo() {
-        return Correo;
+        return correo;
     }
 
     public void setCorreo(String correo) {
-        Correo = correo;
+        correo = correo;
     }
 
     public String getContraseña() {
@@ -59,19 +59,19 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public Integer getEstadoId() {
+    public Estado getEstadoId() {
         return estadoId;
     }
 
-    public void setEstadoId(Integer estadoId) {
+    public void setEstadoId(Estado estadoId) {
         this.estadoId = estadoId;
     }
 
-    public Integer getRolId() {
+    public Rol getRolId() {
         return rolId;
     }
 
-    public void setRolId(Integer rolId) {
+    public void setRolId(Rol rolId) {
         this.rolId = rolId;
     }
 }
