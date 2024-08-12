@@ -26,8 +26,8 @@ public class EstadoService implements IEstadoServices {
     }
 
     @Override
-    public Optional<Estado> buscarPorId(Integer estadoid) {
-        return estadoRepository.findById(estadoid);
+    public Optional<Estado> buscarPorId(Integer estadoId) {
+        return estadoRepository.findById(estadoId);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class EstadoService implements IEstadoServices {
     }
 
     @Override
-    public void eliminarPorid(Integer estadoid) {
-    estadoRepository.deleteById(estadoid);
+    public void eliminarPorid(Integer estadoId) {
+    estadoRepository.deleteById(estadoId);
     }
 }

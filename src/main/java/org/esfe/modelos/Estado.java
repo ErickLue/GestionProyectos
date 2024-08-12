@@ -8,16 +8,16 @@ import jakarta.validation.constraints.NotBlank;
 public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer estadoid;
+    private Integer estadoId;
     @NotBlank(message = "El estado es requerido")
     private String estado;
 
-    public Integer getEstadoid() {
-        return estadoid;
+    public Integer getEstadoId() {
+        return estadoId;
     }
 
-    public void setEstadoid(Integer estadoid) {
-        this.estadoid = estadoid;
+    public void setEstadoId(Integer estadoId) {
+        this.estadoId = estadoId;
     }
 
     public String getEstado() {

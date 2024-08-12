@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import javax.lang.model.element.Name;
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 @Entity
 @Table(name = "Informe")
@@ -17,9 +17,9 @@ public class Informe {
     @NotBlank(message = "El campo es requerido")
    private String nombre;
     @NotBlank(message = "El campo es requerido")
-   private Data fechaInicio;
+   private Date fechaInicio;
     @NotBlank(message = "El campo es requerido")
-   private Data fechaFin;
+   private Date fechaFin;
 
     @ManyToOne
     @JoinColumn(name = "estadoId")
@@ -49,19 +49,19 @@ public class Informe {
         this.nombre = nombre;
     }
 
-    public Data getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Data fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Data getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Data fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 }

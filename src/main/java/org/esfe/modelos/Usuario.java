@@ -21,11 +21,11 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "estadoId")
-    private Estado estadoId;
+    private Estado estado;
 
     @ManyToOne
     @JoinColumn(name = "rolId")
-    private Rol rolId;
+    private Rol rol;
 
     public Integer getUsuarioId() {
         return usuarioId;
@@ -59,19 +59,19 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public Estado getEstadoId() {
-        return estadoId;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public void setEstadoId(Estado estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
-    public Rol getRolId() {
-        return rolId;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRolId(Rol rolId) {
-        this.rolId = rolId;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }

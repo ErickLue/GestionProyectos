@@ -37,12 +37,12 @@
 
         <tbody>
         <tr th:each="item : ${estados}">
-            <td th:text="${item.estadoid}"></td>
+            <td th:text="${item.estadoId}"></td>
             <td th:text="${item.estado}"></td>
             <td>
-                <a th:href="@{/estados/details/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/estados/edit/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/estados/remove/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-danger">Eliminar</a>
+                <a th:href="@{/estados/details/{estadoId} (estadoId = ${item.estadoId})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/estados/edit/{estadoId} (estadoId = ${item.estadoId})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/estados/remove/{estadoId} (estadoId = ${item.estadoId})}" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/Tarea")
+@RequestMapping("/tareas")
 public class TareaController {
     @Autowired
     private ITareaService tareaService;

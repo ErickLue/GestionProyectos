@@ -52,9 +52,9 @@
             <td th:text="${item.fechaProgreso}"></td>
             <td th:text="${item.fechaFin}"></td>
             <td>
-                <a th:href="@{/estados/details/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/estados/edit/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/estados/remove/{estadoid} (estadoid = ${item.estadoid})}" class="btn btn-outline-danger">Eliminar</a>
+                <a th:href="@{/tareas/details/{tareaid} (tareaid = ${item.tareaid})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/tareas/edit/{tareaid} (tareaid = ${item.tareaid})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/tareas/remove/{tareaid} (tareaid = ${item.tareaid})}" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>
@@ -63,7 +63,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{/estados?page=${pageNumber}}" th:text="${pageNumber}"></a>
+                <a class="page-link" th:href="@{/tareas?page=${pageNumber}}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>
