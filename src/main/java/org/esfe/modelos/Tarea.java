@@ -26,17 +26,18 @@ public class Tarea {
     @NotBlank(message = "La fecha Fin  es requerido")
     private Date fechaFin;
 
-   @ManyToOne
-   @JoinColumn(name = "estadoId")
-   private Integer estadoId;
+    @ManyToOne
+    @JoinColumn(name = "estadoId")
+    private Estado estados;
+
 
     @ManyToOne
     @JoinColumn(name = "proyectoId")
-    private Integer  proyectoId;
+    private Proyecto proyecto;
 
     @ManyToOne
     @JoinColumn(name = "miembroEquipoId")
-    private Integer  miembroEquipoId;
+    private Miembro miembroEquipo;
 
     public Integer getTareaid() {
         return tareaid;
@@ -100,29 +101,5 @@ public class Tarea {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
-    }
-
-    public Integer getEstadoId() {
-        return estadoId;
-    }
-
-    public void setEstadoId(Integer estadoId) {
-        this.estadoId = estadoId;
-    }
-
-    public Integer getProyectoId() {
-        return proyectoId;
-    }
-
-    public void setProyectoId(Integer proyectoId) {
-        this.proyectoId = proyectoId;
-    }
-
-    public Integer getMiembroEquipoId() {
-        return miembroEquipoId;
-    }
-
-    public void setMiembroEquipoId(Integer miembroEquipoId) {
-        this.miembroEquipoId = miembroEquipoId;
     }
 }

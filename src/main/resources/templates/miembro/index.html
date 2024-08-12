@@ -39,13 +39,13 @@
       </thead>
       <tbody>
       <tr th:each="item: ${miembros}">
-         <td th:text="${item.id}"></td>
+         <td th:text="${item.miembroEquipoId}"></td>
          <td th:text="${item.nombre}"></td>
          <td th:text="${item.cargo}"></td>
          <td>
-            <a th:href="@{/miembros/details/{id} (id = ${item.id})}" class="btn btn-outline-secondary">Detalles</a> |
-            <a th:href="@{/miembros/edit/{id} (id=${item.id}) }" class="btn btn-outline-info">Editar</a> |
-            <a th:href="@{/miembros/remove/{id} (id=${item.id})}" class="btn btn-outline-danger">Eliminar</a>
+            <a th:href="@{/miembros/details/{miembroEquipoId} (miembroEquipoId = ${item.miembroEquipoId})}" class="btn btn-outline-secondary">Detalles</a> |
+            <a th:href="@{/miembros/edit/{miembroEquipoId} (miembroEquipoId=${item.miembroEquipoId}) }" class="btn btn-outline-info">Editar</a> |
+            <a th:href="@{/miembros/remove/{miembroEquipoId} (miembroEquipoId=${item.miembroEquipoId})}" class="btn btn-outline-danger">Eliminar</a>
         </td>
       </tr>
       </tbody>
