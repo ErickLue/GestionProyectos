@@ -5,31 +5,36 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Tarea")
 public class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tareaid;
+    private Integer tarea_id;
+
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
-    @NotBlank(message = "La descripcion es requerido")
+
+    @NotBlank(message = "La descripción es requerida")
     private String descripcion;
+
     @NotBlank(message = "El estadoTarea es requerido")
     private String estadoTarea;
-    @NotBlank(message = "La prioridad es requerido")
-    private String prioridad;
-    @NotNull(message = "La fecha Inicio es requerido")
-    private Date fechaInicio;
-    @NotNull(message = "La fecha Progreso es requerido")
-    private Date fechaProgreso;
-    @NotNull(message = "La fecha Fin  es requerido")
-    private Date fechaFin;
 
-    @ManyToOne
-    @JoinColumn(name = "estadoId")
-    private Estado estado;
+    @NotBlank(message = "La prioridad es requerida")
+    private String prioridad;
+
+    @NotNull(message = "La fecha de inicio es requerida")
+    private Date fechaInicio;
+
+    @NotNull(message = "La fecha de progreso es requerida")
+    private Date fechaProgreso;
+
+    @NotNull(message = "La fecha de fin es requerida")
+    private Date fechaFin;
 
     @ManyToOne
     @JoinColumn(name = "proyectoId")
@@ -38,22 +43,18 @@ public class Tarea {
     @ManyToOne
     @JoinColumn(name = "miembroEquipoId")
     private Miembro miembroEquipo;
+//relacion
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Estado> estados = new HashSet<>();
 
-    public Integer getTareaid() {
-        return tareaid;
+    public Integer getTarea_id() {
+        return tarea_id;
     }
 
-    public void setTareaid(Integer tareaid) {
-        this.tareaid = tareaid;
+    public void setTarea_id(Integer tarea_id) {
+        this.tarea_id = tarea_id;
     }
 
-    public String getEstadoTarea() {
-        return estadoTarea;
-    }
-
-    public void setEstadoTarea(String estadoTarea) {
-        this.estadoTarea = estadoTarea;
-    }
     public String getNombre() {
         return nombre;
     }
@@ -70,7 +71,15 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-      public String getPrioridad() {
+    public String getEstadoTarea() {
+        return estadoTarea;
+    }
+
+    public void setEstadoTarea(String estadoTarea) {
+        this.estadoTarea = estadoTarea;
+    }
+
+    public String getPrioridad() {
         return prioridad;
     }
 
@@ -102,14 +111,6 @@ public class Tarea {
         this.fechaFin = fechaFin;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
     public Proyecto getProyecto() {
         return proyecto;
     }
@@ -124,5 +125,13 @@ public class Tarea {
 
     public void setMiembroEquipo(Miembro miembroEquipo) {
         this.miembroEquipo = miembroEquipo;
+    }
+
+    public Set<Estado> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(Set<Estado> estados) {
+        this.estados = estados;
     }
 }

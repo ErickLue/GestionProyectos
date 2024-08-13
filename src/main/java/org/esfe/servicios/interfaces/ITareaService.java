@@ -12,9 +12,9 @@ public interface ITareaService  {
 
     List<Tarea> ObtenerTodos();
 
-    Optional<Tarea> buscarPorId(Integer tareaid);
+    Optional<Tarea> buscarPorId(Integer tareaId);
 
     Tarea crearOEditar(Tarea tarea);
 
-    void eliminarPorid(Integer tareaid);
+    void eliminarPorid(Integer tareaId);
 }

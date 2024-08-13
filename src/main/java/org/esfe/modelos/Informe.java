@@ -13,7 +13,7 @@ public class Informe {
     @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotBlank(message = "El campo es requerido")
-   private Integer informeId;
+   private Integer informe_id;
     @NotBlank(message = "El campo es requerido")
    private String nombre;
     @NotBlank(message = "El campo es requerido")
@@ -33,12 +33,12 @@ public class Informe {
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
 
-    public Integer getInformeId() {
-        return informeId;
+    public @NotBlank(message = "El campo es requerido") Integer getInforme_id() {
+        return informe_id;
     }
 
-    public void setInformeId(Integer informeId) {
-        this.informeId = informeId;
+    public void setInforme_id(@NotBlank(message = "El campo es requerido") Integer informe_id) {
+        this.informe_id = informe_id;
     }
 
     public String getNombre() {

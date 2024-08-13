@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer usuarioId;
+    private Integer usuario_id;
 
     @NotBlank (message = "El nombre es necesario")
     private String nombre;
@@ -27,12 +27,12 @@ public class Usuario {
     @JoinColumn(name = "rolId")
     private Rol rol;
 
-    public Integer getUsuarioId() {
-        return usuarioId;
+    public Integer getUsuario_id() {
+        return usuario_id;
     }
 
-    public void setUsuarioId(Integer usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario_id(Integer usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
     public String getNombre() {

@@ -27,8 +27,8 @@ public class TareaService implements ITareaService {
     }
 
     @Override
-    public Optional<Tarea> buscarPorId(Integer tareaid) {
-        return TareaRepository.findById(tareaid);
+    public Optional<Tarea> buscarPorId(Integer tareaId) {
+        return TareaRepository.findById(tareaId);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class TareaService implements ITareaService {
     }
 
     @Override
-    public void eliminarPorid(Integer tareaid) {
-        TareaRepository.deleteById(tareaid);
+    public void eliminarPorid(Integer tareaId) {
+        TareaRepository.deleteById(tareaId);
     }
 
 

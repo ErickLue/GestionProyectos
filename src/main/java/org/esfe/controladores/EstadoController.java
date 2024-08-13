@@ -20,8 +20,8 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("/estados")
 public class EstadoController {
-    @Autowired
-    private IEstadoServices estadoServices;
+   @Autowired
+   private IEstadoServices estadoServices;
 
     @GetMapping
     public String index(Model model, @RequestParam("Page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size)

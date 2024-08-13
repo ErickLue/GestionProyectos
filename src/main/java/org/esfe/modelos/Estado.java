@@ -8,23 +8,37 @@ import jakarta.validation.constraints.NotBlank;
 public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer estadoId;
-    @NotBlank(message = "El estado es requerido")
-    private String estado;
+    private Integer estado_id;
 
-    public Integer getEstadoId() {
-        return estadoId;
+    @NotBlank(message = "El nombre del estado es requerido")
+    private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "tarea_id")
+    private Tarea tarea;
+
+
+    public Integer getEstado_id() {
+        return estado_id;
     }
 
-    public void setEstadoId(Integer estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado_id(Integer estado_id) {
+        this.estado_id = estado_id;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Tarea getTarea() {
+        return tarea;
+    }
+
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
     }
 }

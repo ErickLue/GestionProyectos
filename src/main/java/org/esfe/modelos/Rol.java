@@ -9,7 +9,7 @@ import org.apache.logging.log4j.message.Message;
 public class Rol {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Integer rolId;
+    private Integer rol_id;
 
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
@@ -18,12 +18,12 @@ public class Rol {
     @JoinColumn(name = "estadoId")
     private Estado estado;
 
-    public Integer getRolId() {
-        return rolId;
+    public Integer getRol_id() {
+        return rol_id;
     }
 
-    public void setRolId(Integer rolId) {
-        this.rolId = rolId;
+    public void setRol_id(Integer rol_id) {
+        this.rol_id = rol_id;
     }
 
     public String getNombre() {
