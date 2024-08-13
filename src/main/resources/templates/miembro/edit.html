@@ -7,7 +7,7 @@
 
     <h1>Editar miembro</h1>
     <form th:action="@{/miembros/save}" th:object="${miembro}" method="post">
-        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{miembroEquipo_id}">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

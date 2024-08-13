@@ -84,7 +84,7 @@ public class MiembroController {
 
     @PostMapping("/delete")
     public String delete(Miembro miembro, RedirectAttributes attributes){
-        miembroService.eliminarPorId(miembro.getId());
+        miembroService.eliminarPorId(miembro.getMiembroEquipo_id());
         attributes.addFlashAttribute("msg", "Miembro eliminado correctamente");
         return "redirect:/miembros";
     }

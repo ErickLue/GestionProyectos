@@ -1,19 +1,14 @@
 package org.esfe.modelos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "miembros")
-
+@Table(name = "MiembroEquipo")
 public class Miembro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer miembroEquipo_id;
 
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
@@ -21,12 +16,12 @@ public class Miembro {
     @NotBlank(message = "El cargo es requerido")
     private String cargo;
 
-    public Integer getId() {
-        return id;
+    public Integer getMiembroEquipo_id() {
+        return miembroEquipo_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMiembroEquipo_id(Integer miembroEquipo_id) {
+        this.miembroEquipo_id = miembroEquipo_id;
     }
 
     public @NotBlank(message = "El nombre es requerido") String getNombre() {

@@ -9,14 +9,13 @@ import java.util.Optional;
 
 public interface IEstadoServices {
 
-
     Page<Estado> buscarTodosLospaginado(Pageable pageable);
 
     List<Estado> ObtenerTodos();
 
-    Optional<Estado> buscarPorId(Integer estadoid);
+    Optional<Estado> buscarPorId(Integer estadoId);
 
     Estado crearOEditar(Estado estado);
 
-    void eliminarPorid(Integer estadoid);
+    void eliminarPorid(Integer estadoId);
 }

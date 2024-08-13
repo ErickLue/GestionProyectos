@@ -1,0 +1,72 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <div th:if="${msg != null}">
+        <script>
+            Swal.fire({
+                title: "Confirmación",
+                text: '[[${msg}]]',
+                icon: "success"
+            });
+        </script>
+    </div>
+    <div th:if="${error != null}">
+        <script>
+            Swal.fire({
+                title: "Error",
+                text: '[[${error}]]',
+                icon: "error"
+            });
+        </script>
+    </div>
+
+    <h1>Listado de tarea</h1>
+
+    <a th:href="@{/tareas/create}" class="btn btn-outline-primary">Nuevo grupo</a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tarea ID</th>
+            <th>Nombre</th>
+            <th>descripcion</th>
+            <th>estadoTarea</th>
+            <th>prioridad</th>
+            <th>fechaInicio</th>
+            <th>fechaProgreso</th>
+            <th>fechaFin</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="item : ${tareas}">
+            <td th:text="${item.tareaId}"></td>
+            <td th:text="${item.nombre}"></td>
+            <td th:text="${item.descripcion}"></td>
+            <td th:text="${item.estadoTarea}"></td>
+            <td th:text="${item.prioridad}"></td>
+            <td th:text="${item.fechaInicio}"></td>
+            <td th:text="${item.fechaProgreso}"></td>
+            <td th:text="${item.fechaFin}"></td>
+            <td th:text="${item.estado_id}"></td>
+            <td>
+                <a th:href="@{/tareas/details/{tareaId} (tareaId = ${item.tareaId})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/tareas/edit/{tareaId} (tareaId = ${item.tareaId})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/tareas/remove/{tareaId} (tareaId = ${item.tareaId})}" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{/tareas?page=${pageNumber}}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
