@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public interface IEstadoServices {
 
-
     Page<Estado> buscarTodosLospaginado(Pageable pageable);
 
     List<Estado> ObtenerTodos();

@@ -32,18 +32,20 @@
         <tr>
             <th>Tarea ID</th>
             <th>Nombre</th>
-            <th>descripcion</th>
-            <th>estadoTarea</th>
-            <th>prioridad</th>
-            <th>fechaInicio</th>
-            <th>fechaProgreso</th>
-            <th>fechaFin</th>
+            <th>Descripción</th>
+            <th>Estado Tarea</th>
+            <th>Prioridad</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Progreso</th>
+            <th>Fecha Fin</th>
+            <th>Estados</th>
+            <th>Acciones</th>
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="item : ${tareas}">
-            <td th:text="${item.tareaid}"></td>
+            <td th:text="${item.tarea_id}"></td>
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.estadoTarea}"></td>
@@ -52,9 +54,14 @@
             <td th:text="${item.fechaProgreso}"></td>
             <td th:text="${item.fechaFin}"></td>
             <td>
-                <a th:href="@{/tareas/details/{tareaid} (tareaid = ${item.tareaid})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/tareas/edit/{tareaid} (tareaid = ${item.tareaid})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/tareas/remove/{tareaid} (tareaid = ${item.tareaid})}" class="btn btn-outline-danger">Eliminar</a>
+                <ul>
+                    <li th:each="estado : ${item.estados}" th:text="${estado.nombre}"></li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>

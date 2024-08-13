@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 @Service
 public class EstadoService implements IEstadoServices {
     @Autowired
     private IEstadoRepository estadoRepository;
+
     @Override
     public Page<Estado> buscarTodosLospaginado(Pageable pageable) {
         return estadoRepository.findAll(pageable);
@@ -37,6 +39,6 @@ public class EstadoService implements IEstadoServices {
 
     @Override
     public void eliminarPorid(Integer estadoId) {
-    estadoRepository.deleteById(estadoId);
+        estadoRepository.deleteById(estadoId);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Date;
 public class Proyecto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer proyectoId;
+    private Integer proyecto_id;
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
     @NotBlank(message = "La descripcion es requerido")
@@ -29,12 +29,12 @@ public class Proyecto {
     @JoinColumn(name = "estadoId")
     private Estado estado;
 
-    public Integer getProyectoId() {
-        return proyectoId;
+    public Integer getProyecto_id() {
+        return proyecto_id;
     }
 
-    public void setProyectoId(Integer proyectoId) {
-        this.proyectoId = proyectoId;
+    public void setProyecto_id(Integer proyecto_id) {
+        this.proyecto_id = proyecto_id;
     }
 
     public String getNombre() {

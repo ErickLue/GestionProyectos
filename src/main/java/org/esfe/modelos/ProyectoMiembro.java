@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class ProyectoMiembro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "proyectoId")

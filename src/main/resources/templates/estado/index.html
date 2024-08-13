@@ -1,5 +1,4 @@
 <html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layouts/_mainLayout">
 
@@ -37,12 +36,12 @@
 
         <tbody>
         <tr th:each="item : ${estados}">
-            <td th:text="${item.estadoId}"></td>
-            <td th:text="${item.estado}"></td>
+            <td th:text="${item.estado_id}"></td>
+            <td th:text="${item.nombre}"></td>
             <td>
-                <a th:href="@{/estados/details/{estadoId} (estadoId = ${item.estadoId})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/estados/edit/{estadoId} (estadoId = ${item.estadoId})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/estados/remove/{estadoId} (estadoId = ${item.estadoId})}" class="btn btn-outline-danger">Eliminar</a>
+                <a th:href="@{/estados/details/{estado_id} (estado_id = ${item.estado_id})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/estados/edit/{estado_id} (estado_id = ${item.estado_id})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/estados/remove/{estado_id} (estado_id = ${item.estado_id})}" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>
