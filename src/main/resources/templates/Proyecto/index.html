@@ -50,7 +50,11 @@
             <td th:text="${item.prioridad}"></td>
             <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
-            <td th:text="${item.estado.nombre}"></td>
+            <td>
+            <ul>
+                <li th:each="estado : ${item.estados}" th:text="${estado.nombre}"></li>
+            </ul>
+        </td>
             <td>
                 <a th:href="@{/proyectos/details/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-info">Editar</a>
