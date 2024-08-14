@@ -13,7 +13,15 @@ public class Estado {
     @NotBlank(message = "El nombre del estado es requerido")
     private String nombre;
 
-     public Integer getEstado_id() {
+    @ManyToOne
+    @JoinColumn(name = "tarea_id")
+    private Tarea tarea;
+
+    @ManyToOne
+    @JoinColumn(name = "proyecto_id")
+    private Proyecto proyecto;
+
+    public Integer getEstado_id() {
         return estado_id;
     }
 
@@ -27,6 +35,22 @@ public class Estado {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Tarea getTarea() {
+        return tarea;
+    }
+
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
 
 }

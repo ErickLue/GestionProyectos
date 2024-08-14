@@ -43,13 +43,8 @@ public class Tarea {
     @ManyToOne
     @JoinColumn(name = "miembroEquipoId")
     private Miembro miembroEquipo;
-
-    @ManyToMany
-    @JoinTable(
-            name = "tarea_estado",
-            joinColumns = @JoinColumn(name = "tarea_id"),
-            inverseJoinColumns = @JoinColumn(name = "estado_id")
-    )
+//relacion
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Estado> estados = new HashSet<>();
 
     public Integer getTarea_id() {
