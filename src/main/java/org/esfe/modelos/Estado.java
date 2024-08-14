@@ -17,6 +17,9 @@ public class Estado {
     @JoinColumn(name = "tarea_id")
     private Tarea tarea;
 
+    @ManyToOne
+    @JoinColumn(name = "proyecto_id")
+    private Proyecto proyecto;
 
     public Integer getEstado_id() {
         return estado_id;
@@ -40,5 +43,13 @@ public class Estado {
 
     public void setTarea(Tarea tarea) {
         this.tarea = tarea;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
 }
