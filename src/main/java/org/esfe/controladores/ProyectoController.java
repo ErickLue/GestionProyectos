@@ -51,6 +51,7 @@ public class ProyectoController {
         if (result.hasErrors()) {
             model.addAttribute(proyecto);
             attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
+            return "proyecto/create";
         }
         proyectoService.crearOEditar(proyecto);
         attributes.addFlashAttribute("msg", "Proyecto creado correctamente");
