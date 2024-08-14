@@ -3,6 +3,7 @@ package org.esfe.modelos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,10 +28,12 @@ public class Proyecto {
     @NotBlank(message = "La prioridad es requerido")
     private String prioridad;
 
-    @NotNull(message = "La fecha Inicio es requerido")
+    @NotNull(message = "La fecha de inicio es requerido")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
 
-    @NotNull(message = "La fecha Fin es requerido")
+    @NotNull(message = "La fecha final es requerido")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -77,15 +80,15 @@ public class Proyecto {
         this.prioridad = prioridad;
     }
 
-    public Date getFechaInicio() {
+    public @NotNull(message = "La fecha de inicio es requerido") Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(@NotNull(message = "La fecha de inicio es requerido") Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public @NotNull(message = "La fecha final es requerido") Date getFechaFin() {
         return fechaFin;
     }
 

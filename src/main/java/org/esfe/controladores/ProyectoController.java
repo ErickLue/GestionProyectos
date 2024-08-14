@@ -43,19 +43,25 @@ public class ProyectoController {
 
     @GetMapping("/create")
     public String create(Proyecto proyecto) {
-        return ("Proyecto/create");
+        return "Proyecto/create"; // Asegúrate de que esta ruta coincida con la vista Thymeleaf
     }
 
     @PostMapping("/save")
-    public String save(Proyecto proyecto, BindingResult result, Model model, RedirectAttributes attributes) {
+    public String save(@ModelAttribute Proyecto proyecto, BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
-            model.addAttribute(proyecto);
+            model.addAttribute("proyecto", proyecto); // Asegúrate de que el objeto 'proyecto' esté en el modelo
             attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
-            return "proyecto/create";
+            return "Proyecto/create"; // Redirige de nuevo a la vista de creación si hay errores
         }
+
+        // Aquí es donde guardarías o actualizarías el proyecto
         proyectoService.crearOEditar(proyecto);
+
+        // Mensaje de éxito
         attributes.addFlashAttribute("msg", "Proyecto creado correctamente");
-        return "redirect:/Proyecto";
+
+        // Redirige a la lista de proyectos o a la vista deseada
+        return "redirect:/Proyectos"; // Asegúrate de que esta ruta esté manejada en el controlador
     }
 
     @GetMapping("details/{id}")

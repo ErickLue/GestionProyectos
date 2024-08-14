@@ -42,6 +42,24 @@
             </div>
         </div>
 
+        <!-- Campos agregados: Presupuesto y Prioridad -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="presupuesto">Presupuesto:</label>
+                    <input type="number" class="form-control" id="presupuesto" th:field="*{presupuesto}" placeholder="Ingrese el presupuesto del proyecto" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="prioridad">Prioridad:</label>
+                    <input type="text" class="form-control" id="prioridad" th:field="*{prioridad}" placeholder="Ingrese la prioridad del proyecto" required>
+                </div>
+            </div>
+        </div>
+
         <!-- Mensajes de error -->
         <div th:if="${#fields.hasErrors('*')}">
             <ul>
