@@ -1,0 +1,35 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Detalles de Proyectos</h1>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class = "col-sm-2">ID</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.proyecto_id}"></dd>
+
+            <dt class = "col-sm-2">Nombre</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.nombre}"></dd>
+
+            <dt class = "col-sm-2">Nombre</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.descripcion}"></dd>
+
+            <dt class = "col-sm-2">Nombre</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.presupuesto}"></dd>
+
+            <dt class = "col-sm-2">Nombre</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.prioridad}"></dd>
+
+            <dt class = "col-sm-2">Nombre</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.fechaInicio}"></dd>
+
+            <dt class = "col-sm-2">Cargo</dt>
+            <dd class = "col-sm-10" th:text="${proyecto.fechaFin}"></dd>
+        </dl>
+
+        <a th:href="@{/Proyectos}">Regresar</a>
+    </div>
+</div>

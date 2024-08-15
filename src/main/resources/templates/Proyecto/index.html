@@ -56,7 +56,7 @@
             </ul>
         </td>
             <td>
-                <a th:href="@{/proyectos/details/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-info">Editar</a>
                 <a th:href="@{/proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-danger">Eliminar</a>
             </td>
@@ -67,7 +67,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{/Proyectos?page=${pageNumber}}" th:text="${pageNumber}"></a>
+                <a class="page-link" th:href="@{'/Proyectos?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>
