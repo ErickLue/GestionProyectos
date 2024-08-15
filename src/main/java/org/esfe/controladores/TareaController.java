@@ -88,6 +88,6 @@ public class TareaController {
     public String delete(Tarea tarea, RedirectAttributes attributes){
         tareaService.eliminarPorid(tarea.getTarea_id());
         attributes.addFlashAttribute("msg", "tarea ha sido eliminada correctamente");
-        return "redirect:/tarea";
+        return "redirect:/tareas";
     }
 }
