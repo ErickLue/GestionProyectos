@@ -44,21 +44,22 @@ public class TareaController {
 
         return "tarea/index";
     }
+
     @GetMapping("/create")
-    public String create(Tarea tarea){
+    public String create(Tarea tarea) {
         return "tarea/create";
     }
 
     @PostMapping("/save")
-    public String save(Tarea tarea, BindingResult result, Model model, RedirectAttributes attributes){
-        if(result.hasErrors()){
+    public String save(Tarea tarea, BindingResult result, Model model, RedirectAttributes attributes) {
+        if (result.hasErrors()) {
             model.addAttribute(tarea);
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
             return "tarea/create";
         }
 
         tareaService.crearOEditar(tarea);
-        attributes.addFlashAttribute("msg", "tarea creada correctamente");
+        attributes.addFlashAttribute("msg", "Tarea creada correctamente.");
         return "redirect:/tareas";
     }
 

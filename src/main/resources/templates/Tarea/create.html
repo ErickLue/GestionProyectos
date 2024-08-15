@@ -1,0 +1,73 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+
+    <h1>Crear nueva tarea</h1>
+
+    <form th:action="@{/tareas/save}" th:object="${tarea}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre de la tarea" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3" placeholder="Describa la tarea" required></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estadoTarea">Estado de la Tarea</label>
+                    <input type="text" class="form-control" th:field="*{estadoTarea}" id="estadoTarea" placeholder="Indique el estado de la tarea" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="prioridad">Prioridad</label>
+                    <input type="text" class="form-control" th:field="*{prioridad}" id="prioridad" placeholder="Indique la prioridad de la tarea" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaProgreso">Fecha de Progreso</label>
+                    <input type="date" class="form-control" th:field="*{fechaProgreso}" id="fechaProgreso" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin</label>
+                    <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensajes de error -->
+        <div th:if="${#fields.hasErrors('*')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Error</li>
+            </ul>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button> |
+        <a th:href="@{/tareas}" class="btn btn-secondary">Regresar</a>
+    </form>
+</div>

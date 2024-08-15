@@ -25,7 +25,7 @@
 
     <h1>Listado de tarea</h1>
 
-    <a th:href="@{/tareas/create}" class="btn btn-outline-primary">Nuevo grupo</a>
+    <a th:href="@{/tareas/create}" class="btn btn-outline-primary">Nueva tarea</a>
 
     <table class="table table-striped">
         <thead>
@@ -70,7 +70,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{/tareas?page=${pageNumber}}" th:text="${pageNumber}"></a>
+                <a class="page-link" th:href="@{'/tareas?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>
