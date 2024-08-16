@@ -1,0 +1,61 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Crear nuevo informe</h1>
+    <form th:action="@{/informes/save}" th:object="${informe}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del informe" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de inicio</label>
+                    <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de finalización</label>
+                    <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estado">Estado ID</label>
+                    <input type="text" class="form-control" th:field="*{estado}" id="estado" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="proyecto">Proyecto ID</label>
+                    <input type="text" class="form-control" th:field="*{proyecto}" id="proyecto" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="usuario">Usuario ID</label>
+                    <input type="text" class="form-control" th:field="*{usuario}" id="usuario" required>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button> |
+        <a th:href="@{/informes}">Regresar</a>
+    </form>
+</div>
