@@ -4,6 +4,7 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
+    <!-- Alertas -->
     <div th:if="${msg != null}">
         <script>
             Swal.fire({
@@ -23,16 +24,19 @@
         </script>
     </div>
 
-    <h1>Listado de tarea</h1>
-
+    <!-- Título y Botón de Nueva Tarea -->
+    <h1>Listado de tareas</h1>
     <a th:href="@{/tareas/create}" class="btn btn-outline-primary">Nueva tarea</a>
 
+    <!-- Tabla de Tareas -->
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Tarea ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
+            <th>Proyecto</th> <!-- Nuevo Campo -->
+            <th>Miembro del Equipo</th> <!-- Nuevo Campo -->
             <th>Estado Tarea</th>
             <th>Prioridad</th>
             <th>Fecha Inicio</th>
@@ -41,22 +45,18 @@
             <th>Acciones</th>
         </tr>
         </thead>
-
         <tbody>
         <tr th:each="item : ${tareas}">
             <td th:text="${item.tarea_id}"></td>
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.descripcion}"></td>
+            <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td> <!-- Manejo del campo proyecto -->
+            <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td> <!-- Manejo del campo miembroEquipo -->
             <td th:text="${item.estadoTarea}"></td>
             <td th:text="${item.prioridad}"></td>
             <td th:text="${item.fechaInicio}"></td>
             <td th:text="${item.fechaProgreso}"></td>
             <td th:text="${item.fechaFin}"></td>
-            <td>
-                <ul>
-                    <li th:each="estado : ${item.estados}" th:text="${estado.nombre}"></li>
-                </ul>
-            </td>
             <td>
                 <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-info">Editar</a>
@@ -66,6 +66,8 @@
         </tbody>
     </table>
 
+
+    <!-- Paginación -->
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">

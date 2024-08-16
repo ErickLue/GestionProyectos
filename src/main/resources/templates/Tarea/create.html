@@ -4,11 +4,11 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-
     <h1>Crear nueva tarea</h1>
 
     <form th:action="@{/tareas/save}" th:object="${tarea}" method="post">
         <div class="row">
+            <!-- Campos de Nombre y Descripción -->
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -23,6 +23,7 @@
                 </div>
             </div>
 
+            <!-- Campos de Estado y Prioridad -->
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="estadoTarea">Estado de la Tarea</label>
@@ -37,6 +38,7 @@
                 </div>
             </div>
 
+            <!-- Campos de Fechas -->
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="fechaInicio">Fecha de Inicio</label>
@@ -55,6 +57,30 @@
                 <div class="form-group">
                     <label for="fechaFin">Fecha de Fin</label>
                     <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
+                </div>
+            </div>
+
+            <!-- Campo Select para Proyecto -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="proyecto">Proyecto</label>
+                    <select  class="form-control" th:field="*{proyecto}">
+                        <option value="" disabled selected>Seleccione un proyecto</option>
+                        <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
+                    </select>
+
+                </div>
+            </div>
+
+            <!-- Campo Select para Miembro del Equipo -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="miembroEquipo">Miembro del Equipo</label>
+                    <select class="form-control" th:field="*{miembroEquipo}" id="miembroEquipo" required>
+                        <option value="" disabled selected>Seleccione un miembro del equipo</option>
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
+                    </select>
+
                 </div>
             </div>
         </div>

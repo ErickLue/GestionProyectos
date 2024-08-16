@@ -58,6 +58,29 @@
                     <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="proyecto">Proyecto</label>
+                    <select class="form-control" th:field="*{proyecto.proyecto_id}" id="proyecto" required>
+                        <option th:each="proyecto : ${proyectos}"
+                                th:value="${proyecto.proyecto_id}"
+                                th:text="${proyecto.nombre}">Seleccione un proyecto</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="miembroEquipo">Miembro del Equipo</label>
+                    <select class="form-control" th:field="*{miembroEquipo.miembroEquipo_id}" id="miembroEquipo" required>
+                        <option th:each="miembro : ${miembros}"
+                                th:value="${miembro.miembroEquipo_id}"
+                                th:text="${miembro.nombre}">Seleccione un miembro del equipo</option>
+                    </select>
+                </div>
+            </div>
+
+
         </div>
 
         <hr>
