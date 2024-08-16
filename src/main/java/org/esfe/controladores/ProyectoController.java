@@ -1,5 +1,6 @@
 package org.esfe.controladores;
 import org.esfe.modelos.Proyecto;
+import org.esfe.modelos.Tarea;
 import org.esfe.servicios.interfaces.IProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -86,10 +87,10 @@ public class ProyectoController {
         return  "Proyecto/delete";
     }
 
-    @GetMapping("delete")
-    public String delete (@PathVariable("id")Integer id, Model model){
-        Proyecto proyecto = proyectoService.buscarPorId(id).get();
-        model.addAttribute("proyecto", proyecto);
-        return  "redirect:/Proyecto";
+    @PostMapping("/delete")
+    public String delete(Proyecto proyecto, RedirectAttributes attributes){
+        proyectoService.eliminarPorid(proyecto.getProyecto_id());
+        attributes.addFlashAttribute("msg", "Proyecto ha sido eliminada correctamente");
+        return "redirect:/Proyectos";
     }
 }
