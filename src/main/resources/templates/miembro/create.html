@@ -4,28 +4,43 @@
       layout:decorate="/layouts/_mainLayout">
 
     <div layout:fragment="content">
-
-        <h1>Crear nuevo miembro</h1>
-
-        <form th:action="@{/miembros/save}" th:object="${miembro}" method="post">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del miembro" required>
-                    </div>
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="d-flex" style="width: 50rem; border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+                <div style="width: 25rem;">
+                    <a th:href="@{/miembros}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+                    <img style="width: 300px; object-fit:cover" th:src="@{/assets/img/Add-files-rafiki.png}">
                 </div>
+               <div style="width: 25rem;">
+                   <div class="w-100">
+                       <h5 class="card-title">Agregar Miembro</h5>
+                   </div>
+                   <div class="card-body mt-3">
+                       <form th:action="@{/miembros/save}" th:object="${miembro}" method="post">
+                           <div class="row">
+                               <div class="w-100">
+                                   <div class="form-group">
+                                       <label for="nombre">Nombre</label>
+                                       <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del miembro" required>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="row mt-3">
+                               <div class="w-100">
+                                   <div class="form-group">
+                                       <label for="cargo">Cargo</label>
+                                       <textarea class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" placeholder="Escriba el cargo del miembro" required></textarea>
+                                   </div>
+                               </div>
+                           </div>
+                           <hr>
+                           <div class="d-flex justify-content-center">
+                               <button type="submit" class="custom-btn ripple info w-100">Guardar</button>
+
+                           </div>
+                       </form>
+                   </div>
+               </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="descripcion">Cargo</label>
-                        <textarea class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" required></textarea>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <button type="submit" class="btn btn-primary">Guardar</button> |
-            <a th:href="@{/miembros}">Regresar</a>
-        </form>
-</div>
+        </div>
+
+    </div>

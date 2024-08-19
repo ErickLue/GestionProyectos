@@ -38,6 +38,7 @@ public class MiembroController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("currentPage", currentPage);
         }
 
         return "miembro/index";

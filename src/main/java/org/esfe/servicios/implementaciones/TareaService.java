@@ -40,7 +40,4 @@ public class TareaService implements ITareaService {
     public void eliminarPorid(Integer tareaId) {
         TareaRepository.deleteById(tareaId);
     }
-
-
-
 }

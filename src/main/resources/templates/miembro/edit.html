@@ -4,28 +4,37 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-
-    <h1>Editar miembro</h1>
-    <form th:action="@{/miembros/save}" th:object="${miembro}" method="post">
-        <input type="hidden" th:field="*{miembroEquipo_id}">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del miembro" required>
-                </div>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="d-flex" style="width: 50rem; border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 25rem;">
+                <a th:href="@{/miembros}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+                <img style="width: 300px; object-fit:cover" th:src="@{/assets/img/4752968.jpg}">
             </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="cargo">Cargo</label>
-                <textarea class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" required></textarea>
+            <div style="width: 25rem;">
+                <h5>Editar miembro</h5>
+                <form th:action="@{/miembros/save}" th:object="${miembro}" method="post">
+                    <input type="hidden" th:field="*{miembroEquipo_id}">
+                    <div class="w-100">
+                        <div class="w-100">
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del miembro" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div class="w-100">
+                            <div class="form-group">
+                                <label for="cargo">Cargo</label>
+                                <textarea class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <button type="submit" class="custom-btn w-100 primary ripple mt-4">Guardar cambios</button>
+                </form>
             </div>
         </div>
     </div>
-    <hr>
-    <button type="submit" class="btn btn-primary">Guardar cambios</button> |
-    <a th:href="@{/miembros}">Regresar</a>
-    </form>
+
 </div>

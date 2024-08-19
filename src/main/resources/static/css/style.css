@@ -1,0 +1,192 @@
+:root {
+  --danger: #EE4E4E;
+  --danger-light: #e07a5f;
+
+  --primary: #EF9C66;
+  --primary-ripple: #FD9B63;
+
+  --info: #2C7865;
+  --info-hover: #50B498;
+
+  --warning: #a68868;
+  --warning-hover: #e3c39d;
+
+  --success:#FF8343;
+  --success-hover: #FD9B63;
+}
+
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}
+.danger:hover {
+  background: var(--danger-light)
+    radial-gradient(circle, transparent 1%, var(--danger-light) 1%)
+    center/15000%;
+}
+.danger:active {
+  background-color: var(--danger);
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.98);
+}
+
+/* Button style */
+.custom-btn {
+  border: none;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+.custom-btn:hover{
+  text-decoration: none;
+  color:#ffffff;
+}
+
+.custom-btn::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.danger {
+  background-color: var(--danger);
+  color: white;
+  font-weight: 600;
+}
+
+.danger-outline{
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  background-color: transparent;
+}
+
+.danger-outline:hover{
+  color: var(--danger) !important;
+}
+
+.primary-outline{
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background-color: transparent;
+}
+
+.success {
+  background-color: var(--success);
+  color: white;
+  font-weight: 600;
+}
+
+.success:hover {
+  background: var(--success-hover) radial-gradient(circle, transparent 1%, var(--success-hover) 1%)
+    center/15000%;
+}
+
+.success:active {
+  background-color: #2d6a4f;
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.98);
+}
+
+/* Info theme */
+.info {
+  background-color: var(--info);
+  color: white;
+  font-weight: 600;
+}
+
+.info:hover {
+  background: var(--info-hover)
+    radial-gradient(circle, transparent 1%, var(--info-hover) 1%) center/15000%;
+}
+
+.info:active {
+  background-color: var(--info);
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.98);
+}
+
+/* Warning theme */
+.warning {
+  background-color: var(--warning);
+  color: white;
+  font-weight: 600;
+}
+
+.warning:hover {
+  background: var(--warning-hover)
+    radial-gradient(circle, transparent 1%, var(--warning-hover) 1%)
+    center/15000%;
+}
+
+.warning:active {
+  background-color: var(--warning);
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.97);
+}
+
+/* Primary theme */
+.primary {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+
+.primary:hover {
+  background: var(--primary-ripple)
+    radial-gradient(circle, transparent 1%, var(--primary-ripple) 1%)
+    center/15000%;
+}
+
+.primary:active {
+  background-color: #1d3557;
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.97);
+}
+
+.custom-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .head {
+        background: #e3e3e3;
+        border-radius: 15px;
+        height: 10px;
+        font-size: 12px;
+      }
+      .tbody {
+        font-size: 14px;
+        height: 45px;
+        padding: 0 20px 0 20px;
+        border-bottom: 1px solid #e3e3e3;
+      }
+
+.custom-th{
+padding: 0 20px 0 20px;
+}
+
+.tbody td {
+padding: 0 20px 0 20px;
+}
+
+.custom-nav{
+background: #508D4E !important;
+}
+
+.text-white{
+color: white !important;
+}
+
+.text-white:hover{
+color: #ACE1AF !important;
+}

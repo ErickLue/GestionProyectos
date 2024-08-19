@@ -27,35 +27,40 @@
     </div>
 
 <h1>Listado de miembros</h1>
-<a th:href="@{/miembros/create}" class="btn btn-outline-primary">Nuevo miembro</a>
-<table class="table table-striped">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Cargo</th>
-        <th>Acciones</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="item: ${miembros}">
-         <td th:text="${item.miembroEquipo_id}"></td>
-         <td th:text="${item.nombre}"></td>
-         <td th:text="${item.cargo}"></td>
-         <td>
-            <a th:href="@{/miembros/details/{miembroEquipo_id} (miembroEquipo_id = ${item.miembroEquipo_id})}" class="btn btn-outline-secondary">Detalles</a> |
-            <a th:href="@{/miembros/edit/{miembroEquipo_id} (miembroEquipo_id=${item.miembroEquipo_id}) }" class="btn btn-outline-info">Editar</a> |
-            <a th:href="@{/miembros/remove/{miembroEquipo_id} (miembroEquipo_id=${item.miembroEquipo_id})}" class="btn btn-outline-danger">Eliminar</a>
-        </td>
-      </tr>
-      </tbody>
+<a th:href="@{/miembros/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
+    <table class="custom-table mt-3">
+        <thead>
+        <tr class="head">
+            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Id</th>
+            <th class="custom-th">Nombre</th>
+            <th class="custom-th">Cargo</th>
+            <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">
+                Acciones
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="tbody" th:each="item: ${miembros}">
+            <td th:text="${item.miembroEquipo_id}"></td>
+            <td th:text="${item.nombre}"></td>
+            <td th:text="${item.cargo}"></td>
+            <td>
+                <a th:href="@{/miembros/details/{miembroEquipo_id} (miembroEquipo_id = ${item.miembroEquipo_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a> |
+                <a th:href="@{/miembros/edit/{miembroEquipo_id} (miembroEquipo_id=${item.miembroEquipo_id}) }" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a> |
+                <a th:href="@{/miembros/remove/{miembroEquipo_id} (miembroEquipo_id=${item.miembroEquipo_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+        </tbody>
     </table>
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
+    <nav aria-label="Page navigation example" style="margin-top:50px;">
+        <ul class="pagination" style="gap:5px">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{|/miembros?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                <a  th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                   th:href="@{|/miembros?page=${pageNumber}|}"
+                   th:text="${pageNumber}">
+                </a>
             </li>
         </ul>
     </nav>
+
 </div>
