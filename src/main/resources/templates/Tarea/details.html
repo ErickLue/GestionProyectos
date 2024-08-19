@@ -1,0 +1,63 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+
+    <h1>Detalles tares</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <p class="form-control-static" th:text="${tarea.nombre}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <p class="form-control-static" th:text="${tarea.descripcion}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="estadoTarea">Estado de la Tarea</label>
+                <p class="form-control-static" th:text="${tarea.estadoTarea}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="prioridad">Prioridad</label>
+                <p class="form-control-static" th:text="${tarea.prioridad}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="fechaInicio">Fecha de Inicio</label>
+                <p class="form-control-static" th:text="${#dates.format(tarea.fechaInicio, 'yyyy-MM-dd')}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="fechaProgreso">Fecha de Progreso</label>
+                <p class="form-control-static" th:text="${#dates.format(tarea.fechaProgreso, 'yyyy-MM-dd')}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="fechaFin">Fecha de Fin</label>
+                <p class="form-control-static" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></p>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <a th:href="@{/tareas}" class="btn btn-secondary">Regresar</a>
+</div>

@@ -52,4 +52,5 @@ public class Estado {
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
     }
+
 }

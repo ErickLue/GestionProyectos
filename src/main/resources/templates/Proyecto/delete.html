@@ -1,0 +1,40 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Eliminar proyecto</h1>
+    <h3>¿Está seguro que desea eliminar este registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${proyecto.proyecto_id}"></dd>
+
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${proyecto.nombre}"></dd>
+
+            <dt class="col-sm-2">Descripción</dt>
+            <dd class="col-sm-10" th:text="${proyecto.descripcion}"></dd>
+
+            <dt class="col-sm-2">Presupuesto</dt>
+            <dd class="col-sm-10" th:text="${proyecto.presupuesto}"></dd>
+
+            <dt class="col-sm-2">Prioridad</dt>
+            <dd class="col-sm-10" th:text="${proyecto.prioridad}"></dd>
+
+            <dt class="col-sm-2">Fecha de Inicio</dt>
+            <dd class="col-sm-10" th:text="${#dates.format(proyecto.fechaInicio, 'yyyy-MM-dd')}"></dd>
+
+            <dt class="col-sm-2">Fecha de Fin</dt>
+            <dd class="col-sm-10" th:text="${#dates.format(proyecto.fechaFin, 'yyyy-MM-dd')}"></dd>
+        </dl>
+
+        <form th:action="@{/Proyectos/delete}" method="post">
+            <input type="hidden" name="proyecto_id" th:value="${proyecto.proyecto_id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/Proyectos}" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+</div>

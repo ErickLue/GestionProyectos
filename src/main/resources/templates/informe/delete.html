@@ -1,0 +1,40 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Eliminar informe</h1>
+    <h3>¿Está seguro que desea eliminar este registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">Informe ID</dt>
+            <dd class="col-sm-10" th:text="${informe.informe_id}"></dd>
+
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${informe.nombre}"></dd>
+
+            <dt class="col-sm-2">Fecha de inicio</dt>
+            <dd class="col-sm-10" th:text="${informe.fechaInicio}"></dd>
+
+            <dt class="col-sm-2">Fecha de finalización</dt>
+            <dd class="col-sm-10" th:text="${informe.fechaFin}"></dd>
+
+            <dt class="col-sm-2">Estado ID</dt>
+            <dd class="col-sm-10" th:text="${informe.estado}"></dd>
+
+            <dt class="col-sm-2">Proyecto ID</dt>
+            <dd class="col-sm-10" th:text="${informe.proyecto}"></dd>
+
+            <dt class="col-sm-2">Usuario ID</dt>
+            <dd class="col-sm-10" th:text="${informe.usuario}"></dd>
+        </dl>
+
+        <form th:action="@{/informes/delete}" method="post">
+            <input type="hidden" name="informe_id" th:value="${informe.informe_id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/informes}" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+</div>

@@ -29,32 +29,33 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Proyecto ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Presupuesto</th>
+            <th>Presupuesto: dólares</th>
             <th>Prioridad</th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
-            <th>Estado</th>
             <th>Acciones</th>
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="item : ${proyectos}">
-            <td th:text="${item.proyecto_id}"></td>
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.presupuesto}"></td>
             <td th:text="${item.prioridad}"></td>
             <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
-            <td th:text="${item.estado.nombre}"></td>
             <td>
-                <a th:href="@{/proyectos/details/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-danger">Eliminar</a>
+            <ul>
+                <li th:each="estado : ${item.estados}" th:text="${estado.nombre}"></li>
+            </ul>
+        </td>
+            <td>
+                <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
         </tbody>
@@ -63,7 +64,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{/Proyectos?page=${pageNumber}}" th:text="${pageNumber}"></a>
+                <a class="page-link" th:href="@{'/Proyectos?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>

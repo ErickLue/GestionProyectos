@@ -1,0 +1,43 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Eliminar tarea</h1>
+    <h3>¿Esta seguro que desea eliminar este registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${tarea.tarea_id}"></dd>
+
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${tarea.nombre}"></dd>
+
+            <dt class="col-sm-2">Descripción</dt>
+            <dd class="col-sm-10" th:text="${tarea.descripcion}"></dd>
+
+            <dt class="col-sm-2">Estado</dt>
+            <dd class="col-sm-10" th:text="${tarea.estadoTarea}"></dd>
+
+            <dt class="col-sm-2">Prioridad</dt>
+            <dd class="col-sm-10" th:text="${tarea.prioridad}"></dd>
+
+            <dt class="col-sm-2">Fecha de Inicio</dt>
+            <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaInicio, 'yyyy-MM-dd')}"></dd>
+
+            <dt class="col-sm-2">Fecha de Progreso</dt>
+            <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaProgreso, 'yyyy-MM-dd')}"></dd>
+
+            <dt class="col-sm-2">Fecha de Fin</dt>
+            <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></dd>
+        </dl>
+
+        <form th:action="@{/tareas/delete}" method="post">
+            <input type="hidden" name="tarea_id" th:value="${tarea.tarea_id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/tareas}" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+</div>

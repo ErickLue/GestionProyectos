@@ -3,6 +3,7 @@ package org.esfe.modelos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,12 +29,15 @@ public class Tarea {
     private String prioridad;
 
     @NotNull(message = "La fecha de inicio es requerida")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
 
     @NotNull(message = "La fecha de progreso es requerida")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaProgreso;
 
     @NotNull(message = "La fecha de fin es requerida")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
     @ManyToOne

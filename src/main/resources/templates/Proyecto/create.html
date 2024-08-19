@@ -1,0 +1,76 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+
+    <h1>Crear Nuevo Proyecto</h1>
+
+    <!-- Formulario para crear un nuevo proyecto -->
+    <form th:action="@{/Proyectos/save}" th:object="${proyecto}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Proyecto:</label>
+                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Ingrese el nombre del proyecto" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea class="form-control" id="descripcion" th:field="*{descripcion}" placeholder="Ingrese una descripción"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio:</label>
+                    <input type="date" class="form-control" id="fechaInicio" th:field="*{fechaInicio}" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin:</label>
+                    <input type="date" class="form-control" id="fechaFin" th:field="*{fechaFin}">
+                </div>
+            </div>
+        </div>
+
+        <!-- Campos agregados: Presupuesto y Prioridad -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="presupuesto">Presupuesto:</label>
+                    <input type="number" class="form-control" id="presupuesto" th:field="*{presupuesto}" placeholder="Ingrese el presupuesto del proyecto" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="prioridad">Prioridad:</label>
+                    <input type="text" class="form-control" id="prioridad" th:field="*{prioridad}" placeholder="Ingrese la prioridad del proyecto" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensajes de error -->
+        <div th:if="${#fields.hasErrors('*')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Error</li>
+            </ul>
+        </div>
+
+        <!-- Botones para guardar o cancelar -->
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button> |
+        <a th:href="@{/Proyectos}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</html>

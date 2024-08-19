@@ -37,7 +37,7 @@
         <tbody>
         <tr th:each="item : ${estados}">
             <td th:text="${item.estado_id}"></td>
-            <td th:text="${item.estado}"></td>
+            <td th:text="${item.nombre}"></td>
             <td>
                 <a th:href="@{/estados/details/{estado_id} (estado_id = ${item.estado_id})}" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/estados/edit/{estado_id} (estado_id = ${item.estado_id})}" class="btn btn-outline-info">Editar</a>
