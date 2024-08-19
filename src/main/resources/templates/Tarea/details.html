@@ -56,6 +56,23 @@
                 <p class="form-control-static" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></p>
             </div>
         </div>
+
+
+        <!-- Nuevo campo: Proyecto -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="proyecto">Proyecto</label>
+                <p class="form-control-static" th:text="${tarea.proyecto.nombre}"></p>
+            </div>
+        </div>
+
+        <!-- Nuevo campo: Miembro del Equipo -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="miembroEquipo">Miembro del Equipo</label>
+                <p class="form-control-static" th:text="${tarea.miembroEquipo.nombre}"></p>
+            </div>
+        </div>
     </div>
 
     <hr>

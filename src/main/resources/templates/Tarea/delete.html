@@ -32,6 +32,13 @@
 
             <dt class="col-sm-2">Fecha de Fin</dt>
             <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></dd>
+
+            <dt class="col-sm-2">Proyecto</dt>
+            <dd class="col-sm-10" th:text="${tarea.proyecto.nombre}"></dd>
+
+            <!-- Nuevo campo: Miembro del Equipo -->
+            <dt class="col-sm-2">Miembro del Equipo</dt>
+            <dd class="col-sm-10" th:text="${tarea.miembroEquipo.nombre}"></dd>
         </dl>
 
         <form th:action="@{/tareas/delete}" method="post">
