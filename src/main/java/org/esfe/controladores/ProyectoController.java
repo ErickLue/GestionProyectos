@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,6 +59,7 @@ public class ProyectoController {
     public String save(@ModelAttribute Proyecto proyecto, BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             model.addAttribute("proyecto", proyecto); // Asegúrate de que el objeto 'proyecto' esté en el modelo
+            model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
             attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
             return "Proyecto/create"; // Redirige de nuevo a la vista de creación si hay errores
         }
@@ -83,7 +85,13 @@ public class ProyectoController {
     public String edit(@PathVariable("id") Integer id, Model model) {
         Proyecto proyecto = proyectoService.buscarPorId(id).get();
         model.addAttribute("proyecto", proyecto);
+        model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
         return "Proyecto/edit";
+    }
+
+    // Método para obtener las prioridades ordenadas
+    private List<String> obtenerPrioridadesOrdenadas() {
+        return Arrays.asList("Alta","Intermedia", "Baja");
     }
 
 
