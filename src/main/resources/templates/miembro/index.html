@@ -52,10 +52,11 @@
         </tr>
         </tbody>
     </table>
+
     <nav aria-label="Page navigation example" style="margin-top:50px;">
         <ul class="pagination" style="gap:5px">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a  th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
                    th:href="@{|/miembros?page=${pageNumber}|}"
                    th:text="${pageNumber}">
                 </a>

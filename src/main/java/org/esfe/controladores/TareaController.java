@@ -64,6 +64,7 @@ public class TareaController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("currentPage",currentPage);
         }
 
         return "tarea/index";

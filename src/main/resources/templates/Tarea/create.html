@@ -4,83 +4,91 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1>Crear nueva tarea</h1>
-
-    <form th:action="@{/tareas/save}" th:object="${tarea}" method="post">
-        <div class="row">
+<div class="d-flex justify-content-center align-items-center vh-100 w-100 py-3">
+    <div class="d-flex w-100 h-100" style="width: 50rem; border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+        <div style="width: 50%;" class="d-flex flex-column">
+            <a th:href="@{/tareas}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+            <div class="w-100 h-100 justify-content-center align-items-center">
+                <img style="width: 400px; object-fit:cover" th:src="@{/assets/img/Add-files-rafiki.png}">
+            </div>
+        </div>
+        <div style="width: 50%;">
+            <div class="w-100">
+                <h5 class="card-title">Agregar Tarea</h5>
+            </div>
+            <div class="card-body mt-3">
+                <form th:action="@{/tareas/save}" th:object="${tarea}" method="post">
+                    <div class="row">
             <!-- Campos de Nombre y Descripción -->
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
+                        <div class="w-50">
+                            <div class="form-group">
+                    <label for="nombre" class="fw-bold" style="font-size:14px">Nombre</label>
                     <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre de la tarea" required>
                 </div>
             </div>
+                        <div class="w-50">
+                            <div class="form-group">
+                                <label for="miembroEquipo" class="fw-bold" style="font-size:14px">Miembro del Equipo</label>
+                                <select class="form-control" th:field="*{miembroEquipo}" id="miembroEquipo" required>
+                                    <option value="" disabled selected>Seleccione un miembro del equipo</option>
+                                    <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
+                                </select>
 
-            <div class="col-md-6">
+                            </div>
+                        </div>
+            <div class="w-100">
                 <div class="form-group">
-                    <label for="descripcion">Descripción</label>
+                    <label for="descripcion" class="fw-bold" style="font-size:14px">Descripción</label>
                     <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3" placeholder="Describa la tarea" required></textarea>
                 </div>
             </div>
 
             <!-- Campos de Estado y Prioridad -->
-            <div class="col-md-6">
+            <div class="w-50">
                 <div class="form-group">
-                    <label for="estadoTarea">Estado de la Tarea</label>
+                    <label for="estadoTarea" class="fw-bold" style="font-size:14px">Estado de la Tarea</label>
                     <input type="text" class="form-control" th:field="*{estadoTarea}" id="estadoTarea" placeholder="Indique el estado de la tarea" required>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="w-50">
                 <div class="form-group">
                     <label for="prioridad">Prioridad</label>
-                    <select class="form-control" th:field="*{prioridad}" id="prioridad" required>
+                    <select class="form-control fw-bold"  style="font-size:14px" th:field="*{prioridad}" id="prioridad" required>
                         <option value="" disabled selected>Seleccione una prioridad</option>
                         <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}"></option>
                     </select>
                 </div>
             </div>
             <!-- Campos de Fechas -->
-            <div class="col-md-6">
+            <div class="w-50">
                 <div class="form-group">
-                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <label for="fechaInicio" class="fw-bold" style="font-size:14px">Fecha de Inicio</label>
                     <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="w-50">
                 <div class="form-group">
-                    <label for="fechaProgreso">Fecha de Progreso</label>
+                    <label for="fechaProgreso" class="fw-bold" style="font-size:14px">Fecha de Progreso</label>
                     <input type="date" class="form-control" th:field="*{fechaProgreso}" id="fechaProgreso" required>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="w-50">
                 <div class="form-group">
-                    <label for="fechaFin">Fecha de Fin</label>
+                    <label for="fechaFin" class="fw-bold" style="font-size:14px">Fecha de Fin</label>
                     <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
                 </div>
             </div>
 
             <!-- Campo Select para Proyecto -->
-            <div class="col-md-6">
+            <div class="w-50">
                 <div class="form-group">
-                    <label for="proyecto">Proyecto</label>
+                    <label for="proyecto" class="fw-bold" style="font-size:14px">Proyecto</label>
                     <select  class="form-control" th:field="*{proyecto}">
                         <option value="" disabled selected>Seleccione un proyecto</option>
                         <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
-                    </select>
-
-                </div>
-            </div>
-
-            <!-- Campo Select para Miembro del Equipo -->
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="miembroEquipo">Miembro del Equipo</label>
-                    <select class="form-control" th:field="*{miembroEquipo}" id="miembroEquipo" required>
-                        <option value="" disabled selected>Seleccione un miembro del equipo</option>
-                        <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
                     </select>
 
                 </div>
@@ -93,9 +101,7 @@
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Error</li>
             </ul>
         </div>
-
         <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button> |
-        <a th:href="@{/tareas}" class="btn btn-secondary">Regresar</a>
+        <button type="submit" class="custom-btn ripple info w-100">Guardar</button>
     </form>
 </div>

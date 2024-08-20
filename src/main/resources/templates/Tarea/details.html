@@ -4,64 +4,56 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-
-    <h1>Detalles tares</h1>
-
+    <div class="d-flex w-100 justify-content-center py-3 align-items-center vh-100">
+        <div class="d-flex w-100 h-100" style="border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 50%">
     <div class="row">
-        <div class="col-md-6">
+        <a th:href="@{/tareas}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+        <div class="col-md-12">
             <div class="form-group">
-                <label for="nombre">Nombre</label>
+                <label for="nombre" class = "col-sm-3 mt-3 fw-bold">Nombre:</label>
                 <p class="form-control-static" th:text="${tarea.nombre}"></p>
             </div>
         </div>
-
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
-                <label for="descripcion">Descripción</label>
+                <label for="descripcion" class = "col-sm-3 mt-3 fw-bold">Descripción:</label>
                 <p class="form-control-static" th:text="${tarea.descripcion}"></p>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group">
-                <label for="estadoTarea">Estado de la Tarea</label>
+                <label for="estadoTarea" class="fw-bold">Estado de la Tarea:</label>
                 <p class="form-control-static" th:text="${tarea.estadoTarea}"></p>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group">
-                <label for="prioridad">Prioridad</label>
+                <label for="prioridad" class="fw-bold">Prioridad:</label>
                 <p class="form-control-static" th:text="${tarea.prioridad}"></p>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group">
-                <label for="fechaInicio">Fecha de Inicio</label>
+                <label for="fechaInicio" class="fw-bold">Fecha de Inicio:</label>
                 <p class="form-control-static" th:text="${#dates.format(tarea.fechaInicio, 'yyyy-MM-dd')}"></p>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group">
-                <label for="fechaProgreso">Fecha de Progreso</label>
+                <label for="fechaProgreso" class="fw-bold">Fecha de Progreso:</label>
                 <p class="form-control-static" th:text="${#dates.format(tarea.fechaProgreso, 'yyyy-MM-dd')}"></p>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="form-group">
-                <label for="fechaFin">Fecha de Fin</label>
+                <label for="fechaFin" class="fw-bold">Fecha de Fin:</label>
                 <p class="form-control-static" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></p>
             </div>
         </div>
-
-
-        <!-- Nuevo campo: Proyecto -->
         <div class="col-md-6">
             <div class="form-group">
-                <label for="proyecto">Proyecto</label>
+                <label for="proyecto" class="fw-bold">Proyecto:</label>
                 <p class="form-control-static" th:text="${tarea.proyecto.nombre}"></p>
             </div>
         </div>
@@ -69,12 +61,19 @@
         <!-- Nuevo campo: Miembro del Equipo -->
         <div class="col-md-6">
             <div class="form-group">
-                <label for="miembroEquipo">Miembro del Equipo</label>
+                <label for="miembroEquipo" class="fw-bold">Miembro del Equipo:</label>
                 <p class="form-control-static" th:text="${tarea.miembroEquipo.nombre}"></p>
             </div>
         </div>
+        <div class="d-flex" style="gap:30px">
+            <a th:href="@{/tareas/edit/{tarea_id} (tarea_id=${tarea.tarea_id}) }" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+            <a th:href="@{/tareas/remove/{tarea_id} (tarea_id=${tarea.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+        </div>
     </div>
-
-    <hr>
-    <a th:href="@{/tareas}" class="btn btn-secondary">Regresar</a>
+        </div>
+            <div style="width: 50%;" class="d-flex justify-content-center align-items-center">
+                <img style="width: 450px; object-fit:cover" th:src="@{/assets/img/sapiens.png}">
+            </div>
+    </div>
+</div>
 </div>

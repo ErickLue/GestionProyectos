@@ -26,52 +26,54 @@
 
     <!-- Título y Botón de Nueva Tarea -->
     <h1>Listado de tareas</h1>
-    <a th:href="@{/tareas/create}" class="btn btn-outline-primary">Nueva tarea</a>
+    <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
 
     <!-- Tabla de Tareas -->
-    <table class="table table-striped">
+    <table class="custom-table mt-3">
         <thead>
-        <tr>
-            <th>Tarea ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Proyecto</th> <!-- Nuevo Campo -->
-            <th>Miembro del Equipo</th> <!-- Nuevo Campo -->
-            <th>Estado Tarea</th>
-            <th>Prioridad</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Progreso</th>
-            <th>Fecha Fin</th>
-            <th>Acciones</th>
+        <tr class="head">
+            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Id</th>
+            <th class="custom-th">Nombre</th>
+            <th class="custom-th">Descripción</th>
+            <th class="custom-th">Proyecto</th>
+            <th class="custom-th">Miembro del Equipo</th>
+            <th class="custom-th">Estado Tarea</th>
+            <th class="custom-th">Prioridad</th>
+           <!-- <th class="custom-th">Fecha Inicio</th>
+            <th class="custom-th">Fecha Progreso</th>
+            <th class="custom-th">Fecha Fin</th> -->
+            <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${tareas}">
+        <tr class="tbody" th:each="item : ${tareas}">
             <td th:text="${item.tarea_id}"></td>
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.descripcion}"></td>
-            <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td> <!-- Manejo del campo proyecto -->
-            <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td> <!-- Manejo del campo miembroEquipo -->
+            <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
+            <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td>
             <td th:text="${item.estadoTarea}"></td>
             <td th:text="${item.prioridad}"></td>
-            <td th:text="${item.fechaInicio}"></td>
+            <!-- <td th:text="${item.fechaInicio}"></td>
             <td th:text="${item.fechaProgreso}"></td>
-            <td th:text="${item.fechaFin}"></td>
+            <td th:text="${item.fechaFin}"></td> -->
             <td>
-                <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="btn btn-outline-danger">Eliminar</a>
+                <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a> |
+                <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a> |
+                <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
     </table>
 
-
     <!-- Paginación -->
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
+    <nav aria-label="Page navigation example" style="margin-top:50px;">
+        <ul class="pagination" style="gap:5px">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{'/tareas?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
+                <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                   th:href="@{|/tareas?page=${pageNumber}|}"
+                   th:text="${pageNumber}">
+                </a>
             </li>
         </ul>
     </nav>
