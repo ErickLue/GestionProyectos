@@ -3,9 +3,7 @@ import org.esfe.modelos.Proyecto;
 import org.esfe.modelos.Tarea;
 import org.esfe.servicios.interfaces.IProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,32 +24,52 @@ public class ProyectoController {
     private IProyectoService proyectoService;
 
     @GetMapping
-    public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public String index(Model model,
+                        @RequestParam("page") Optional<Integer> page,
+                        @RequestParam("size") Optional<Integer> size,
+                        @RequestParam("sort") Optional<String> sort) {
         int currentPage = page.orElse(1) - 1; // Si no está seteado, se asigna 0
         int pageSize = size.orElse(5); // Tamaño de la página, se asigna 5
-        Pageable pageable = PageRequest.of(currentPage, pageSize);
+        String sortField = sort.orElse("prioridad"); // Campo de ordenación predeterminado
 
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.unsorted()); // Usamos Sort.unsorted() para manejar la ordenación manualmente
+
+        // Obtener los proyectos paginados
         Page<Proyecto> proyectos = proyectoService.buscarTodosLospaginado(pageable);
-        if (proyectos != null && proyectos.hasContent()) {
-            model.addAttribute("proyectos", proyectos);
-            int totalPages = proyectos.getTotalPages();
-            if (totalPages > 0) {
-                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                        .boxed()
-                        .collect(Collectors.toList());
-                model.addAttribute("pageNumbers", pageNumbers);
-            }
+
+        // Ordenar manualmente según la prioridad
+        List<Proyecto> proyectosOrdenados = proyectos.getContent().stream()
+                .sorted((p1, p2) -> {
+                    List<String> ordenPrioridades = obtenerPrioridadesOrdenadas();
+                    return Integer.compare(
+                            ordenPrioridades.indexOf(p1.getPrioridad()),
+                            ordenPrioridades.indexOf(p2.getPrioridad())
+                    );
+                })
+                .collect(Collectors.toList());
+
+        // Crear una nueva instancia de Page con los proyectos ordenados
+        model.addAttribute("proyectos", new PageImpl<>(proyectosOrdenados, pageable, proyectos.getTotalElements()));
+
+        int totalPages = proyectos.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
         } else {
             model.addAttribute("error", "No se encontraron proyectos.");
         }
 
-        return "Proyecto/index";
+        return "Proyecto/index"; // Asegúrate de que la vista se llame correctamente
     }
 
 
 
+
     @GetMapping("/create")
-    public String create(Proyecto proyecto) {
+    public String create(Proyecto proyecto, Model model) {
+        model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
         return "Proyecto/create"; // Asegúrate de que esta ruta coincida con la vista Thymeleaf
     }
 
