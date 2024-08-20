@@ -1,7 +1,9 @@
 package org.esfe.controladores;
 
-import org.esfe.modelos.Proyecto;
+import org.esfe.modelos.Estado;
 import org.esfe.modelos.Usuario;
+import org.esfe.servicios.interfaces.IEstadoServices;
+import org.esfe.servicios.interfaces.IRolService;
 import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +15,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
+    private IRolService rolService;
+
+    @Autowired
     private IUsuarioService usuarioService;
+
+    @Autowired
+    private IEstadoServices estadoServices;
+
 
     @GetMapping("/login")
     public String mostrarFormularioDeLogin() {
@@ -38,18 +49,52 @@ public class UsuarioController {
     }
 
     @GetMapping("/create")
-    public String create(Usuario usuario) {
+    public String create(Model model) {
+        // Crear un nuevo objeto Usuario
+        Usuario usuario = new Usuario();
+        model.addAttribute("usuario", usuario);
+
+        // Cargar los roles y el estado por defecto
+        model.addAttribute("roles", rolService.ObtenerTodos()); // Suponiendo que tienes un método para obtener roles
+        model.addAttribute("estado", estadoServices.buscarPorId(1)); // Estado con ID 1
+
         return "Usuario/create"; // Asegúrate de que esta ruta coincida con la vista Thymeleaf
     }
-    @PostMapping("/save")
-    public String save (@ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes attributes){
-        if (result.hasErrors()) {
-            model.addAttribute("error", "Usuario no creado por un error inesperado");
-            return "Usuario/login";
-        }
-        usuarioService.crearOEditar(usuario);
-        return "redirect:/Proyectos";
 
+    @PostMapping("/save")
+    public String save(@ModelAttribute("usuario") Usuario usuario, BindingResult result, Model model, RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            // Si hay errores en el formulario, vuelve a mostrar el formulario
+            model.addAttribute("roles", rolService.ObtenerTodos()); // Recargar roles
+            model.addAttribute("estado", estadoServices.buscarPorId(2)); // Estado con ID 1
+            model.addAttribute("error", "Usuario no creado por un error inesperado");
+            return "Usuario/create"; // Vista de creación del usuario
+        }
+
+        // Asignar el estado automáticamente
+      //  Optional<Estado> estado = estadoServices.buscarPorId(1); // Obtener el estado con ID 1
+        //usuario.setEstado(estado.orElse(null)); // Asignar el estado al usuario
+
+        // Asignar el estado automáticamente
+        Optional<Estado> estado = estadoServices.buscarPorId(1); // Obtener el estado con ID 1
+
+      // Verificar si el estado está presente antes de asignarlo
+        if (estado.isPresent()) {
+            usuario.setEstado(estado.get()); // Asignar el estado al usuario
+        } else {
+            // Manejar el caso en que el estado no se encuentra, si es necesario
+            // Por ejemplo, puedes lanzar una excepción o asignar un estado por defecto
+            // throw new IllegalStateException("Estado con ID 1 no encontrado");
+            usuario.setEstado(null); // O cualquier otro manejo apropiado
+        }
+
+
+        // Crear o editar el usuario
+        usuarioService.crearOEditar(usuario);
+
+        // Agregar un mensaje de éxito y redirigir a la vista
+        attributes.addFlashAttribute("msg", "Usuario creado correctamente");
+        return "redirect:/Proyectos"; // Redirigir a la página de proyectos
     }
 
 

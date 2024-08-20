@@ -48,7 +48,7 @@ public class Usuario {
     }
 
     public void setCorreo(String correo) {
-        correo = correo;
+        this.correo = correo;
     }
 
     public String getContraseña() {

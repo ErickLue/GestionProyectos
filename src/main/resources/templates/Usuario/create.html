@@ -11,13 +11,23 @@
   <input type="text" th:field="*{nombre}" id="nombre" name="nombre" />
   <br/>
 
+  <label for="correo">Correo Electrónico:</label>
+  <input type="email" th:field="*{correo}" id="correo" name="correo" />
+  <br/>
+
+  <label for="contraseña">Contraseña:</label>
+  <input type="password" th:field="*{contraseña}" id="contraseña" name="contraseña" />
+  <br/>
+
   <label for="rol">Rol:</label>
   <select th:field="*{rol}" id="rol" name="rol">
-    <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}"></option>
+    <option th:each="rol : ${roles}" th:value="${rol.rol_id}" th:text="${rol.nombre}"></option>
   </select>
   <br/>
 
-  <input type="submit" value="Guardar" />
+  <!-- Botón para guardar los datos -->
+  <button type="submit">Guardar</button>
+
 </form>
 
 <div th:if="${Error}">
@@ -28,7 +38,5 @@
   <p th:text="${msg}"></p>
 </div>
 
-<!-- Enlace para crear un nuevo login -->
-<a href="#" th:href="@{/login/create}">Crear un nuevo login</a>
 </body>
 </html>
