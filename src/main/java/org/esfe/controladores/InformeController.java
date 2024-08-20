@@ -6,7 +6,10 @@ import org.esfe.modelos.Informe;
 import org.esfe.modelos.Miembro;
 import org.esfe.modelos.Proyecto;
 import org.esfe.servicios.implementaciones.InformeService;
+import org.esfe.servicios.interfaces.IEstadoServices;
 import org.esfe.servicios.interfaces.IInformeServices;
+import org.esfe.servicios.interfaces.IProyectoService;
+import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +30,15 @@ import java.util.stream.IntStream;
 public class InformeController {
     @Autowired
     private IInformeServices informeServices;
+    @Autowired
+    private IEstadoServices estadoServices;
+    @Autowired
+    private IProyectoService proyectoService;
+
+    @Autowired
+    private IUsuarioService usuarioService;
+
+
 
     @GetMapping
     public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
@@ -48,17 +60,25 @@ public class InformeController {
         return "informe/index";
     }
     @GetMapping("/create")
-    public String create(Informe  informe ){ return "informe/create"; }
+    public String create(Informe  informe, Model model )
+    {
+        model.addAttribute("estados", estadoServices.ObtenerTodos());
+        model.addAttribute("proyectos", proyectoService.ObtenerTodos());
+        model.addAttribute("usuarios", usuarioService.ObtenerTodos());
+        return "informe/create";
+    }
 
     @PostMapping("/save")
     public String save(Informe  informe, BindingResult result, Model model, RedirectAttributes attributes){
         if(result.hasErrors()){
-            model.addAttribute(informe);
+            model.addAttribute("estados", estadoServices.ObtenerTodos());
+            model.addAttribute("proyectos", proyectoService.ObtenerTodos());
+            model.addAttribute("usuarios", usuarioService.ObtenerTodos());
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
-            return "informes/create";}
+            return "informe/create";}
 
         informeServices.crearOEditar(informe);
-        attributes.addFlashAttribute("msg", "Miembro creado correctamente");
+        attributes.addFlashAttribute("msg", "Informe creado correctamente");
         return "redirect:/informes";
     }
 
@@ -66,15 +86,15 @@ public class InformeController {
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model){
         Informe informe = informeServices.buscarPorId(id).get();
-        model.addAttribute("informes", informe);
-        return "informes/details";
+        model.addAttribute("informe", informe);
+        return "informe/details";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
         Informe informe = informeServices.buscarPorId(id).get();
         model.addAttribute("informe", informe);
-        return "informes/edit";
+        return "informe/edit";
     }
 
     @GetMapping("/remove/{id}")
@@ -84,7 +104,7 @@ public class InformeController {
         return  "informe/delete";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(Informe informe, RedirectAttributes attributes){
         informeServices.eliminarPorid(informe.getInforme_id());
         attributes.addFlashAttribute("msg","Informe liminado");
