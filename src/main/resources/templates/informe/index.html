@@ -4,20 +4,20 @@
 
 <div layout:fragment="content">
     <div th:if="${msg != null}">
-        <script>
+        <script th:inline="javascript">
             Swal.fire({
                 title: "Confirmación",
-                text: '[[${msg}]]',
+                text: /*[[${msg}]]*/ 'Mensaje aquí',
                 icon: "success"
             });
         </script>
     </div>
 
     <div th:if="${error != null}">
-        <script>
+        <script th:inline="javascript">
             Swal.fire({
                 title: "Error",
-                text: '[[${error}]]',
+                text: /*[[${error}]]*/ 'Error aquí',
                 icon: "error"
             });
         </script>
@@ -33,7 +33,7 @@
             <th>Informe ID</th>
             <th>Nombre</th>
             <th>Fecha de inicio</th>
-            <th>Fecha de finalizacion</th>
+            <th>Fecha de finalización</th>
             <th>Estado</th>
             <th>Proyecto</th>
             <th>Usuario</th>
@@ -47,9 +47,9 @@
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.fechaInicio}"></td>
             <td th:text="${item.fechaFin}"></td>
-            <td th:text="${item.estado.nombre}"></td>
-            <td th:text="${item.proyecto.nombre}"></td>
-            <td th:text="${item.usuario.nombre}"></td>
+            <td th:text="${item.estado != null ? item.estado.nombre : 'Sin estado'}"></td>
+            <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
+            <td th:text="${item.usuario != null ? item.usuario.nombre : 'Sin usuario'}"></td>
             <td>
                 <a th:href="@{/informes/details/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/informes/edit/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-info">Editar</a>
@@ -59,11 +59,15 @@
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
+    <nav aria-label="Page navigation example" style="margin-top:50px;">
+        <ul class="pagination" style="gap:5px">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{/informes?page=${pageNumber}}" th:text="${pageNumber}"></a>
+                <a th:class="${pageNumber == (currentPage ?: 0) + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                   th:href="@{|/informes?page=${pageNumber}|}"
+                   th:text="${pageNumber}">
+                </a>
             </li>
         </ul>
     </nav>
 </div>
+</html>

@@ -4,7 +4,7 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1>Crear nuevo informe</h1>
+    <h1>Editar informe</h1>
     <form th:action="@{/informes/save}" th:object="${informe}" method="post">
         <input type="hidden" th:field="*{informe_id}">
         <div class="row">
@@ -19,8 +19,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="fechaInicio">Fecha de inicio</label>
-                    <dd class="col-sm-10" th:text="${#dates.format(informe.fechaInicio, 'yyyy-MM-dd')}"></dd>
-                    <input type="text" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
+                    <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
                 </div>
             </div>
         </div>
@@ -28,8 +27,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="fechaFin">Fecha de finalización</label>
-                    <dd class="col-sm-10" th:text="${#dates.format(informe.fechaFin, 'yyyy-MM-dd')}"></dd>x
-                    <input type="text" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
+                    <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
                 </div>
             </div>
         </div>
