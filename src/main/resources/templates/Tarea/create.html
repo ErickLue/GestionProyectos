@@ -53,11 +53,13 @@
 
             <div class="w-50">
                 <div class="form-group">
-                    <label for="prioridad" class="fw-bold" style="font-size:14px">Prioridad</label>
-                    <input type="text" class="form-control" th:field="*{prioridad}" id="prioridad" placeholder="Indique la prioridad de la tarea" required>
+                    <label for="prioridad">Prioridad</label>
+                    <select class="form-control fw-bold"  style="font-size:14px" th:field="*{prioridad}" id="prioridad" required>
+                        <option value="" disabled selected>Seleccione una prioridad</option>
+                        <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}"></option>
+                    </select>
                 </div>
             </div>
-
             <!-- Campos de Fechas -->
             <div class="w-50">
                 <div class="form-group">

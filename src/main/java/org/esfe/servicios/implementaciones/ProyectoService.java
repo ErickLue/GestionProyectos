@@ -39,6 +39,10 @@ public class ProyectoService implements IProyectoService {
 
     @Override
     public void eliminarPorid(Integer proyectoId) {
-        proyectoRepository.deleteById(proyectoId);
+        Proyecto proyecto = proyectoRepository.findById(proyectoId)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+
+        proyectoRepository.delete(proyecto);
     }
 }

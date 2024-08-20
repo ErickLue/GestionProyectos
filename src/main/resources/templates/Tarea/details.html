@@ -51,6 +51,20 @@
                 <p class="form-control-static" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></p>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="proyecto" class="fw-bold">Proyecto:</label>
+                <p class="form-control-static" th:text="${tarea.proyecto.nombre}"></p>
+            </div>
+        </div>
+
+        <!-- Nuevo campo: Miembro del Equipo -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="miembroEquipo" class="fw-bold">Miembro del Equipo:</label>
+                <p class="form-control-static" th:text="${tarea.miembroEquipo.nombre}"></p>
+            </div>
+        </div>
         <div class="d-flex" style="gap:30px">
             <a th:href="@{/tareas/edit/{tarea_id} (tarea_id=${tarea.tarea_id}) }" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
             <a th:href="@{/tareas/remove/{tarea_id} (tarea_id=${tarea.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>

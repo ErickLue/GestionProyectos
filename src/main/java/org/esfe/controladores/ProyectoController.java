@@ -26,21 +26,28 @@ public class ProyectoController {
 
     @GetMapping
     public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1) - 1;//Si no esta seteado se asigna 0
-        int pageSize = size.orElse(5); //Tamaño de la pagina se asigna 5
-        Pageable pageable = (Pageable) PageRequest.of(currentPage, pageSize);
+        int currentPage = page.orElse(1) - 1; // Si no está seteado, se asigna 0
+        int pageSize = size.orElse(5); // Tamaño de la página, se asigna 5
+        Pageable pageable = PageRequest.of(currentPage, pageSize);
 
         Page<Proyecto> proyectos = proyectoService.buscarTodosLospaginado(pageable);
-        model.addAttribute("proyectos", proyectos);
-        int totalPages = proyectos.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
+        if (proyectos != null && proyectos.hasContent()) {
+            model.addAttribute("proyectos", proyectos);
+            int totalPages = proyectos.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
+        } else {
+            model.addAttribute("error", "No se encontraron proyectos.");
         }
+
         return "Proyecto/index";
     }
+
+
 
     @GetMapping("/create")
     public String create(Proyecto proyecto) {

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -54,55 +55,62 @@ public class TareaController {
 
         return "tarea/index";
     }
-
-    @GetMapping("/create")
-    public String create(Tarea tarea, Model model) {
-        model.addAttribute("proyectos", proyectoService.ObtenerTodos());
-        model.addAttribute("miembros", miembroService.obtenerTodos()); // Cambié a ObtenerTodos()
-        return "tarea/create";
-    }
-
-    @PostMapping("/save")
-    public String save(Tarea tarea, BindingResult result, Model model, RedirectAttributes attributes) {
-        if (result.hasErrors()) {
+        @GetMapping("/create")
+        public String create(Tarea tarea, Model model) {
             model.addAttribute("proyectos", proyectoService.ObtenerTodos());
-            model.addAttribute("miembros", miembroService.obtenerTodos()); // Cambié a ObtenerTodos()
-            attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
+            model.addAttribute("miembros", miembroService.obtenerTodos());
+            model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
             return "tarea/create";
         }
 
-        tareaService.crearOEditar(tarea);
-        attributes.addFlashAttribute("msg", "Tarea creada correctamente.");
-        return "redirect:/tareas";
-    }
+        @PostMapping("/save")
+        public String save(Tarea tarea, BindingResult result, Model model, RedirectAttributes attributes) {
+            if (result.hasErrors()) {
+                model.addAttribute("proyectos", proyectoService.ObtenerTodos());
+                model.addAttribute("miembros", miembroService.obtenerTodos());
+                model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+                attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
+                return "tarea/create";
+            }
 
-    @GetMapping("/details/{id}")
-    public String details(@PathVariable("id") Integer id, Model model){
-        Tarea tarea = tareaService.buscarPorId(id).orElse(null);
-        model.addAttribute("tarea", tarea);
-        return "tarea/details";
-    }
+            tareaService.crearOEditar(tarea);
+            attributes.addFlashAttribute("msg", "Tarea creada correctamente.");
+            return "redirect:/tareas";
+        }
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model){
-        Tarea tarea = tareaService.buscarPorId(id).orElse(null);
-        model.addAttribute("tarea", tarea);
-        model.addAttribute("proyectos", proyectoService.ObtenerTodos()); // Cambié a ObtenerTodos()
-        model.addAttribute("miembros", miembroService.obtenerTodos()); // Cambié a ObtenerTodos()
-        return "tarea/edit";
-    }
+        @GetMapping("/edit/{id}")
+        public String edit(@PathVariable("id") Integer id, Model model){
+            Tarea tarea = tareaService.buscarPorId(id).orElse(null);
+            model.addAttribute("tarea", tarea);
+            model.addAttribute("proyectos", proyectoService.ObtenerTodos());
+            model.addAttribute("miembros", miembroService.obtenerTodos());
+            model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+            return "tarea/edit";
+        }
 
-    @GetMapping("/remove/{id}")
-    public String remove(@PathVariable("id") Integer id, Model model){
-        Tarea tarea = tareaService.buscarPorId(id).orElse(null);
-        model.addAttribute("tarea", tarea);
-        return "tarea/delete";
-    }
+        // Método para obtener las prioridades ordenadas
+        private List<String> obtenerPrioridadesOrdenadas() {
+            return Arrays.asList("Alta", "Intermedia", "Baja");
+        }
 
-    @PostMapping("/delete")
-    public String delete(Tarea tarea, RedirectAttributes attributes){
-        tareaService.eliminarPorid(tarea.getTarea_id());
-        attributes.addFlashAttribute("msg", "Tarea ha sido eliminada correctamente");
-        return "redirect:/tareas";
+        @GetMapping("/details/{id}")
+        public String details(@PathVariable("id") Integer id, Model model){
+            Tarea tarea = tareaService.buscarPorId(id).orElse(null);
+            model.addAttribute("tarea", tarea);
+            return "tarea/details";
+        }
+
+        @GetMapping("/remove/{id}")
+        public String remove(@PathVariable("id") Integer id, Model model){
+            Tarea tarea = tareaService.buscarPorId(id).orElse(null);
+            model.addAttribute("tarea", tarea);
+            return "tarea/delete";
+        }
+
+        @PostMapping("/delete")
+        public String delete(Tarea tarea, RedirectAttributes attributes){
+            tareaService.eliminarPorid(tarea.getTarea_id());
+            attributes.addFlashAttribute("msg", "Tarea ha sido eliminada correctamente");
+            return "redirect:/tareas";
+        }
     }
-}

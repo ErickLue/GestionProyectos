@@ -19,26 +19,33 @@ public class Proyecto {
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
 
-    @NotBlank(message = "La descripcion es requerido")
+    @NotBlank(message = "La descripcion es requerida")
     private String descripcion;
 
     @NotNull(message = "El presupuesto es requerido")
     private Double presupuesto;
 
-    @NotBlank(message = "La prioridad es requerido")
+    @NotBlank(message = "La prioridad es requerida")
     private String prioridad;
 
-    @NotNull(message = "La fecha de inicio es requerido")
+    @NotNull(message = "La fecha de inicio es requerida")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
 
-    @NotNull(message = "La fecha final es requerido")
+    @NotNull(message = "La fecha final es requerida")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Estado> estados = new HashSet<>();
 
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Informe> informes = new HashSet<>();
+
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Tarea> tareas = new HashSet<>(); // Nueva relación con Tarea
+
+    // Getters y Setters
 
     public Integer getProyecto_id() {
         return proyecto_id;
@@ -80,15 +87,15 @@ public class Proyecto {
         this.prioridad = prioridad;
     }
 
-    public @NotNull(message = "La fecha de inicio es requerido") Date getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(@NotNull(message = "La fecha de inicio es requerido") Date fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public @NotNull(message = "La fecha final es requerido") Date getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
@@ -102,5 +109,21 @@ public class Proyecto {
 
     public void setEstados(Set<Estado> estados) {
         this.estados = estados;
+    }
+
+    public Set<Informe> getInformes() {
+        return informes;
+    }
+
+    public void setInformes(Set<Informe> informes) {
+        this.informes = informes;
+    }
+
+    public Set<Tarea> getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(Set<Tarea> tareas) {
+        this.tareas = tareas;
     }
 }
