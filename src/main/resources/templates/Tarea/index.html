@@ -31,32 +31,31 @@
     <!-- Tabla de Tareas -->
     <table class="custom-table mt-3">
         <thead>
-        <tr class="head">
-            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Id</th>
+        <tr class="head" style="border-radius: 10px 0 0 10px; height: 35px;">
             <th class="custom-th">Nombre</th>
             <th class="custom-th">Descripción</th>
             <th class="custom-th">Proyecto</th>
-            <th class="custom-th">Miembro del Equipo</th>
-            <th class="custom-th">Estado Tarea</th>
+            <th class="custom-th">Miembro</th>
+            <!-- <th class="custom-th">Estado Tarea</th>-->
             <th class="custom-th">Prioridad</th>
-           <!-- <th class="custom-th">Fecha Inicio</th>
-            <th class="custom-th">Fecha Progreso</th>
-            <th class="custom-th">Fecha Fin</th> -->
+            <th class="custom-th">Fecha Inicio</th>
+            <!-- <th class="custom-th">Fecha Progreso</th>-->
+            <th class="custom-th">Fecha Fin</th>
             <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
         </tr>
         </thead>
         <tbody>
         <tr class="tbody" th:each="item : ${tareas}">
-            <td th:text="${item.tarea_id}"></td>
+            <!--<td th:text="${item.tarea_id}"></td>-->
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
             <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td>
-            <td th:text="${item.estadoTarea}"></td>
+            <!--<td th:text="${item.estadoTarea}"></td>-->
             <td th:text="${item.prioridad}"></td>
-            <!-- <td th:text="${item.fechaInicio}"></td>
-            <td th:text="${item.fechaProgreso}"></td>
-            <td th:text="${item.fechaFin}"></td> -->
+            <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+            <!-- <td th:text="${item.fechaProgreso}"></td>-->
+            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
             <td>
                 <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a> |
                 <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a> |
