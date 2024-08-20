@@ -4,63 +4,62 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-
-    <h1>Editar tarea</h1>
+    <div class="d-flex w-100 py-3 justify-content-center align-items-center vh-100">
+        <div class="d-flex w-100 h-100" style=" border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 50%">
+                <a th:href="@{/tareas}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+                <img style="width: 400px; object-fit:cover" th:src="@{/assets/img/4752968.jpg}">
+            </div>
+            <div style="width: 50%;">
+    <h5 class="card-title">Editar tarea</h5>
     <form th:action="@{/tareas/save}" th:object="${tarea}" method="post">
         <input type="hidden" th:field="*{tarea_id}">
-
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre" class="fw-bold" style="font-size:14px">Nombre:</label>
                     <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre de la tarea" required>
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <textarea class="form-control" th:field="*{descripcion}" id="descripcion" placeholder="Escriba la descripción de la tarea" required></textarea>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="estadoTarea">Estado</label>
+                    <label for="estadoTarea" class="fw-bold" style="font-size:14px">Estado:</label>
                     <input type="text" class="form-control" th:field="*{estadoTarea}" id="estadoTarea" placeholder="Escriba el estado de la tarea" required>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12 mt-2">
                 <div class="form-group">
-                    <label for="prioridad">Prioridad</label>
+                    <label for="descripcion" class="fw-bold" style="font-size:14px">Descripción:</label>
+                    <textarea class="form-control" th:field="*{descripcion}" id="descripcion" placeholder="Escriba la descripción de la tarea" required></textarea>
+                </div>
+            </div>
+            <div class="col-md-6 mt-2">
+                <div class="form-group">
+                    <label for="prioridad" class="fw-bold" style="font-size:14px">Prioridad:</label>
                     <input type="text" class="form-control" th:field="*{prioridad}" id="prioridad" placeholder="Escriba la prioridad de la tarea" required>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-6 mt-2">
                 <div class="form-group">
-                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <label for="fechaInicio" class="fw-bold" style="font-size:14px">Fecha de Inicio:</label>
                     <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-6 mt-2">
                 <div class="form-group">
-                    <label for="fechaProgreso">Fecha de Progreso</label>
+                    <label for="fechaProgreso" class="fw-bold" style="font-size:14px">Fecha de Progreso:</label>
                     <input type="date" class="form-control" th:field="*{fechaProgreso}" id="fechaProgreso" required>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-6 mt-2">
                 <div class="form-group">
-                    <label for="fechaFin">Fecha de Fin</label>
+                    <label for="fechaFin" class="fw-bold" style="font-size:14px">Fecha de Fin:</label>
                     <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mt-2">
                 <div class="form-group">
-                    <label for="proyecto">Proyecto</label>
+                    <label for="proyecto" class="fw-bold" style="font-size:14px">Proyecto:</label>
                     <select class="form-control" th:field="*{proyecto.proyecto_id}" id="proyecto" required>
                         <option th:each="proyecto : ${proyectos}"
                                 th:value="${proyecto.proyecto_id}"
@@ -68,10 +67,9 @@
                     </select>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-6 mt-2">
                 <div class="form-group">
-                    <label for="miembroEquipo">Miembro del Equipo</label>
+                    <label for="miembroEquipo" class="fw-bold" style="font-size:14px">Miembro del Equipo:</label>
                     <select class="form-control" th:field="*{miembroEquipo.miembroEquipo_id}" id="miembroEquipo" required>
                         <option th:each="miembro : ${miembros}"
                                 th:value="${miembro.miembroEquipo_id}"
@@ -79,13 +77,10 @@
                     </select>
                 </div>
             </div>
-
-
         </div>
-
-        <hr>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button> |
-        <a th:href="@{/tareas}">Regresar</a>
+        <button type="submit" class="custom-btn w-100 primary ripple mt-4">Guardar cambios</button>
     </form>
+            </div>
+        </div>
+    </div>
 </div>
-x

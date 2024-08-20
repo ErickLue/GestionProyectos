@@ -4,40 +4,48 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1>Eliminar tarea</h1>
-    <h3>¿Esta seguro que desea eliminar este registro?</h3>
-    <div>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="d-flex" style="width: 50rem; border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 25rem;">
+                <a th:href="@{/tareas}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+                <img style="width: 350px; object-fit:cover" th:src="@{/assets/img/3024051.jpg}">
+            </div>
+            <div style="width: 25rem;">
+                <h6 class="text-center">¿Esta seguro que desea eliminar este registro?</h6>
+                <div>
         <hr/>
         <dl class="row">
-            <dt class="col-sm-2">ID</dt>
-            <dd class="col-sm-10" th:text="${tarea.tarea_id}"></dd>
+           <!-- <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9" th:text="${tarea.tarea_id}"></dd> -->
 
-            <dt class="col-sm-2">Nombre</dt>
-            <dd class="col-sm-10" th:text="${tarea.nombre}"></dd>
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9" th:text="${tarea.nombre}"></dd>
 
-            <dt class="col-sm-2">Descripción</dt>
-            <dd class="col-sm-10" th:text="${tarea.descripcion}"></dd>
+           <!-- <dt class="col-sm-3">Descripción:</dt>
+            <dd class="col-sm-9" th:text="${tarea.descripcion}"></dd>
 
-            <dt class="col-sm-2">Estado</dt>
-            <dd class="col-sm-10" th:text="${tarea.estadoTarea}"></dd>
+            <dt class="col-sm-3">Estado:</dt>
+            <dd class="col-sm-9" th:text="${tarea.estadoTarea}"></dd>
 
-            <dt class="col-sm-2">Prioridad</dt>
-            <dd class="col-sm-10" th:text="${tarea.prioridad}"></dd>
+            <dt class="col-sm-3">Prioridad:</dt>
+            <dd class="col-sm-9" th:text="${tarea.prioridad}"></dd>
 
-            <dt class="col-sm-2">Fecha de Inicio</dt>
-            <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaInicio, 'yyyy-MM-dd')}"></dd>
+            <dt class="col-sm-3">Fecha de Inicio:</dt>
+            <dd class="col-sm-9" th:text="${#dates.format(tarea.fechaInicio, 'yyyy-MM-dd')}"></dd>
 
-            <dt class="col-sm-2">Fecha de Progreso</dt>
-            <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaProgreso, 'yyyy-MM-dd')}"></dd>
+            <dt class="col-sm-3">Fecha de Progreso:</dt>
+            <dd class="col-sm-9" th:text="${#dates.format(tarea.fechaProgreso, 'yyyy-MM-dd')}"></dd>
 
-            <dt class="col-sm-2">Fecha de Fin</dt>
-            <dd class="col-sm-10" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></dd>
+            <dt class="col-sm-3">Fecha de Fin:</dt>
+            <dd class="col-sm-9" th:text="${#dates.format(tarea.fechaFin, 'yyyy-MM-dd')}"></dd> -->
         </dl>
 
         <form th:action="@{/tareas/delete}" method="post">
             <input type="hidden" name="tarea_id" th:value="${tarea.tarea_id}">
-            <input type="submit" value="Eliminar" class="btn btn-danger">
-            <a th:href="@{/tareas}" class="btn btn-secondary">Regresar</a>
+            <input type="submit" value="Eliminar" class="w-100 custom-btn ripple danger">
         </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
