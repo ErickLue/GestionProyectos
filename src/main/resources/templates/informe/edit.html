@@ -1,20 +1,29 @@
+<!DOCTYPE html>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layouts/_mainLayout">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Informe</title>
+</head>
+
+<body>
 <div layout:fragment="content">
     <h1>Editar informe</h1>
     <form th:action="@{/informes/save}" th:object="${informe}" method="post">
         <input type="hidden" th:field="*{informe_id}">
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del miembro" required>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del informe" required>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -23,6 +32,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -31,32 +41,53 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="estado">Estado ID</label>
-                    <input type="text" class="form-control" th:field="*{estado}" id="estado" required>
+                    <label for="estado">Estado</label>
+                    <select class="form-control" th:field="*{estado}" id="estado">
+                        <option value="" disabled>Seleccione un estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
+                    </select>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="proyecto">Proyecto ID</label>
-                    <input type="text" class="form-control" th:field="*{proyecto}" id="proyecto" required>
+                    <label for="proyecto">Proyecto</label>
+                    <select class="form-control" th:field="*{proyecto}" id="proyecto">
+                        <option value="" disabled>Seleccione un proyecto</option>
+                        <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
+                    </select>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="usuario">Usuario ID</label>
-                    <input type="text" class="form-control" th:field="*{usuario}" id="usuario" required>
+                    <label for="usuario">Usuario</label>
+                    <select class="form-control" th:field="*{usuario}">
+                        <option value="" disabled selected>Seleccione un usuario</option> <!-- Cambié "proyecto" a "usuario" -->
+                        <option th:each="usuario : ${usuarios}"
+                                th:value="${usuario.usuario_id}"
+                                th:text="${usuario.nombre}"></option>
+                    </select>
                 </div>
             </div>
         </div>
+
         <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button> |
-        <a th:href="@{/informes}">Regresar</a>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Guardar</button> |
+                <a th:href="@{/informes}" class="btn btn-secondary">Regresar</a>
+            </div>
+        </div>
     </form>
 </div>
+</body>
+</html>

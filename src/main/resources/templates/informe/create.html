@@ -3,6 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layouts/_mainLayout">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Informe</title>
+</head>
+
+<body>
+
 <div layout:fragment="content">
     <h1>Crear nuevo informe</h1>
     <form th:action="@{/informes/save}" th:object="${informe}" method="post">
@@ -41,7 +48,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+
+        <div class="row">
+          <div class="col-md-6">
             <div class="form-group">
                 <label for="proyecto">Proyecto</label>
                 <select  class="form-control" th:field="*{proyecto}">
@@ -49,20 +58,29 @@
                     <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
                 </select>
             </div>
+          </div>
         </div>
 
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="usuario">Usuario</label>
-                <select  class="form-control" th:field="*{usuario}">
-                    <option value="" disabled selected>Seleccione un proyecto</option>
-                    <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
-                </select>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="usuario">Usuario</label>
+                    <select class="form-control" th:field="*{usuario}">
+                        <option value="" disabled selected>Seleccione un usuario</option> <!-- Cambié "proyecto" a "usuario" -->
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
+                    </select>
+                </div>
             </div>
         </div>
+
         <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button> |
-        <a th:href="@{/informes}">Regresar</a>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Guardar</button> |
+                <a th:href="@{/informes}">Regresar</a>
+            </div>
+        </div>
     </form>
 </div>
+</body>
+</html>
