@@ -39,6 +39,7 @@ public class ProyectoController {
                         .boxed()
                         .collect(Collectors.toList());
                 model.addAttribute("pageNumbers", pageNumbers);
+                model.addAttribute("currentPage",currentPage);
             }
         } else {
             model.addAttribute("error", "No se encontraron proyectos.");
@@ -46,8 +47,6 @@ public class ProyectoController {
 
         return "Proyecto/index";
     }
-
-
 
     @GetMapping("/create")
     public String create(Proyecto proyecto) {

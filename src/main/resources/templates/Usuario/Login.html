@@ -3,25 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.6.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body>
-<h1>Login</h1>
-<form th:action="@{/usuarios/login}" method="post">
-    <label for="correo">Correo Electrónico:</label>
-    <input type="email" id="correo" name="correo" required>
-    <br>
-    <label for="contraseña">Contraseña:</label>
-    <input type="password" id="contraseña" name="contraseña" required>
-    <br>
-    <button type="submit">Iniciar Sesión</button>
-</form>
-
-<p th:if="${error}" th:text="${error}"></p>
-
-<!-- Enlace para crear un nuevo usuario -->
-<p>
-    <a href="#" th:href="@{/usuarios/create}">Crear Nuevo Usuario</a>
-</p>
-
+<body class="vw-100 vh-100">
+<style th:inline="text">
+    body{
+        background: url([[@{/assets/img/login.png}]])
+                    no-repeat center center fixed;
+    }
+</style>
+<div class="vw-100 vh-100 d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.5);">
+    <div class="d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.4);width:80vw;height:80vh;position:relative">
+        <img style="width: 250px; object-fit:cover;position:absolute; left: 150px;top:20px;border-bottom: 1px solid #e0e1dd" th:src="@{/assets/img/login3.png}">
+        <div style="width:350px;padding:50px; height: 400px;background:#fff;border-radius:50px" class="custom-box-shadow d-flex flex-column justify-content-center align-items-center">
+            <h3 class="fw-bold" style="color:#e76f51">Bienvenido</h3>
+            <form th:action="@{/usuarios/login}" method="post" class="w-100">
+                <div class="d-flex flex-column w-100">
+                    <label for="correo" class="fw-bold" style="font-size:12px;color:#6c757d">Correo Electrónico</label>
+                    <input placeholder="Ingresa tu correo" class="form-control" type="email" id="correo" name="correo" required>
+                </div>
+                <br>
+                <div class="d-flex flex-column w-100">
+                    <label for="contraseña" class="fw-bold" style="font-size:12px;color:#6c757d">Contraseña:</label>
+                    <input placeholder="Ingresa tu contraseña" class="form-control" type="password" id="contraseña" name="contraseña" required>
+                </div>
+                <button type="submit" class="custom-btn ripple primary w-100 mt-3">Iniciar Sesión</button>
+            </form>
+            <!-- <p th:if="${error}" th:text="${error}" style="color: #EE4E4E; font-weight: bold;"></p> -->
+            <div class="d-flex w-100 mt-3">
+                <p style="font-size:12px">¿No tienes una cuenta? </p><a style="font-size:12px" href="#" th:href="@{/usuarios/create}">Crear Nuevo Usuario</a>
+            </div>
+        </div>
+        <img style="width: 350px; object-fit:cover;position:absolute; right: 150px;bottom:0px" th:src="@{/assets/img/login-pana.png}">
+    </div>
+</div>
+<script th:inline="javascript">
+    /* Esto verifica si el atributo 'error' existe y lo muestra en un alert */
+    var error = [[${error}]];
+    if (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de autenticación',
+            text: error,
+            confirmButtonColor: '#e76f51'
+        });
+    }
+</script>
 </body>
 </html>

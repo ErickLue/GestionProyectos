@@ -190,3 +190,6 @@ color: white !important;
 .text-white:hover{
 color: #ACE1AF !important;
 }
+
+.custom-box-shadow{
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;}

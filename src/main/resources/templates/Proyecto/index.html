@@ -24,49 +24,49 @@
     </div>
 
     <h1>Listado de Proyectos</h1>
-    <a th:href="@{/Proyectos/create}" class="btn btn-outline-primary">Nuevo proyecto</a>
+    <a th:href="@{/Proyectos/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
 
-    <table class="table table-striped">
+    <table class="custom-table mt-3">
         <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Presupuesto: dólares</th>
-            <th>Prioridad</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Acciones</th>
+        <tr class="head">
+            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Nombre</th>
+            <th class="custom-th">Descripción</th>
+            <th class="custom-th">Presupuesto: (dólares)</th>
+            <th class="custom-th">Prioridad:</th>
+            <!-- <th>Fecha Inicio</th>
+            <th>Fecha Fin</th> -->
+            <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
         </tr>
         </thead>
-
         <tbody>
-        <tr th:each="item : ${proyectos}">
+        <tr class="tbody" th:each="item : ${proyectos}">
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.presupuesto}"></td>
             <td th:text="${item.prioridad}"></td>
-            <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
-            <td>
+           <!-- <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td> -->
             <ul>
                 <li th:each="estado : ${item.estados}" th:text="${estado.nombre}"></li>
             </ul>
         </td>
             <td>
-                <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="btn btn-outline-danger">Eliminar</a>
+                <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
+                <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+                <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
+    <nav aria-label="Page navigation example" style="margin-top:50px;">
+        <ul class="pagination" style="gap:5px">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a class="page-link" th:href="@{'/Proyectos?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
+                <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                   th:href="@{|/Proyectos?page=${pageNumber}|}"
+                   th:text="${pageNumber}">
+                </a>
             </li>
         </ul>
     </nav>
 </div>
-</html>

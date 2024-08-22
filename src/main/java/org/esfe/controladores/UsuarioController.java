@@ -22,7 +22,7 @@ public class UsuarioController {
 
     @GetMapping("/login")
     public String mostrarFormularioDeLogin() {
-        return "Usuario/login";
+        return "Usuario/Login";
     }
 
     @PostMapping("/login")
@@ -34,7 +34,6 @@ public class UsuarioController {
             model.addAttribute("error", "Correo o contraseña incorrectos");
             return "Usuario/login";
         }
-
     }
 
     @GetMapping("/create")
