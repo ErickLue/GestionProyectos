@@ -33,25 +33,32 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="estado">Estado ID</label>
-                    <input type="text" class="form-control" th:field="*{estado}" id="estado" required>
+                    <label for="estado">Estado</label>
+                    <select class="form-control" th:field="*{estado}">
+                        <option value="" disabled selected>Seleccione un Estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
+                    </select>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="proyecto">Proyecto ID</label>
-                    <input type="text" class="form-control" th:field="*{proyecto}" id="proyecto" required>
-                </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="proyecto">Proyecto</label>
+                <select  class="form-control" th:field="*{proyecto}">
+                    <option value="" disabled selected>Seleccione un proyecto</option>
+                    <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
+                </select>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="usuario">Usuario ID</label>
-                    <input type="text" class="form-control" th:field="*{usuario}" id="usuario" required>
-                </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <select  class="form-control" th:field="*{usuario}">
+                    <option value="" disabled selected>Seleccione un proyecto</option>
+                    <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
+                </select>
             </div>
         </div>
         <hr>

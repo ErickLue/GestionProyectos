@@ -52,13 +52,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="prioridad">Prioridad:</label>
-                    <input type="text" class="form-control" id="prioridad" th:field="*{prioridad}" placeholder="Ingrese la prioridad del proyecto" required>
-                </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="prioridad">Prioridad:</label>
+                <select class="form-control" th:field="*{prioridad}" id="prioridad" required>
+                    <option value="" disabled selected>Seleccione una prioridad</option>
+                    <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}"></option>
+                </select>
             </div>
         </div>
+    </div>
+
 
         <!-- Mensajes de error -->
         <div th:if="${#fields.hasErrors('*')}">
@@ -69,7 +73,7 @@
 
         <!-- Botones para guardar o cancelar -->
         <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button> |
+        <button type="submit" class="btn btn-primary">Guardar</button>
         <a th:href="@{/Proyectos}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

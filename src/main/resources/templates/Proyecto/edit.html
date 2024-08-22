@@ -34,7 +34,10 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="prioridad">Prioridad</label>
-                    <input type="text" class="form-control" th:field="*{prioridad}" id="prioridad" placeholder="Escriba la prioridad de la tarea" required>
+                    <select class="form-control" th:field="*{prioridad}" id="prioridad" required>
+                        <option value="" disabled selected>Seleccione una prioridad</option>
+                        <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}"></option>
+                    </select>
                 </div>
             </div>
 
