@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.w3.org/1999/xhtml">
+      layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
     <div th:if="${msg != null}">
@@ -47,7 +49,7 @@
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.fechaInicio}"></td>
             <td th:text="${item.fechaFin}"></td>
-            <td th:text="${item.estado != null ? item.estado.nombre : 'Sin estado'}"></td>
+            <td th:text="${item.estado?.nombre ?: 'Sin estado'}"></td>
             <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
             <td th:text="${item.usuario != null ? item.usuario.nombre : 'Sin usuario'}"></td>
             <td>
@@ -63,11 +65,12 @@
         <ul class="pagination" style="gap:5px">
             <li class="page-item" th:each="pageNumber : ${pageNumbers}">
                 <a th:class="${pageNumber == (currentPage ?: 0) + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
-                   th:href="@{|/informes?page=${pageNumber}|}"
+                   th:href="@{/informes?page=${pageNumber}}"
                    th:text="${pageNumber}">
                 </a>
             </li>
         </ul>
     </nav>
 </div>
+
 </html>

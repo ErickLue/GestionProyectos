@@ -3,6 +3,7 @@ package org.esfe.controladores;
 import org.esfe.modelos.Miembro;
 import org.esfe.modelos.Proyecto;
 import org.esfe.modelos.Tarea;
+import org.esfe.servicios.interfaces.IEstadoServices;
 import org.esfe.servicios.interfaces.ITareaService;
 import org.esfe.servicios.interfaces.IProyectoService;
 import org.esfe.servicios.interfaces.IMiembroService;
@@ -31,6 +32,9 @@ public class TareaController {
 
     @Autowired
     private IProyectoService proyectoService;
+
+    @Autowired
+    private IEstadoServices estadoServices;
 
     @Autowired
     private IMiembroService miembroService;
@@ -75,6 +79,7 @@ public class TareaController {
     public String create(Tarea tarea, Model model) {
         model.addAttribute("proyectos", proyectoService.ObtenerTodos());
         model.addAttribute("miembros", miembroService.obtenerTodos());
+        model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
         return "tarea/create";
     }
@@ -84,6 +89,7 @@ public class TareaController {
         if (result.hasErrors()) {
             model.addAttribute("proyectos", proyectoService.ObtenerTodos());
             model.addAttribute("miembros", miembroService.obtenerTodos());
+            model.addAttribute("estados", estadoServices.ObtenerTodos());
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
             return "tarea/create";

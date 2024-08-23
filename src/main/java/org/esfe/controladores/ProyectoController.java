@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -75,10 +76,22 @@ public class ProyectoController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Proyecto proyecto, BindingResult result, Model model, RedirectAttributes attributes) {
+
+        if (proyecto.getFechaInicio() != null && proyecto.getFechaInicio().before(new Date())) {
+            result.rejectValue("fechaInicio", "error.proyecto", "La fecha de inicio no puede ser una fecha pasada");
+        }
+        if (proyecto.getFechaFin() != null && proyecto.getFechaFin().before(new Date())) {
+            result.rejectValue("fechaFin", "error.proyecto", "La fecha final no puede ser una fecha pasada");
+        }
+        if (proyecto.getFechaInicio() != null && proyecto.getFechaFin() != null && proyecto.getFechaFin().before(proyecto.getFechaInicio())) {
+            result.rejectValue("fechaFin", "error.proyecto", "La fecha final no puede ser anterior a la fecha de inicio");
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("proyecto", proyecto); // Asegúrate de que el objeto 'proyecto' esté en el modelo
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
             attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
+
             return "Proyecto/create"; // Redirige de nuevo a la vista de creación si hay errores
         }
 

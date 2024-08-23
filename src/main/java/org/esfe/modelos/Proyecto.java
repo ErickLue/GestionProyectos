@@ -36,8 +36,8 @@ public class Proyecto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
-    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Estado> estados = new HashSet<>();
+ //   @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+   // private Set<Estado> estados = new HashSet<>();
 
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Informe> informes = new HashSet<>();
@@ -101,14 +101,6 @@ public class Proyecto {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
-    }
-
-    public Set<Estado> getEstados() {
-        return estados;
-    }
-
-    public void setEstados(Set<Estado> estados) {
-        this.estados = estados;
     }
 
     public Set<Informe> getInformes() {

@@ -78,16 +78,6 @@ public class UsuarioController {
         // Asignar el estado automáticamente
         Optional<Estado> estado = estadoServices.buscarPorId(1); // Obtener el estado con ID 1
 
-      // Verificar si el estado está presente antes de asignarlo
-        if (estado.isPresent()) {
-            usuario.setEstado(estado.get()); // Asignar el estado al usuario
-        } else {
-            // Manejar el caso en que el estado no se encuentra, si es necesario
-            // Por ejemplo, puedes lanzar una excepción o asignar un estado por defecto
-            // throw new IllegalStateException("Estado con ID 1 no encontrado");
-            usuario.setEstado(null); // O cualquier otro manejo apropiado
-        }
-
 
         // Crear o editar el usuario
         usuarioService.crearOEditar(usuario);

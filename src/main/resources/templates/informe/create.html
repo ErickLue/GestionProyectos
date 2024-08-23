@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layouts/_mainLayout">
 
+<body>
 <div layout:fragment="content">
     <h1>Crear nuevo informe</h1>
     <form th:action="@{/informes/save}" th:object="${informe}" method="post">
@@ -14,6 +16,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -22,6 +25,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -30,6 +34,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -41,28 +46,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="proyecto">Proyecto</label>
-                <select  class="form-control" th:field="*{proyecto}">
-                    <option value="" disabled selected>Seleccione un proyecto</option>
-                    <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
-                </select>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="proyecto">Proyecto</label>
+                    <select class="form-control" th:field="*{proyecto}">
+                        <option value="" disabled selected>Seleccione un proyecto</option>
+                        <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
+                    </select>
+                </div>
             </div>
         </div>
 
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="usuario">Usuario</label>
-                <select  class="form-control" th:field="*{usuario}">
-                    <option value="" disabled selected>Seleccione un proyecto</option>
-                    <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
-                </select>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="usuario">Usuario</label>
+                    <select class="form-control" th:field="*{usuario}">
+                        <option value="" disabled selected>Seleccione un usuario</option>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
+                    </select>
+                </div>
             </div>
         </div>
+
         <hr>
         <button type="submit" class="btn btn-primary">Guardar</button> |
         <a th:href="@{/informes}">Regresar</a>
     </form>
 </div>
+</body>
+</html>
