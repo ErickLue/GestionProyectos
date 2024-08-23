@@ -32,7 +32,6 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Informe ID</th>
             <th>Nombre</th>
             <th>Fecha de inicio</th>
             <th>Fecha de finalización</th>
@@ -45,7 +44,6 @@
 
         <tbody>
         <tr th:each="item : ${informes}">
-            <td th:text="${item.informe_id}"></td>
             <td th:text="${item.nombre}"></td>
             <td th:text="${item.fechaInicio}"></td>
             <td th:text="${item.fechaFin}"></td>
