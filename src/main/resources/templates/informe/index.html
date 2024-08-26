@@ -45,8 +45,8 @@
         <tbody>
         <tr th:each="item : ${informes}">
             <td th:text="${item.nombre}"></td>
-            <td th:text="${item.fechaInicio}"></td>
-            <td th:text="${item.fechaFin}"></td>
+            <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
             <td th:text="${item.estado?.nombre ?: 'Sin estado'}"></td>
             <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
             <td th:text="${item.usuario != null ? item.usuario.nombre : 'Sin usuario'}"></td>
