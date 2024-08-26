@@ -49,9 +49,13 @@
                             <div class="w-50">
                                 <div class="form-group">
                                     <label for="estadoTarea" class="fw-bold" style="font-size:14px">Estado de la Tarea</label>
-                                    <input type="text" class="form-control" th:field="*{estadoTarea}" id="estadoTarea" placeholder="Indique el estado de la tarea" required>
+                                    <select class="form-control" th:field="*{estadoTarea}" id="estadoTarea" required>
+                                        <option value="" disabled selected>Seleccione el estado de la tarea</option>
+                                        <option th:each="estadoTarea: ${estadosTareas}" th:value="${estadoTarea}" th:text="${estadoTarea}"></option>
+                                    </select>
                                 </div>
                             </div>
+
                             <div class="w-50">
                                 <div class="form-group">
                                     <label for="prioridad" class="fw-bold" style="font-size:14px">Prioridad</label>
