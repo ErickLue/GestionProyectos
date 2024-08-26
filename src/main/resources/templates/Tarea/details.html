@@ -57,7 +57,12 @@
                 <p class="form-control-static" th:text="${tarea.proyecto.nombre}"></p>
             </div>
         </div>
-
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="estado" class="fw-bold">Estado:</label>
+                <dd class = "form-control-static" th:text="${tarea.estado.nombre}"></dd>
+            </div>
+        </div>
         <!-- Nuevo campo: Miembro del Equipo -->
         <div class="col-md-6">
             <div class="form-group">

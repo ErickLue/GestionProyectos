@@ -37,17 +37,25 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading text-white">Gestión de Proyectos</div>
-                    <a class="nav-link text-white" href="#">
+                    <a class="nav-link text-white" href="@{/proyectos}">
                         <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-list"></i></div>
                         Proyectos
                     </a>
                     <a class="nav-link text-white" th:href="@{/tareas}">
-                        <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-list-check"></i></i></div>
+                        <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-list-check"></i></div>
                         Tareas
                     </a>
                     <a class="nav-link text-white" th:href="@{/miembros}">
                         <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-users"></i></div>
                         Miembros
+                    </a>
+                    <a class="nav-link text-white" th:href="@{/informes}">
+                        <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-chart-bar"></i></div>
+                        Informes
+                    </a>
+                    <a class="nav-link text-white" th:href="@{/logout}">
+                        <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-right-from-bracket"></i></div>
+                        Cerrar Sesión
                     </a>
                 </div>
             </div>
@@ -69,11 +77,6 @@
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-muted">Copyright &copy; ESFE - Gestion de proyectos 2024</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp;amp; Conditions</a>
-                    </div>
                 </div>
             </div>
         </footer>

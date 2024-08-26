@@ -92,6 +92,9 @@ public class InformeController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("estados", estadoServices.ObtenerTodos());
+        model.addAttribute("proyectos", proyectoService.ObtenerTodos());
+        model.addAttribute("usuarios", usuarioService.ObtenerTodos());
         Informe informe = informeServices.buscarPorId(id).get();
         model.addAttribute("informe", informe);
         return "informe/edit";

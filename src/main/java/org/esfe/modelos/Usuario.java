@@ -3,6 +3,9 @@ package org.esfe.modelos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+
+import java.util.List;
+
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
@@ -10,22 +13,38 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer usuario_id;
 
-    @NotBlank (message = "El nombre es necesario")
-    private String nombre;
+    private int status;
 
     @NotBlank (message = "El correo electronico es necesario")
     private String correo;
 
+    @NotBlank (message = "El nombre es necesario")
+    private String nombre;
+
     @NotBlank (message = "La contraseña es necesaria")
     private String contraseña;
 
-    @ManyToOne
-    @JoinColumn(name = "estadoId")
-    private Estado estado;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_rol",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private List<Rol> Rol;
 
-    @ManyToOne
-    @JoinColumn(name = "rolId")
-    private Rol rol;
+    public @NotBlank(message = "El nombre es necesario") String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(@NotBlank(message = "El nombre es necesario") String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<org.esfe.modelos.Rol> getRol() {
+        return Rol;
+    }
+
+    public void setRol(List<org.esfe.modelos.Rol> rol) {
+        Rol = rol;
+    }
 
     public Integer getUsuario_id() {
         return usuario_id;
@@ -35,12 +54,12 @@ public class Usuario {
         this.usuario_id = usuario_id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getStatus() {
+        return status;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getCorreo() {
@@ -59,19 +78,4 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
 }

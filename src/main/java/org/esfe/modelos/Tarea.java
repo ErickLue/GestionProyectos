@@ -45,11 +45,20 @@ public class Tarea {
     private Proyecto proyecto;
 
     @ManyToOne
+    @JoinColumn(name = "estadoId")
+    private Estado estado;
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    @ManyToOne
     @JoinColumn(name = "miembroEquipoId")
     private Miembro miembroEquipo;
-//relacion
-    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Estado> estados = new HashSet<>();
 
     public Integer getTarea_id() {
         return tarea_id;
@@ -131,11 +140,4 @@ public class Tarea {
         this.miembroEquipo = miembroEquipo;
     }
 
-    public Set<Estado> getEstados() {
-        return estados;
-    }
-
-    public void setEstados(Set<Estado> estados) {
-        this.estados = estados;
-    }
-}
+ }

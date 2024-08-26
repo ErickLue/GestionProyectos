@@ -32,7 +32,7 @@
                 </div>
                 <button type="submit" class="custom-btn ripple primary w-100 mt-3">Iniciar Sesión</button>
             </form>
-             <p th:if="${error}" th:text="${error}" style="color: #EE4E4E; font-weight: bold;"></p>
+            <p th:if="${error}" th:text="${error}" style="color: #EE4E4E; font-weight: bold;"></p>
             <div class="d-flex w-100 mt-3">
                 <p style="font-size:12px">¿No tienes una cuenta? </p><a style="font-size:12px" href="#" th:href="@{/usuarios/create}">Crear Nuevo Usuario</a>
             </div>
@@ -41,14 +41,11 @@
     </div>
 </div>
 <script th:inline="javascript">
-    /* Esto verifica si el atributo 'error' existe y lo muestra en un alert */
-    var error = [[${error}]];
-    console.log(error)
-    if (error) {
+    if (window.location.search.includes("error")) {
         Swal.fire({
             icon: 'error',
             title: 'Error de autenticación',
-            text: error,
+            text: 'Credenciales incorrectas. Por favor, intenta de nuevo.',
             confirmButtonColor: '#e76f51'
         });
     }
