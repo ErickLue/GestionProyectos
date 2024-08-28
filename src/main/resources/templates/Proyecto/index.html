@@ -44,8 +44,8 @@
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.presupuesto}"></td>
             <td th:text="${item.prioridad}"></td>
-            <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
+            <!--<td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
 
             <td width="300px">
                 <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>

@@ -45,6 +45,11 @@ public class Proyecto {
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tarea> tareas = new HashSet<>(); // Nueva relación con Tarea
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id") // Ajusta según tu esquema
+    private Usuario usuario;
+
+
     // Getters y Setters
 
     public Integer getProyecto_id() {
@@ -117,5 +122,13 @@ public class Proyecto {
 
     public void setTareas(Set<Tarea> tareas) {
         this.tareas = tareas;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

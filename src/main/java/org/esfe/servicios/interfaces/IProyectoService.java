@@ -1,6 +1,7 @@
 package org.esfe.servicios.interfaces;
 
 import org.esfe.modelos.Proyecto;
+import org.esfe.modelos.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,5 +18,8 @@ public interface IProyectoService {
     Proyecto crearOEditar(Proyecto proyecto);
 
     void eliminarPorid(Integer proyectoId);
+
+    List<Proyecto> getProyectosByUsuario(Usuario usuario);
+
 }
 
