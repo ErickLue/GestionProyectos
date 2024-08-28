@@ -28,8 +28,8 @@
 
     <table class="custom-table mt-3">
         <thead>
-        <tr class="head">
-            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Nombre</th>
+        <tr class="head" style="border-radius: 10px 0 0 10px; height: 35px;">
+            <th class="custom-th">Nombre</th>
             <th class="custom-th">Descripción</th>
             <th class="custom-th">Presupuesto: (dólares)</th>
             <th class="custom-th">Prioridad:</th>
@@ -44,9 +44,8 @@
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.presupuesto}"></td>
             <td th:text="${item.prioridad}"></td>
-            <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
-
+            <!-- <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td> -->
             <td>
                 <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
                 <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>

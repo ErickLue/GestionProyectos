@@ -3,16 +3,34 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layouts/_mainLayout">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Proyecto</title>
+</head>
+<body>
 <div layout:fragment="content">
-
-    <h1>Crear Nuevo Proyecto</h1>
-
     <!-- Formulario para crear un nuevo proyecto -->
+    <div class="d-flex justify-content-center align-items-center vh-100 w-100 py-3">
+        <div class="d-flex w-100 h-100" style="width: 50rem; border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 50%;" class="d-flex flex-column">
+                <a th:href="@{/Proyectos}" class="d-flex align-items-center h-4" style="gap:10px">
+                    <i class="fa-solid fa-arrow-left"></i> Regresar
+                </a>
+                <div class="w-100 h-100 justify-content-center align-items-center">
+                    <img style="width: 400px; object-fit:cover" th:src="@{/assets/img/Add-files-rafiki.png}">
+                </div>
+            </div>
+            <div style="width: 50%;">
+                <div class="w-100">
+                    <h5 class="card-title">Agregar Proyecto</h5>
+                </div>
+                <div class="card-body mt-3">
     <form th:action="@{/Proyectos/save}" th:object="${proyecto}" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="nombre">Nombre del Proyecto:</label>
+                    <label for="nombre" class="fw-bold" style="font-size:14px">Nombre del Proyecto:</label>
                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Ingrese el nombre del proyecto" required>
                 </div>
             </div>
@@ -20,7 +38,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="descripcion">Descripción:</label>
+                    <label for="descripcion" class="fw-bold" style="font-size:14px">Descripción:</label>
                     <textarea class="form-control" id="descripcion" th:field="*{descripcion}" placeholder="Ingrese una descripción"></textarea>
                 </div>
             </div>
@@ -28,7 +46,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fechaInicio">Fecha de Inicio:</label>
+                    <label for="fechaInicio" class="fw-bold" style="font-size:14px">Fecha de Inicio:</label>
                     <input type="date" class="form-control" id="fechaInicio" th:field="*{fechaInicio}" required>
                 </div>
             </div>
@@ -36,7 +54,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fechaFin">Fecha de Fin:</label>
+                    <label for="fechaFin" class="fw-bold" style="font-size:14px">Fecha de Fin:</label>
                     <input type="date" class="form-control" id="fechaFin" th:field="*{fechaFin}">
                 </div>
             </div>
@@ -46,7 +64,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="presupuesto">Presupuesto:</label>
+                    <label for="presupuesto" class="fw-bold" style="font-size:14px">Presupuesto:</label>
                     <input type="number" class="form-control" id="presupuesto" th:field="*{presupuesto}" placeholder="Ingrese el presupuesto del proyecto" required>
                 </div>
             </div>
@@ -54,7 +72,7 @@
         <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="prioridad">Prioridad:</label>
+                <label for="prioridad" class="fw-bold" style="font-size:14px">Prioridad:</label>
                 <select class="form-control" th:field="*{prioridad}" id="prioridad" required>
                     <option value="" disabled selected>Seleccione una prioridad</option>
                     <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}"></option>
@@ -73,8 +91,12 @@
 
         <!-- Botones para guardar o cancelar -->
         <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a th:href="@{/Proyectos}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="custom-btn ripple info w-100">Guardar</button>
     </form>
 </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

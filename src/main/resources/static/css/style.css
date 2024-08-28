@@ -1,18 +1,18 @@
 :root {
-  --danger: #EE4E4E;
+  --danger: #B80000;
   --danger-light: #e07a5f;
 
-  --primary: #EF9C66;
-  --primary-ripple: #FD9B63;
+  --primary: #A76F6F;
+  --primary-ripple: #EAB2A0;
 
-  --info: #2C7865;
-  --info-hover: #50B498;
+  --info: #898121;
+  --info-hover: #B5C99A;
 
   --warning: #a68868;
   --warning-hover: #e3c39d;
 
-  --success:#FF8343;
-  --success-hover: #FD9B63;
+  --success:#7C9D96;
+  --success-hover: #A1CCD1;
 }
 
 .ripple {
@@ -180,7 +180,7 @@ padding: 0 20px 0 20px;
 }
 
 .custom-nav{
-background: #508D4E !important;
+background: #227C70  !important;
 }
 
 .text-white{

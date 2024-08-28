@@ -11,15 +11,17 @@
 <body class="vw-100 vh-100">
 <style th:inline="text">
     body{
-        background: url([[@{/assets/img/login.png}]])
+        background: url([[@{/assets/img/bg-login.png}]])
                     no-repeat center center fixed;
+
     }
 </style>
-<div class="vw-100 vh-100 d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.5);">
-    <div class="d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.4);width:80vw;height:80vh;position:relative">
-        <img style="width: 250px; object-fit:cover;position:absolute; left: 150px;top:20px;border-bottom: 1px solid #e0e1dd" th:src="@{/assets/img/login3.png}">
+<div class="vw-100 vh-100 d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.5)">
+    <img style="width:80vw;height:80vh; object-fit:cover;position:absolute; left: 137px;top:60px;filter: blur(4px);" th:src="@{/assets/img/config.png}">
+    <div class="d-flex justify-content-center align-items-center" style="background-color: rgba(255, 255, 255, 0.4);width:80vw;height:80vh;position:relative;border-radius:30px">
+        <!-- <img style="width: 250px; object-fit:cover;position:absolute; left: 180px;top:60px" th:src="@{/assets/img/Revenue-pana.png}"> -->
         <div style="width:350px;padding:50px; height: 400px;background:#fff;border-radius:50px" class="custom-box-shadow d-flex flex-column justify-content-center align-items-center">
-            <h3 class="fw-bold" style="color:#e76f51">Bienvenido</h3>
+            <h3 class="fw-bold" style="color:#3C6255">Bienvenido</h3>
             <form th:action="@{/login}" method="post" class="w-100">
                 <div class="d-flex flex-column w-100">
                     <label for="correo" class="fw-bold" style="font-size:12px;color:#6c757d">Correo Electrónico</label>
@@ -30,14 +32,11 @@
                     <label for="contraseña" class="fw-bold" style="font-size:12px;color:#6c757d">Contraseña:</label>
                     <input placeholder="Ingresa tu contraseña" class="form-control" type="password" id="contraseña" name="password" required>
                 </div>
-                <button type="submit" class="custom-btn ripple primary w-100 mt-3">Iniciar Sesión</button>
+                <button type="submit" class="custom-btn ripple success w-100 mt-3">Iniciar Sesión</button>
             </form>
             <p th:if="${error}" th:text="${error}" style="color: #EE4E4E; font-weight: bold;"></p>
-            <div class="d-flex w-100 mt-3">
-                <p style="font-size:12px">¿No tienes una cuenta? </p><a style="font-size:12px" href="#" th:href="@{/usuarios/create}">Crear Nuevo Usuario</a>
-            </div>
         </div>
-        <img style="width: 350px; object-fit:cover;position:absolute; right: 150px;bottom:0px" th:src="@{/assets/img/login-pana.png}">
+        <img style="width: 250px; object-fit:cover;position:absolute; right: 175px;bottom:0px" th:src="@{/assets/img/Analytics-pana.png}">
     </div>
 </div>
 <script th:inline="javascript">
@@ -46,7 +45,7 @@
             icon: 'error',
             title: 'Error de autenticación',
             text: 'Credenciales incorrectas. Por favor, intenta de nuevo.',
-            confirmButtonColor: '#e76f51'
+            confirmButtonColor: '#618264'
         });
     }
 </script>

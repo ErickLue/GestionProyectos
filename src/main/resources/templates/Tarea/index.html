@@ -53,7 +53,7 @@
             <!--<td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${item.fechaProgreso}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
-            <td>
+            <td width="300px">
                 <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
                 <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
                 <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>

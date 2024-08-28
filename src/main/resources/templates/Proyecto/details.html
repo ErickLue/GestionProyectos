@@ -4,32 +4,38 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1>Detalles de Proyectos</h1>
-    <div>
-        <hr/>
-        <dl class="row">
-            <dt class = "col-sm-2">ID</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.proyecto_id}"></dd>
-
-            <dt class = "col-sm-2">Nombre</dt>
+    <div class="d-flex w-100 justify-content-center py-3 align-items-center vh-100">
+        <div class="d-flex w-100 h-100" style="border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 50%">
+                <div class="row">
+            <a th:href="@{/Proyectos}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Nombre:</dt>
             <dd class = "col-sm-10" th:text="${proyecto.nombre}"></dd>
 
-            <dt class = "col-sm-2">Descripcion</dt>
+            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Descripción:</dt>
             <dd class = "col-sm-10" th:text="${proyecto.descripcion}"></dd>
 
-            <dt class = "col-sm-2">Presupuesto</dt>
+            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Presupuesto:</dt>
             <dd class = "col-sm-10" th:text="${proyecto.presupuesto}"></dd>
 
-            <dt class = "col-sm-2">Prioridad</dt>
+            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Prioridad:</dt>
             <dd class = "col-sm-10" th:text="${proyecto.prioridad}"></dd>
 
-            <dt class = "col-sm-2">Fecha Inicio</dt>
+            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Fecha Inicio:</dt>
             <dd class = "col-sm-10" th:text="${proyecto.fechaInicio}"></dd>
 
-            <dt class = "col-sm-2">Fecha Fin</dt>
+            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Fecha Fin:</dt>
             <dd class = "col-sm-10" th:text="${proyecto.fechaFin}"></dd>
         </dl>
-
-        <a th:href="@{/Proyectos}">Regresar</a>
+                    <div class="d-flex" style="gap:30px">
+                    <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id=${proyecto.proyecto_id}) }" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+                    <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id=${proyecto.proyecto_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+                </div>
+            </div>
+            </div>
+                <div style="width: 50%;" class="d-flex justify-content-center align-items-center">
+                    <img style="width: 450px; object-fit:cover" th:src="@{/assets/img/sapiens.png}">
+            </div>
+        </div>
     </div>
 </div>
