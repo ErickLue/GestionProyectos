@@ -32,10 +32,6 @@ public class Tarea {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
 
-    @NotNull(message = "La fecha de progreso es requerida")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fechaProgreso;
-
     @NotNull(message = "La fecha de fin es requerida")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
@@ -108,13 +104,13 @@ public class Tarea {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaProgreso() {
-        return fechaProgreso;
-    }
-
-    public void setFechaProgreso(Date fechaProgreso) {
-        this.fechaProgreso = fechaProgreso;
-    }
+//    public Date getFechaProgreso() {
+//        return fechaProgreso;
+//    }
+//
+//    public void setFechaProgreso(Date fechaProgreso) {
+//        this.fechaProgreso = fechaProgreso;
+//    }
 
     public Date getFechaFin() {
         return fechaFin;

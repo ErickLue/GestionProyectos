@@ -7,6 +7,8 @@ import org.esfe.servicios.interfaces.IEstadoServices;
 import org.esfe.servicios.interfaces.ITareaService;
 import org.esfe.servicios.interfaces.IProyectoService;
 import org.esfe.servicios.interfaces.IMiembroService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.domain.Sort.Direction;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -26,6 +29,8 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("/tareas")
 public class TareaController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TareaController.class);
 
     @Autowired
     private ITareaService tareaService;
@@ -70,6 +75,9 @@ public class TareaController {
             model.addAttribute("pageNumbers", pageNumbers);
             model.addAttribute("currentPage",currentPage);
         }
+
+        Map<String, Integer> porcentajePorEstado = tareaService.calcularPorcentajes();
+        model.addAttribute("porcentajePorEstado", porcentajePorEstado);
 
         return "tarea/index";
     }
@@ -143,5 +151,21 @@ public class TareaController {
         tareaService.eliminarPorid(tarea.getTarea_id());
         attributes.addFlashAttribute("msg", "Tarea ha sido eliminada correctamente");
         return "redirect:/tareas";
+    }
+
+    // Nuevo método para mostrar el porcentaje de tareas por estado
+    @GetMapping("/porcentaje")
+    public String mostrarPorcentajeDeTareas(Model model) {
+        try {
+            Map<String, Integer> porcentajePorEstado = tareaService.calcularPorcentajes();
+            model.addAttribute("porcentajePorEstado", porcentajePorEstado);
+            return "tarea/porcentaje";
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            logger.error("Error calculating percentages: {}", e.getMessage());
+            // You can also add a flash attribute to display an error message to the user
+            model.addAttribute("errorMessage", "Error calculating percentages. Please try again later.");
+            return "error"; // or return a specific error page
+        }
     }
 }

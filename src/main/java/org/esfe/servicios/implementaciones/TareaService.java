@@ -8,8 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TareaService implements ITareaService {
@@ -40,4 +40,20 @@ public class TareaService implements ITareaService {
     public void eliminarPorid(Integer tareaId) {
         TareaRepository.deleteById(tareaId);
     }
+
+    public Map<String, Integer> calcularPorcentajes() {
+        List<Tarea> tareas = TareaRepository.findAll();
+        long totalTareas = tareas.size();
+
+        if (totalTareas == 0) {
+            return Collections.emptyMap();
+        }
+
+        return tareas.stream()
+                .collect(Collectors.groupingBy(Tarea::getEstadoTarea, Collectors.collectingAndThen(
+                        Collectors.counting(),
+                        count -> (int) Math.round((double) count / totalTareas * 100)
+                )));
+    }
 }
+
