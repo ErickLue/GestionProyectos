@@ -56,6 +56,19 @@ public class Tarea {
     @JoinColumn(name = "miembroEquipoId")
     private Miembro miembroEquipo;
 
+    @Transient
+    private long diasLaborables;
+
+    // ...
+
+    public void setDiasLaborables(long diasLaborables) {
+        this.diasLaborables = diasLaborables;
+    }
+
+    public long getDiasLaborables() {
+        return diasLaborables;
+    }
+
     public Integer getTarea_id() {
         return tarea_id;
     }

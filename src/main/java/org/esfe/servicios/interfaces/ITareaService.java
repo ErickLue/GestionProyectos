@@ -21,4 +21,6 @@ public interface ITareaService  {
     void eliminarPorid(Integer tareaId);
 
     Map<String, Integer> calcularPorcentajes();
+
+    public long calcularDiasLaborables(Tarea tarea);
 }

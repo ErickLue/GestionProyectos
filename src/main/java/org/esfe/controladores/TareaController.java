@@ -65,6 +65,11 @@ public class TareaController {
                 })
                 .collect(Collectors.toList());
 
+
+        // Llamar al método calcularDiasLaborables del servicio TareaService
+        tareasOrdenadas.forEach(tarea -> tarea.setDiasLaborables(tareaService.calcularDiasLaborables(tarea)));
+
+
         model.addAttribute("tareas", new PageImpl<>(tareasOrdenadas, pageable, tareas.getTotalElements()));
 
         int totalPages = tareas.getTotalPages();
