@@ -81,6 +81,7 @@ public class TareaController {
         model.addAttribute("miembros", miembroService.obtenerTodos());
         model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+        model.addAttribute("estadosTareas", EstadoTarea());
         return "tarea/create";
     }
 
@@ -91,6 +92,7 @@ public class TareaController {
             model.addAttribute("miembros", miembroService.obtenerTodos());
             model.addAttribute("estados", estadoServices.ObtenerTodos());
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+            model.addAttribute("estadosTareas", EstadoTarea());
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
             return "tarea/create";
         }
@@ -106,13 +108,20 @@ public class TareaController {
         model.addAttribute("tarea", tarea);
         model.addAttribute("proyectos", proyectoService.ObtenerTodos());
         model.addAttribute("miembros", miembroService.obtenerTodos());
+        model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+        model.addAttribute("estadosTareas", EstadoTarea());
         return "tarea/edit";
     }
 
     // Método para obtener las prioridades ordenadas
     private List<String> obtenerPrioridadesOrdenadas() {
         return Arrays.asList("Alta","Intermedia", "Baja");
+    }
+
+    //Método para obtener las estado tarea
+    private List<String> EstadoTarea(){
+        return Arrays.asList("Pendiente","En Progreso","Completada","Cancelada");
     }
 
     @GetMapping("/details/{id}")

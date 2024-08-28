@@ -21,12 +21,15 @@
                     <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre de la tarea" required>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="estadoTarea" class="fw-bold" style="font-size:14px">Estado:</label>
-                    <input type="text" class="form-control" th:field="*{estadoTarea}" id="estadoTarea" placeholder="Escriba el estado de la tarea" required>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="estadoTarea" class="fw-bold" style="font-size:14px">Estado de la Tarea</label>
+                        <select class="form-control" th:field="*{estadoTarea}" id="estadoTarea" required>
+                            <option value="" disabled selected>Seleccione el estado de la tarea</option>
+                            <option th:each="estadoTarea: ${estadosTareas}" th:value="${estadoTarea}" th:text="${estadoTarea}"></option>
+                        </select>
+                    </div>
                 </div>
-            </div>
             <div class="col-md-12 mt-2">
                 <div class="form-group">
                     <label for="descripcion" class="fw-bold" style="font-size:14px">Descripción:</label>
@@ -37,8 +40,7 @@
                 <div class="form-group">
                     <label for="prioridad" class="fw-bold" style="font-size:14px">Prioridad:</label>
                     <select class="form-control" th:field="*{prioridad}" id="prioridad" required>
-                        <option value="" disabled selected>Seleccione una prioridad</option>
-                        <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}"></option>
+                        <option th:each="prioridad : ${prioridades}" th:value="${prioridad}" th:text="${prioridad}">Seleccione una prioridad</option>
                     </select>
                 </div>
             </div>
@@ -70,6 +72,18 @@
                     </select>
                 </div>
             </div>
+            <div class="w-50">
+                <div class="form-group">
+                    <label for="estado" class="fw-bold" style="font-size:14px">Estado</label>
+                    <select class="form-control" th:field="*{estado.estado_id}" id="estado">
+                        <option th:each="estado : ${estados}"
+                                th:value="${estado.estado_id}"
+                                th:text="${estado.nombre}">Seleccione el estado</option>
+                    </select>
+                </div>
+            </div>
+
+
             <div class="col-md-6 mt-2">
                 <div class="form-group">
                     <label for="miembroEquipo" class="fw-bold" style="font-size:14px">Miembro del Equipo:</label>
