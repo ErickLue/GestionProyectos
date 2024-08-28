@@ -47,7 +47,7 @@
             <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
 
-            <td>
+            <td width="300px">
                 <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
                 <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
                 <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
