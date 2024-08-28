@@ -20,15 +20,14 @@
             <dt class = "col-sm-2">Fecha de finalizacion </dt>
             <dd class = "col-sm-10" th:text="${#dates.format(informe.fechaFin, 'yyyy-MM-dd')}"></dd>
 
-            <dt class = "col-sm-2">Estado </dt>
-            <dd class = "col-sm-10" th:text="${informe.estado.nombre}"></dd>
-
-
             <dt class = "col-sm-2">Proyecto </dt>
             <dd class = "col-sm-10" th:text="${informe.proyecto.nombre}"></dd>
 
-            <dt class = "col-sm-2">Usuario </dt>
-            <dd class = "col-sm-10" th:text="${informe.usuario.nombre}"></dd>
+            <dt class = "col-sm-2">Miembro </dt>
+            <dd class = "col-sm-10" th:text="${informe.miembro.nombre}"></dd>
+
+            <dt class = "col-sm-2">Estado </dt>
+            <dd class = "col-sm-10" th:text="${informe.estado.nombre}"></dd>
         </dl>
         <a th:href="@{/informes}">Regresar</a>
     </div>

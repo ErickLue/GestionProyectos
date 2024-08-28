@@ -6,10 +6,7 @@ import org.esfe.modelos.Informe;
 import org.esfe.modelos.Miembro;
 import org.esfe.modelos.Proyecto;
 import org.esfe.servicios.implementaciones.InformeService;
-import org.esfe.servicios.interfaces.IEstadoServices;
-import org.esfe.servicios.interfaces.IInformeServices;
-import org.esfe.servicios.interfaces.IProyectoService;
-import org.esfe.servicios.interfaces.IUsuarioService;
+import org.esfe.servicios.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,10 +32,10 @@ public class InformeController {
     @Autowired
     private IProyectoService proyectoService;
 
+
+
     @Autowired
-    private IUsuarioService usuarioService;
-
-
+    private IMiembroService miembroService;
 
     @GetMapping
     public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
@@ -64,7 +61,7 @@ public class InformeController {
     {
         model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("proyectos", proyectoService.ObtenerTodos());
-        model.addAttribute("usuarios", usuarioService.ObtenerTodos());
+        model.addAttribute("miembros", miembroService.obtenerTodos());
         return "informe/create";
     }
 
@@ -73,7 +70,7 @@ public class InformeController {
         if(result.hasErrors()){
             model.addAttribute("estados", estadoServices.ObtenerTodos());
             model.addAttribute("proyectos", proyectoService.ObtenerTodos());
-            model.addAttribute("usuarios", usuarioService.ObtenerTodos());
+            model.addAttribute("miembros", miembroService.obtenerTodos());
             attributes.addFlashAttribute("error", "No se pudo guardar debido a un error.");
             return "informe/create";}
 
@@ -94,7 +91,7 @@ public class InformeController {
     public String edit(@PathVariable("id") Integer id, Model model){
         model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("proyectos", proyectoService.ObtenerTodos());
-        model.addAttribute("usuarios", usuarioService.ObtenerTodos());
+        model.addAttribute("miembros", miembroService.obtenerTodos());
         Informe informe = informeServices.buscarPorId(id).get();
         model.addAttribute("informe", informe);
         return "informe/edit";

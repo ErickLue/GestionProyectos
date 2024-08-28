@@ -30,17 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <select class="form-control" th:field="*{estado}">
-                        <option value="" disabled selected>Seleccione un Estado</option>
-                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
+
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -54,15 +44,27 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-                <label for="usuario">Usuario</label>
-                <select  class="form-control" th:field="*{usuario}">
-                    <option value="" disabled selected>Seleccione un proyecto</option>
-                    <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
-                </select>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="miembro">Miembro</label>
+                    <select  class="form-control" th:field="*{miembro}">
+                        <option value="" disabled selected>Seleccione un miembro</option>
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
+                    </select>
+                </div>
             </div>
-           </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" th:field="*{estado}">
+                        <option value="" disabled selected>Seleccione un Estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
+                    </select>
+                </div>
+            </div>
         </div>
         <hr>
         <button type="submit" class="btn btn-primary">Guardar</button> |
