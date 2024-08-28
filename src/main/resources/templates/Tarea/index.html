@@ -24,8 +24,50 @@
         </script>
     </div>
 
-    <!-- Título y Botón de Nueva Tarea -->
-    <h1>Listado de tareas</h1>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 150px;
+            margin: auto;
+        }
+
+        .chart-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+    </style>
+
+    <!-- Gráficos de donut y porcentajes de tareas -->
+    <div class="container mt-5">
+        <h5 class="mb-4 text-center">Porcentaje de Tareas por Estado</h5>
+        <div class="row">
+            <!-- Gráficos y elementos ocultos para cada estado -->
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3" th:each="entry : ${porcentajePorEstado}">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas th:id="${'chart' + #strings.replace(entry.key, ' ', '')}"></canvas>
+                        <div class="chart-text" th:id="${'text' + #strings.replace(entry.key, ' ', '')}"></div>
+                    </div>
+                    <div class="chart-label" th:text="${entry.key}"></div>
+                </div>
+                <input type="hidden" th:id="${'data' + #strings.replace(entry.key, ' ', '')}" th:value="${entry.value}"/>
+            </div>
+        </div>
+    </div>
+
     <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
 
     <!-- Tabla de Tareas -->
@@ -51,7 +93,6 @@
             <!--<td th:text="${item.estadoTarea}"></td>-->
             <td th:text="${item.prioridad}"></td>
             <!--<td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
-            <td th:text="${item.fechaProgreso}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
             <td width="300px">
                 <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
@@ -73,4 +114,53 @@
             </li>
         </ul>
     </nav>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('[id^="data"]').forEach(element => {
+                const state = element.id.replace('data', '');
+                let data = parseInt(element.value);
+                if (isNaN(data)) {
+                    data = 0;
+                }
+                data = Math.max(0, Math.min(100, data));
+                const colorMap = {
+                    "Pendiente": '#17a2b8',
+                    "En Progreso": '#ffc107',
+                    "Completada": '#28a745',
+                    "Cancelada": '#dc3545'
+                };
+                const color = colorMap[state] || '#007bff'; // Fallback color
+                configChart(document.getElementById('chart' + state).getContext('2d'), data, color, 'text' + state);
+            });
+        });
+
+        function configChart(ctx, data, color, textElementId) {
+            const chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [data, 100 - data],
+                        backgroundColor: [color, '#e9ecef'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    cutoutPercentage: 75,
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false },
+                    }
+                }
+            });
+
+            document.getElementById(textElementId).innerText = `${data}%`;
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </div>

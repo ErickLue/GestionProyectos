@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ITareaService  {
@@ -19,4 +20,5 @@ public interface ITareaService  {
 
     void eliminarPorid(Integer tareaId);
 
+    Map<String, Integer> calcularPorcentajes();
 }
