@@ -28,7 +28,10 @@
                                <div class="w-100">
                                    <div class="form-group">
                                        <label for="cargo">Cargo:</label>
-                                       <textarea class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" placeholder="Escriba el cargo del miembro" required></textarea>
+                                       <select class="form-control" th:field="*{cargo}" id="cargo" cols="12" rows="3" placeholder="Escriba el cargo del miembro" required>
+                                           <option value="Administrador">Admistrador</option>
+                                           <option value="Colaborador">Colaborador</option>
+                                       </select>
                                    </div>
                                </div>
                            </div>

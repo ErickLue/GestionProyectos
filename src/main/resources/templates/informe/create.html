@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre" class="fw-bold" style="font-size:14px">Nombre:</label>
                     <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del informe" required>
                 </div>
             </div>
@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fechaInicio">Fecha de inicio</label>
+                    <label for="fechaInicio" class="fw-bold" style="font-size:14px">Fecha de inicio:</label>
                     <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
                 </div>
             </div>
@@ -45,26 +45,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fechaFin">Fecha de finalización</label>
+                    <label for="fechaFin" class="fw-bold" style="font-size:14px">Fecha de finalización:</label>
                     <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <select class="form-control" th:field="*{estado}">
-                        <option value="" disabled selected>Seleccione un Estado</option>
-                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
+
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-                <label for="proyecto">Proyecto</label>
+                <label for="proyecto" class="fw-bold" style="font-size:14px">Proyecto:</label>
                 <select  class="form-control" th:field="*{proyecto}">
                     <option value="" disabled selected>Seleccione un proyecto</option>
                     <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
@@ -74,15 +64,27 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-                <label for="usuario">Usuario</label>
-                <select  class="form-control" th:field="*{usuario}">
-                    <option value="" disabled selected>Seleccione un proyecto</option>
-                    <option th:each="usuario : ${usuarios}" th:value="${usuario.usuario_id}" th:text="${usuario.nombre}"></option>
-                </select>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="miembro" class="fw-bold" style="font-size:14px">Miembro:</label>
+                    <select  class="form-control" th:field="*{miembro}">
+                        <option value="" disabled selected>Seleccione un miembro</option>
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
+                    </select>
+                </div>
             </div>
-           </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estado" class="fw-bold" style="font-size:14px">Estado:</label>
+                    <select class="form-control" th:field="*{estado}">
+                        <option value="" disabled selected>Seleccione un Estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
+                    </select>
+                </div>
+            </div>
         </div>
         <hr>
                         <div class="d-flex justify-content-center">

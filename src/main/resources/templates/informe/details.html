@@ -4,32 +4,38 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1>Detalles del informes</h1>
-    <div>
-        <hr/>
-        <dl class="row">
-            <dt class = "col-sm-2">Informe ID</dt>
-            <dd class = "col-sm-10" th:text="${informe.informe_id}"></dd>
+    <div class="d-flex w-100 justify-content-center py-3 align-items-center vh-100">
+        <div class="d-flex w-100 h-100" style="border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 50%">
+                <div class="row">
+                    <a th:href="@{/informes}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+                    <dt class = "col-sm-2 fw-bold" style="font-size:14px">Nombre:</dt>
+            <dd class = "col-sm-12" th:text="${informe.nombre}"></dd>
 
-            <dt class = "col-sm-2">Nombre</dt>
-            <dd class = "col-sm-10" th:text="${informe.nombre}"></dd>
+            <dt class = "col-sm-2 fw-bold" style="font-size:14px">Fecha de inicio:</dt>
+            <dd class = "col-sm-12" th:text="${#dates.format(informe.fechaInicio, 'yyyy-MM-dd')}"></dd>
 
-            <dt class = "col-sm-2">Fecha de inicio</dt>
-            <dd class = "col-sm-10" th:text="${#dates.format(informe.fechaInicio, 'yyyy-MM-dd')}"></dd>
+            <dt class = "col-sm-2 fw-bold" style="font-size:14px">Fecha de finalizacion:</dt>
+            <dd class = "col-sm-12" th:text="${#dates.format(informe.fechaFin, 'yyyy-MM-dd')}"></dd>
 
-            <dt class = "col-sm-2">Fecha de finalizacion </dt>
-            <dd class = "col-sm-10" th:text="${#dates.format(informe.fechaFin, 'yyyy-MM-dd')}"></dd>
+            <dt class = "col-sm-2 fw-bold" style="font-size:14px">Proyecto:</dt>
+            <dd class = "col-sm-12" th:text="${informe.proyecto.nombre}"></dd>
 
-            <dt class = "col-sm-2">Estado </dt>
-            <dd class = "col-sm-10" th:text="${informe.estado.nombre}"></dd>
+            <dt class = "col-sm-2 fw-bold" style="font-size:14px">Miembro:</dt>
+            <dd class = "col-sm-12" th:text="${informe.miembro.nombre}"></dd>
 
-
-            <dt class = "col-sm-2">Proyecto </dt>
-            <dd class = "col-sm-10" th:text="${informe.proyecto.nombre}"></dd>
-
-            <dt class = "col-sm-2">Usuario </dt>
-            <dd class = "col-sm-10" th:text="${informe.usuario.nombre}"></dd>
+            <dt class = "col-sm-2 fw-bold" style="font-size:14px">Estado:</dt>
+            <dd class = "col-sm-12" th:text="${informe.estado.nombre}"></dd>
         </dl>
-        <a th:href="@{/informes}">Regresar</a>
+                    <div class="d-flex" style="gap:30px">
+                        <a th:href="@{/informes/edit/{informe_id} (informe_id=${informe.informe_id}) }" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+                        <a th:href="@{/informes/remove/{informe_id} (informe_id=${informe.informe_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 50%;" class="d-flex justify-content-center align-items-center">
+                <img style="width: 450px; object-fit:cover" th:src="@{/assets/img/sapiens.png}">
+            </div>
+        </div>
     </div>
 </div>

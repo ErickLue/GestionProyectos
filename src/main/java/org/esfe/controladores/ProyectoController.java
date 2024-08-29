@@ -1,9 +1,13 @@
 package org.esfe.controladores;
+
 import org.esfe.modelos.Proyecto;
-import org.esfe.modelos.Tarea;
+import org.esfe.modelos.Usuario;
 import org.esfe.servicios.interfaces.IProyectoService;
+import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,28 +28,42 @@ public class ProyectoController {
     @Autowired
     private IProyectoService proyectoService;
 
+    @Autowired
+    private IUsuarioService usuarioService;
+
     @GetMapping
     public String index(Model model,
                         @RequestParam("page") Optional<Integer> page,
                         @RequestParam("size") Optional<Integer> size,
-                        @RequestParam("sort") Optional<String> sort) {
+                        @RequestParam("sort") Optional<String> sort,
+                        @AuthenticationPrincipal UserDetails userDetails) {
         int currentPage = page.orElse(1) - 1; // Si no está seteado, se asigna 0
         int pageSize = size.orElse(5); // Tamaño de la página, se asigna 5
         String sortField = sort.orElse("prioridad"); // Campo de ordenación predeterminado
 
-        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.unsorted()); // Usamos Sort.unsorted() para manejar la ordenación manualmente
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(sortField).ascending());
 
-        // Obtener los proyectos paginados
-        Page<Proyecto> proyectos = proyectoService.buscarTodosLospaginado(pageable);
-        if (proyectos != null && proyectos.hasContent()) {
-            model.addAttribute("proyectos", proyectos);
-            int totalPages = proyectos.getTotalPages();
+        // Obtener el usuario autenticado
+        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Obtener los proyectos del usuario autenticado
+        List<Proyecto> proyectos = proyectoService.getProyectosByUsuario(usuario);
+
+        // Paginar los proyectos del usuario
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), proyectos.size());
+        Page<Proyecto> paginatedProyectos = new PageImpl<>(proyectos.subList(start, end), pageable, proyectos.size());
+
+        if (paginatedProyectos != null && paginatedProyectos.hasContent()) {
+            model.addAttribute("proyectos", paginatedProyectos);
+            int totalPages = paginatedProyectos.getTotalPages();
             if (totalPages > 0) {
                 List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                         .boxed()
                         .collect(Collectors.toList());
                 model.addAttribute("pageNumbers", pageNumbers);
-                model.addAttribute("currentPage",currentPage);
+                model.addAttribute("currentPage", currentPage);
             }
         } else {
             model.addAttribute("error", "No se encontraron proyectos.");
@@ -77,7 +95,6 @@ public class ProyectoController {
             model.addAttribute("proyecto", proyecto); // Asegúrate de que el objeto 'proyecto' esté en el modelo
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
             attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
-
             return "Proyecto/create"; // Redirige de nuevo a la vista de creación si hay errores
         }
 
@@ -93,14 +110,14 @@ public class ProyectoController {
 
     @GetMapping("details/{id}")
     public String details(@PathVariable("id") Integer id, Model model) {
-        Proyecto proyecto = proyectoService.buscarPorId(id).get();
+        Proyecto proyecto = proyectoService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
         model.addAttribute("proyecto", proyecto);
         return "Proyecto/details";
     }
 
     @GetMapping("edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
-        Proyecto proyecto = proyectoService.buscarPorId(id).get();
+        Proyecto proyecto = proyectoService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
         return "Proyecto/edit";
@@ -108,19 +125,18 @@ public class ProyectoController {
 
     // Método para obtener las prioridades ordenadas
     private List<String> obtenerPrioridadesOrdenadas() {
-        return Arrays.asList("Alta","Intermedia", "Baja");
+        return Arrays.asList("Alta", "Intermedia", "Baja");
     }
 
-
     @GetMapping("remove/{id}")
-    public String remove (@PathVariable("id")Integer id, Model model){
-        Proyecto proyecto = proyectoService.buscarPorId(id).get();
+    public String remove(@PathVariable("id") Integer id, Model model) {
+        Proyecto proyecto = proyectoService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
         model.addAttribute("proyecto", proyecto);
-        return  "Proyecto/delete";
+        return "Proyecto/delete";
     }
 
     @PostMapping("/delete")
-    public String delete(Proyecto proyecto, RedirectAttributes attributes){
+    public String delete(Proyecto proyecto, RedirectAttributes attributes) {
         proyectoService.eliminarPorid(proyecto.getProyecto_id());
         attributes.addFlashAttribute("msg", "Proyecto ha sido eliminada correctamente");
         return "redirect:/Proyectos";

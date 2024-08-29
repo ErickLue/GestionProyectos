@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/privacy", "/terms").permitAll()
                 // todas las demás vistas requieren autenticación
                 .anyRequest().authenticated());
-        http.formLogin(form -> form.loginPage("/login").permitAll());
+        http.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"));
 
         return http.build();
     }

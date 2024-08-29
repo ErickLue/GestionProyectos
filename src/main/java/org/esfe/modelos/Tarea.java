@@ -32,6 +32,19 @@ public class Tarea {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
 
+    @Transient
+    private long diasLaborables;
+
+    // ...
+
+    public void setDiasLaborables(long diasLaborables) {
+        this.diasLaborables = diasLaborables;
+    }
+
+    public long getDiasLaborables() {
+        return diasLaborables;
+    }
+
     @NotNull(message = "La fecha de fin es requerida")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
@@ -104,13 +117,6 @@ public class Tarea {
         this.fechaInicio = fechaInicio;
     }
 
-//    public Date getFechaProgreso() {
-//        return fechaProgreso;
-//    }
-//
-//    public void setFechaProgreso(Date fechaProgreso) {
-//        this.fechaProgreso = fechaProgreso;
-//    }
 
     public Date getFechaFin() {
         return fechaFin;

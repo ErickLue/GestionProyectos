@@ -4,117 +4,120 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <!-- Alertas -->
-    <div th:if="${msg != null}">
-        <script>
-            Swal.fire({
-                title: "Confirmación",
-                text: '[[${msg}]]',
-                icon: "success"
-            });
-        </script>
-    </div>
-    <div th:if="${error != null}">
-        <script>
-            Swal.fire({
-                title: "Error",
-                text: '[[${error}]]',
-                icon: "error"
-            });
-        </script>
-    </div>
+    <div class="w-100 vh-100 p-3" style="overflow-y:auto;">
+        <!-- Alertas -->
+        <div th:if="${msg != null}">
+            <script>
+                Swal.fire({
+                    title: "Confirmación",
+                    text: '[[${msg}]]',
+                    icon: "success"
+                });
+            </script>
+        </div>
+        <div th:if="${error != null}">
+            <script>
+                Swal.fire({
+                    title: "Error",
+                    text: '[[${error}]]',
+                    icon: "error"
+                });
+            </script>
+        </div>
 
-    <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
+        <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
 
-    <!-- Tabla de Tareas -->
+        <!-- Tabla de Tareas -->
+        <table class="custom-table mt-3">
+            <thead>
+            <tr class="head" style="border-radius: 10px 0 0 10px; height: 35px;">
+                <th class="custom-th">Nombre</th>
+                <th class="custom-th">Descripción</th>
+                <th class="custom-th">Proyecto</th>
+                <th class="custom-th">Miembro</th>
+                <th class="custom-th">Prioridad</th>
+                <th class="custom-th">Días Laborables</th>
+                <!-- <th class="custom-th">Fecha Inicio</th>
+                 <th class="custom-th">Fecha Fin</th>-->
+                <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="tbody" th:each="item : ${tareas}">
+                <td th:text="${item.nombre}"></td>
+                <td th:text="${item.descripcion}"></td>
+                <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
+                <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td>
+                <td th:text="${item.prioridad}"></td>
+                <td th:text="${item.diasLaborables}"></td>
+                <!-- <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+                 <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
+                <td width="300px">
+                    <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
+                    <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+                    <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-    <table class="custom-table mt-3">
-        <thead>
-        <tr class="head" style="border-radius: 10px 0 0 10px; height: 35px;">
-            <th class="custom-th">Nombre</th>
-            <th class="custom-th">Descripción</th>
-            <th class="custom-th">Proyecto</th>
-            <th class="custom-th">Miembro</th>
-            <th class="custom-th">Prioridad</th>
-            <!-- <th class="custom-th">Fecha Inicio</th>
-             <th class="custom-th">Fecha Fin</th>-->
-            <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="tbody" th:each="item : ${tareas}">
-            <td th:text="${item.nombre}"></td>
-            <td th:text="${item.descripcion}"></td>
-            <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
-            <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td>
-            <!--<td th:text="${item.estadoTarea}"></td>-->
-            <td th:text="${item.prioridad}"></td>
-            <!--<td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
-            <td width="300px">
-                <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
-                <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
-                <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <!-- Paginación -->
+        <nav aria-label="Page navigation example" style="margin-top:50px;">
+            <ul class="pagination" style="gap:5px">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                       th:href="@{|/tareas?page=${pageNumber}|}"
+                       th:text="${pageNumber}">
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-    <!-- Paginación -->
-    <nav aria-label="Page navigation example" style="margin-top:50px;">
-        <ul class="pagination" style="gap:5px">
-            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
-                   th:href="@{|/tareas?page=${pageNumber}|}"
-                   th:text="${pageNumber}">
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <style>
+            .chart-container {
+                position: relative;
+                width: 100%;
+                max-width: 150px;
+                margin: auto;
+            }
 
-    <style>
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 150px;
-            margin: auto;
-        }
+            .chart-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 1.5em;
+                font-weight: bold;
+                color: #333;
+            }
 
-        .chart-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #333;
-        }
+            .chart-label {
+                text-align: center;
+                font-weight: bold;
+                margin-top: 10px;
+            }
 
-        .chart-label {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+        </style>
 
-    </style>
-
-    <!-- Gráficos de donut y porcentajes de tareas -->
-    <div class="container mt-5">
-        <h5 class="mb-4 text-center">Porcentaje de Tareas por Estado</h5>
-        <div class="row">
-            <!-- Gráficos y elementos ocultos para cada estado -->
-            <div class="col-lg-3 col-md-6 col-sm-12 mb-3" th:each="entry : ${porcentajePorEstado}">
-                <div class="card">
-                    <div class="chart-container">
-                        <canvas th:id="${'chart' + #strings.replace(entry.key, ' ', '')}"></canvas>
-                        <div class="chart-text" th:id="${'text' + #strings.replace(entry.key, ' ', '')}"></div>
+        <!-- Gráficos de donut y porcentajes de tareas -->
+        <div class="container mt-5">
+            <h5 class="mb-4 text-center">Porcentaje de Tareas por Estado</h5>
+            <div class="row">
+                <!-- Gráficos y elementos ocultos para cada estado -->
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3" th:each="entry : ${porcentajePorEstado}">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas th:id="${'chart' + #strings.replace(entry.key, ' ', '')}"></canvas>
+                            <div class="chart-text" th:id="${'text' + #strings.replace(entry.key, ' ', '')}"></div>
+                        </div>
+                        <div class="chart-label" th:text="${entry.key}"></div>
                     </div>
-                    <div class="chart-label" th:text="${entry.key}"></div>
+                    <input type="hidden" th:id="${'data' + #strings.replace(entry.key, ' ', '')}" th:value="${entry.value}"/>
                 </div>
-                <input type="hidden" th:id="${'data' + #strings.replace(entry.key, ' ', '')}" th:value="${entry.value}"/>
             </div>
         </div>
-    </div>
+</div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -124,14 +127,15 @@
                 if (isNaN(data)) {
                     data = 0;
                 }
+                console.log(state)
                 data = Math.max(0, Math.min(100, data));
                 const colorMap = {
-                    "Pendiente": '#8644A2',
-                    "En Progreso": '#FF8E8F',
-                    "Completada": '#FC819E',
+                    "Pendiente": '#EE4E4E',
+                    "EnProgreso": '#597445',
+                    "Completada": '#D37676',
                     "Cancelada": '#dc3545'
                 };
-                const color = colorMap[state] || '#007bff'; // Fallback color
+                const color = colorMap[state] || '#06D001'; // Fallback color
                 configChart(document.getElementById('chart' + state).getContext('2d'), data, color, 'text' + state);
             });
         });

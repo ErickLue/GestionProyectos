@@ -11,14 +11,21 @@
 
 <body>
 <div layout:fragment="content">
-    <h1>Editar informe</h1>
-    <form th:action="@{/informes/save}" th:object="${informe}" method="post">
-        <input type="hidden" th:field="*{informe_id}">
+    <div class="d-flex w-100 py-3 justify-content-center align-items-center vh-100">
+        <div class="d-flex w-100 h-100" style=" border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <div style="width: 50%">
+                <a th:href="@{/informes}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
+                <img style="width: 400px; object-fit:cover" th:src="@{/assets/img/4752968.jpg}">
+            </div>
+            <div style="width: 50%;">
+                <h5 class="card-title">Editar Informe</h5>
+                <form th:action="@{/informes/save}" th:object="${informe}" method="post">
+                    <input type="hidden" th:field="*{informe_id}">
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre" class="fw-bold" style="font-size:14px">Nombre:</label>
                     <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del informe" required>
                 </div>
             </div>
@@ -27,7 +34,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fechaInicio">Fecha de inicio</label>
+                    <label for="fechaInicio" class="fw-bold" style="font-size:14px">Fecha de inicio:</label>
                     <input type="date" class="form-control" th:field="*{fechaInicio}" id="fechaInicio" required>
                 </div>
             </div>
@@ -36,7 +43,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fechaFin">Fecha de finalización</label>
+                    <label for="fechaFin" class="fw-bold" style="font-size:14px">Fecha de finalización:</label>
                     <input type="date" class="form-control" th:field="*{fechaFin}" id="fechaFin" required>
                 </div>
             </div>
@@ -45,19 +52,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <select class="form-control" th:field="*{estado}" id="estado">
-                        <option value="" disabled>Seleccione un estado</option>
-                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="proyecto">Proyecto</label>
+                    <label for="proyecto" class="fw-bold" style="font-size:14px">Proyecto:</label>
                     <select class="form-control" th:field="*{proyecto}" id="proyecto">
                         <option value="" disabled>Seleccione un proyecto</option>
                         <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
@@ -69,25 +64,29 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="usuario">Usuario</label>
-                    <select class="form-control" th:field="*{usuario}">
-                        <option value="" disabled selected>Seleccione un usuario</option> <!-- Cambié "proyecto" a "usuario" -->
-                        <option th:each="usuario : ${usuarios}"
-                                th:value="${usuario.usuario_id}"
-                                th:text="${usuario.nombre}"></option>
+                    <label for="miembro" class="fw-bold" style="font-size:14px">Miembro:</label>
+                    <select  class="form-control" th:field="*{miembro}">
+                        <option value="" disabled selected>Seleccione un miembro</option>
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <hr>
         <div class="row">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">Guardar</button> |
-                <a th:href="@{/informes}" class="btn btn-secondary">Regresar</a>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estado" class="fw-bold" style="font-size:14px">Estado:</label>
+                    <select class="form-control" th:field="*{estado}" id="estado">
+                        <option value="" disabled>Seleccione un estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
+                    </select>
+                </div>
             </div>
         </div>
-    </form>
+                    <button type="submit" class="custom-btn w-100 primary ripple mt-4">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-</body>
-</html>

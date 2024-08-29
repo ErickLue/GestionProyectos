@@ -33,8 +33,8 @@ public class Informe {
     private Proyecto  proyecto;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "miembroEquipo_id")
+    private Miembro miembro;
 
     public Integer getInforme_id() {
         return informe_id;
@@ -84,11 +84,11 @@ public class Informe {
         this.proyecto = proyecto;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Miembro getMiembro() {
+        return miembro;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setMiembro(Miembro miembro) {
+        this.miembro = miembro;
     }
 }
