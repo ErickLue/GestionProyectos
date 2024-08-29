@@ -45,18 +45,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <select class="form-control" th:field="*{estado}" id="estado">
-                        <option value="" disabled>Seleccione un estado</option>
-                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
                     <label for="proyecto">Proyecto</label>
                     <select class="form-control" th:field="*{proyecto}" id="proyecto">
                         <option value="" disabled>Seleccione un proyecto</option>
@@ -69,12 +57,22 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="usuario">Usuario</label>
-                    <select class="form-control" th:field="*{usuario}">
-                        <option value="" disabled selected>Seleccione un usuario</option> <!-- Cambié "proyecto" a "usuario" -->
-                        <option th:each="usuario : ${usuarios}"
-                                th:value="${usuario.usuario_id}"
-                                th:text="${usuario.nombre}"></option>
+                    <label for="miembro">Miembro</label>
+                    <select  class="form-control" th:field="*{miembro}">
+                        <option value="" disabled selected>Seleccione un miembro</option>
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.miembroEquipo_id}" th:text="${miembro.nombre}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" th:field="*{estado}" id="estado">
+                        <option value="" disabled>Seleccione un estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.estado_id}" th:text="${estado.nombre}"></option>
                     </select>
                 </div>
             </div>

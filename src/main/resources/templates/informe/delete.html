@@ -21,15 +21,15 @@
             <dt class="col-sm-2">Fecha de finalización</dt>
             <dd class="col-sm-10" th:text="${#dates.format(informe.fechaFin, 'yyyy-MM-dd')}"></dd>
 
-            <dt class="col-sm-2">Estado </dt>
-            <dd class="col-sm-10" th:text="${informe.estado.nombre}"></dd>
-
             <dt class="col-sm-2">Proyecto </dt>
             <dd class="col-sm-10" th:text="${informe.proyecto.nombre}"></dd>
-            <dt class="col-sm-2">Usuario </dt>
-            <!-- Corrigiendo la expresión para evitar error -->
-            <dd class="col-sm-10" th:text="${informe.usuario.nombre}"></dd>
 
+            <dt class="col-sm-2">Miembro </dt>
+            <!-- Corrigiendo la expresión para evitar error -->
+            <dd class="col-sm-10" th:text="${informe.miembro.nombre}"></dd>
+
+            <dt class="col-sm-2">Estado </dt>
+            <dd class="col-sm-10" th:text="${informe.estado.nombre}"></dd>
         </dl>
         <form th:action="@{/informes/delete}" method="post">
             <input type="hidden" name="informe_id" th:value="${informe.informe_id}">

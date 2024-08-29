@@ -35,10 +35,11 @@
             <th>Nombre</th>
             <th>Fecha de inicio</th>
             <th>Fecha de finalización</th>
-            <th>Estado</th>
             <th>Proyecto</th>
-            <th>Usuario</th>
+            <th>Miembro</th>
+            <th>Estado</th>
             <th>Acciones</th>
+
         </tr>
         </thead>
 
@@ -47,9 +48,9 @@
             <td th:text="${item.nombre}"></td>
             <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
-            <td th:text="${item.estado?.nombre ?: 'Sin estado'}"></td>
             <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
-            <td th:text="${item.usuario != null ? item.usuario.nombre : 'Sin usuario'}"></td>
+            <td th:text="${item.miembro != null ? item.miembro.nombre : 'Sin miembro'}"></td>
+            <td th:text="${item.estado?.nombre ?: 'Sin estado'}"></td>
             <td>
                 <a th:href="@{/informes/details/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/informes/edit/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-info">Editar</a>
