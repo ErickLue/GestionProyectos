@@ -26,34 +26,33 @@
     </div>
 
     <h1>Listado de informes</h1>
+    <a th:href="@{/informes/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
 
-    <a th:href="@{/informes/create}" class="btn btn-outline-primary">Nuevo informe</a>
-
-    <table class="table table-striped">
+    <table class="custom-table mt-3">
         <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Fecha de inicio</th>
-            <th>Fecha de finalización</th>
-            <th>Estado</th>
-            <th>Proyecto</th>
-            <th>Usuario</th>
-            <th>Acciones</th>
+        <tr class="head">
+            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Nombre</th>
+           <!-- <th class="custom-th">Fecha de inicio</th>
+            <th class="custom-th">Fecha de finalización</th>
+            <th class="custom-th">Estado</th> -->
+            <th class="custom-th">Proyecto</th>
+            <th class="custom-th">Usuario</th>
+            <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="item : ${informes}">
+        <tr class="tbody" th:each="item : ${informes}">
             <td th:text="${item.nombre}"></td>
-            <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+           <!-- <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>
-            <td th:text="${item.estado?.nombre ?: 'Sin estado'}"></td>
+            <td th:text="${item.estado?.nombre ?: 'Sin estado'}"></td> -->
             <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
             <td th:text="${item.usuario != null ? item.usuario.nombre : 'Sin usuario'}"></td>
             <td>
-                <a th:href="@{/informes/details/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/informes/edit/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-info">Editar</a>
-                <a th:href="@{/informes/remove/{informe_id} (informe_id = ${item.informe_id})}" class="btn btn-outline-danger">Eliminar</a>
+                <a th:href="@{/informes/details/{informe_id} (informe_id = ${item.informe_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
+                <a th:href="@{/informes/edit/{informe_id} (informe_id = ${item.informe_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+                <a th:href="@{/informes/remove/{informe_id} (informe_id = ${item.informe_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
