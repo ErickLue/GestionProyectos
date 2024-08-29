@@ -79,8 +79,13 @@ public class ProyectoController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Proyecto proyecto, BindingResult result, Model model, RedirectAttributes attributes) {
+    public String save(@ModelAttribute Proyecto proyecto,
+                       BindingResult result,
+                       Model model,
+                       RedirectAttributes attributes,
+                       @AuthenticationPrincipal UserDetails userDetails) {
 
+        // Validaciones de fechas
         if (proyecto.getFechaInicio() != null && proyecto.getFechaInicio().before(new Date())) {
             result.rejectValue("fechaInicio", "error.proyecto", "La fecha de inicio no puede ser una fecha pasada");
         }
@@ -92,20 +97,27 @@ public class ProyectoController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("proyecto", proyecto); // Asegúrate de que el objeto 'proyecto' esté en el modelo
+            model.addAttribute("proyecto", proyecto);
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
             attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
-            return "Proyecto/create"; // Redirige de nuevo a la vista de creación si hay errores
+            return "Proyecto/create";
         }
 
-        // Aquí es donde guardarías o actualizarías el proyecto
+        // Obtener el usuario autenticado
+        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Asignar el usuario al proyecto
+        proyecto.setUsuario(usuario);
+
+        // Guardar el proyecto
         proyectoService.crearOEditar(proyecto);
 
         // Mensaje de éxito
         attributes.addFlashAttribute("msg", "Proyecto creado correctamente");
 
-        // Redirige a la lista de proyectos o a la vista deseada
-        return "redirect:/Proyectos"; // Asegúrate de que esta ruta esté manejada en el controlador
+        // Redirigir a la lista de proyectos
+        return "redirect:/Proyectos";
     }
 
     @GetMapping("details/{id}")
