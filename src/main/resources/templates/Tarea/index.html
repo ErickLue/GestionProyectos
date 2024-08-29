@@ -70,6 +70,7 @@
 
     <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
 
+
     <!-- Tabla de Tareas -->
     <table class="custom-table mt-3">
         <thead>
@@ -79,6 +80,7 @@
             <th class="custom-th">Proyecto</th>
             <th class="custom-th">Miembro</th>
             <th class="custom-th">Prioridad</th>
+            <th class="custom-th">Días Laborables</th>
            <!-- <th class="custom-th">Fecha Inicio</th>
             <th class="custom-th">Fecha Fin</th>-->
             <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
@@ -90,9 +92,9 @@
             <td th:text="${item.descripcion}"></td>
             <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
             <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td>
-            <!--<td th:text="${item.estadoTarea}"></td>-->
             <td th:text="${item.prioridad}"></td>
-            <!--<td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
+            <td th:text="${item.diasLaborables}"></td>
+           <!-- <td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
             <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
             <td width="300px">
                 <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
