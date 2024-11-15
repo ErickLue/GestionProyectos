@@ -36,7 +36,15 @@ public class Proyecto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
- //   @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @NotNull(message = "El estado es requerido")
+    private String estado = "Activo";
+
+
+    private String imagen;
+
+
+
+    //   @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
    // private Set<Estado> estados = new HashSet<>();
 
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -130,5 +138,21 @@ public class Proyecto {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public @NotBlank(message = "La prioridad es requerida") String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(@NotBlank(message = "La prioridad es requerida") String estado) {
+        this.estado = estado;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

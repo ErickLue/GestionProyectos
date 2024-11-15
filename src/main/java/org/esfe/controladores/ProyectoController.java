@@ -2,6 +2,8 @@ package org.esfe.controladores;
 
 import org.esfe.modelos.Proyecto;
 import org.esfe.modelos.Usuario;
+import org.esfe.repositorio.IProyectoRepository;
+import org.esfe.servicios.implementaciones.ProyectoService;
 import org.esfe.servicios.interfaces.IProyectoService;
 import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +14,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.security.Principal;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/Proyectos")
 public class ProyectoController {
+    private static String UPLOADED_FOLDER = "C:/imagenes_proyectos/"; // Ruta en el servidor donde se guardarán las imágenes
+
 
     @Autowired
     private IProyectoService proyectoService;
 
     @Autowired
     private IUsuarioService usuarioService;
+
+    @Autowired
+    private IProyectoRepository proyectoRepository;
 
     @GetMapping
     public String index(Model model,
@@ -47,13 +58,16 @@ public class ProyectoController {
         Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Obtener los proyectos del usuario autenticado
-        List<Proyecto> proyectos = proyectoService.getProyectosByUsuario(usuario);
+        // Obtener y filtrar los proyectos activos del usuario autenticado
+        List<Proyecto> proyectosActivos = proyectoService.getProyectosByUsuario(usuario)
+                .stream()
+                .filter(proyecto -> "Activo".equals(proyecto.getEstado()))
+                .collect(Collectors.toList());
 
-        // Paginar los proyectos del usuario
+        // Paginar los proyectos activos del usuario
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), proyectos.size());
-        Page<Proyecto> paginatedProyectos = new PageImpl<>(proyectos.subList(start, end), pageable, proyectos.size());
+        int end = Math.min((start + pageable.getPageSize()), proyectosActivos.size());
+        Page<Proyecto> paginatedProyectos = new PageImpl<>(proyectosActivos.subList(start, end), pageable, proyectosActivos.size());
 
         if (paginatedProyectos != null && paginatedProyectos.hasContent()) {
             model.addAttribute("proyectos", paginatedProyectos);
@@ -66,7 +80,7 @@ public class ProyectoController {
                 model.addAttribute("currentPage", currentPage);
             }
         } else {
-            model.addAttribute("error", "No se encontraron proyectos.");
+            model.addAttribute("error", "No se encontraron proyectos activos.");
         }
 
         return "Proyecto/index"; // Asegúrate de que la vista se llame correctamente
@@ -83,6 +97,8 @@ public class ProyectoController {
                        BindingResult result,
                        Model model,
                        RedirectAttributes attributes,
+                       @RequestParam("file") MultipartFile file, // Asegúrate de que este es el parámetro de archivo
+
                        @AuthenticationPrincipal UserDetails userDetails) {
 
         // Validaciones de fechas
@@ -110,10 +126,41 @@ public class ProyectoController {
         // Asignar el usuario al proyecto
         proyecto.setUsuario(usuario);
 
+        // Aquí se maneja el archivo (imagen)
+        if (!file.isEmpty()) {
+            String contentType = file.getContentType();
+
+            // Verificar que el archivo sea una imagen
+            if (contentType != null && contentType.startsWith("image/")) {
+                try {
+                    // Generar un nombre único para la imagen
+                    String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+                    // Ruta para almacenar la imagen en `resources/static/images`
+                    Path path = Paths.get("src/main/resources/static/images/" + fileName);
+
+                    // Guardar el archivo en el directorio del proyecto
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                    // Establecer la URL de la imagen en el proyecto (se usará para acceder desde la vista)
+                    proyecto.setImagen("/images/" + fileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    attributes.addFlashAttribute("error", "No se pudo guardar la imagen.");
+                    return "redirect:/Proyectos";
+                }
+            } else {
+                // Si no es una imagen, agregar un mensaje de error
+                attributes.addFlashAttribute("error", "Solo se permiten archivos de imagen.");
+                return "redirect:/Proyectos";
+            }
+        }
+
+
         // Guardar el proyecto
         proyectoService.crearOEditar(proyecto);
 
-        // Mensaje de éxito
+        // Mensaje de éxitool
         attributes.addFlashAttribute("msg", "Proyecto creado correctamente");
 
         // Redirigir a la lista de proyectos
@@ -153,4 +200,98 @@ public class ProyectoController {
         attributes.addFlashAttribute("msg", "Proyecto ha sido eliminada correctamente");
         return "redirect:/Proyectos";
     }
+
+
+
+    @GetMapping("/completados")
+    public String mostrarProyectosCompletados(Model model) {
+        List<Proyecto> proyectosCompletados = proyectoService.obtenerProyectosCompletados();
+        model.addAttribute("proyectosCompletados", proyectosCompletados);
+        return "Proyecto/completados";
+    }
+
+    @GetMapping("/activos")
+    public String mostrarProyectosEnProgreso(Model model) {
+        // Obtener los proyectos con estado "en progreso"
+        List<Proyecto> proyectosActivos = proyectoService.obtenerProyectosActivos();
+
+        // Agregar los proyectos en progreso al modelo
+        model.addAttribute("proyectosActivos", proyectosActivos);
+
+        // Retornar la vista para mostrar los proyectos en progreso
+        return "proyecto/activos";  // Vista que deberás crear para proyectos en progreso
+    }
+
+    @GetMapping("/cancelados")
+    public String obtenerProyectosCancelados(Model model) {
+        List<Proyecto> proyectosCancelados = proyectoService.obtenerProyectosCancelados();
+        model.addAttribute("proyectosCancelados", proyectosCancelados);
+        return "Proyecto/cancelados";  // Nombre de tu plantilla Thymeleaf
+    }
+
+    @GetMapping("/order")
+    public String mostrarProyectosCompletados(@RequestParam(value = "filterBy", defaultValue = "fechaFin") String filterBy, Model model) {
+        List<Proyecto> proyectosCompletados;
+
+        // Filtrar solo los proyectos completados
+        proyectosCompletados = proyectoRepository.findByEstado("Completado");
+
+        // Ordenar los proyectos según el filtro recibido
+        switch (filterBy) {
+            case "nombre":
+                proyectosCompletados.sort(Comparator.comparing(Proyecto::getNombre));
+                break;
+            case "presupuesto":
+                proyectosCompletados.sort(Comparator.comparing(Proyecto::getPresupuesto).reversed());
+                break;
+            case "fechaFin":
+            default:
+                proyectosCompletados.sort(Comparator.comparing(Proyecto::getFechaFin).reversed());
+                break;
+        }
+
+        model.addAttribute("proyectosCompletados", proyectosCompletados);
+        model.addAttribute("filterBy", filterBy);  // Para mantener el valor seleccionado
+        return "Proyecto/completados";  // La vista que muestra los proyectos completados
+    }
+    @GetMapping("/order/cancelados")
+    public String mostrarProyectosCancelados(@RequestParam(value = "filterBy", defaultValue = "fechaInicio") String filterBy, Model model) {
+        List<Proyecto> proyectosCancelados;
+
+        // Filtrar solo los proyectos cancelados
+        proyectosCancelados = proyectoRepository.findByEstado("Cancelado");
+
+        // Ordenar los proyectos según el filtro recibido
+        switch (filterBy) {
+            case "nombre":
+                proyectosCancelados.sort(Comparator.comparing(Proyecto::getNombre));
+                break;
+            case "presupuesto":
+                proyectosCancelados.sort(Comparator.comparing(Proyecto::getPresupuesto).reversed());
+                break;
+            case "fechaInicio":
+            default:
+                proyectosCancelados.sort(Comparator.comparing(Proyecto::getFechaInicio).reversed());
+                break;
+        }
+
+        model.addAttribute("proyectosCancelados", proyectosCancelados);
+        model.addAttribute("filterBy", filterBy);  // Para mantener el valor seleccionado
+        return "Proyecto/cancelados";  // La vista que muestra los proyectos cancelados
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model, Principal principal) {
+        Usuario usuario = usuarioService.findByCorreo(principal.getName())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        model.addAttribute("usuario", usuario);
+        return "dashboard";
+    }
+
+    @ModelAttribute("usuario")
+    public Usuario getUsuario(Principal principal) {
+        return usuarioService.findByCorreo(principal.getName())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
 }

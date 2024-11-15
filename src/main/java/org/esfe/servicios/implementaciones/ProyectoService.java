@@ -61,5 +61,37 @@
                 return Collections.emptyList();
             }
         }
+
+        @Override
+        public List<Proyecto> obtenerProyectosCompletados() {
+            return proyectoRepository.findByEstado("completado");
+        }
+
+        @Override
+        public List<Proyecto> obtenerProyectosActivos() {
+            return proyectoRepository.findByEstado("activo");
+        }
+
+        @Override
+        public List<Proyecto> obtenerProyectosCancelados() {
+            return proyectoRepository.findByEstado("cancelado");
+        }
+
+        @Override
+        public List<Proyecto> findAllOrderedByNombre() {
+            return proyectoRepository.findAllByOrderByNombreAsc(); // Asegúrate de tener un método en el repositorio
+        }
+
+        @Override
+        public List<Proyecto> findAllOrderedByFechaFin() {
+            return proyectoRepository.findAllByOrderByFechaFinAsc(); // Asegúrate de tener un método en el repositorio
+        }
+
+        @Override
+        public List<Proyecto> findAllOrderedByPresupuesto() {
+            return proyectoRepository.findAllByOrderByPresupuestoAsc(); // Asegúrate de tener un método en el repositorio
+        }
+
+
     }
 

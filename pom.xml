@@ -85,6 +85,13 @@
 			<version>3.1.2.RELEASE</version>
 		</dependency>
 
+		<!-- Para enviar correos electronicos
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		-->
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

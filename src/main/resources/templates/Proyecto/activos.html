@@ -1,0 +1,32 @@
+<!-- En completados.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Proyectos Activos</title>
+</head>
+<body>
+<h1>Proyectos Activos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha de Inicio</th>
+        <th>Fecha de Fin</th>
+        <th>Prioridad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="proyecto : ${proyectosActivos}">
+        <td th:text="${proyecto.proyecto_id}">1</td>
+        <td th:text="${proyecto.nombre}">Nombre</td>
+        <td th:text="${proyecto.descripcion}">Descripción</td>
+        <td th:text="${proyecto.fechaInicio}">Fecha Inicio</td>
+        <td th:text="${proyecto.fechaFin}">Fecha Fin</td>
+        <td th:text="${proyecto.prioridad}">Prioridad</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
