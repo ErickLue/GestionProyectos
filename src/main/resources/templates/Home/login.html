@@ -34,6 +34,12 @@
                 </div>
                 <button type="submit" class="custom-btn ripple success w-100 mt-3">Iniciar Sesión</button>
             </form>
+
+            <!-- Enlace a la página de creación de cuenta -->
+            <div class="mt-3">
+                <a th:href="@{/usuarios/create}" style="color: #3C6255; font-weight: bold;">¿No tienes cuenta? Crear una cuenta</a>
+            </div>
+
             <p th:if="${error}" th:text="${error}" style="color: #EE4E4E; font-weight: bold;"></p>
         </div>
         <img style="width: 250px; object-fit:cover;position:absolute; right: 175px;bottom:0px" th:src="@{/assets/img/Analytics-pana.png}">

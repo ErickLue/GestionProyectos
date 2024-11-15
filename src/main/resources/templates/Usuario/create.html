@@ -27,11 +27,11 @@
 
   <!-- Botón para guardar los datos -->
   <button type="submit">Guardar</button>
-
 </form>
 
-<div th:if="${Error}">
-  <p th:text="${Error}"></p>
+<!-- Manejo de errores -->
+<div th:if="${error}">
+  <p th:text="${error}"></p>
 </div>
 
 <div th:if="${msg}">

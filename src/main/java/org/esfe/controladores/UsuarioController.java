@@ -1,11 +1,12 @@
 package org.esfe.controladores;
 
-import org.esfe.modelos.Estado;
+
 import org.esfe.modelos.Usuario;
 import org.esfe.servicios.interfaces.IEstadoServices;
 import org.esfe.servicios.interfaces.IRolService;
 import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,9 @@ public class UsuarioController {
     @Autowired
     private IEstadoServices estadoServices;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
 
     @GetMapping("/login")
     public String mostrarFormularioDeLogin() {
@@ -45,19 +49,18 @@ public class UsuarioController {
             return "redirect:/Proyectos";
         } else {
             model.addAttribute("error", "Correo o contraseña incorrectos");
-            return "Usuario/login";
+            return "usuarios/login";
         }
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        // Crear un nuevo objeto Usuario
         Usuario usuario = new Usuario();
         model.addAttribute("usuario", usuario);
 
         // Cargar los roles y el estado por defecto
-        model.addAttribute("roles", rolService.ObtenerTodos()); // Suponiendo que tienes un método para obtener roles
-        model.addAttribute("estado", estadoServices.buscarPorId(1)); // Estado con ID 1
+        model.addAttribute("roles", rolService.ObtenerTodos());
+        model.addAttribute("estado", estadoServices.buscarPorId(1).orElse(null)); // Estado con ID 1
 
         return "Usuario/create"; // Asegúrate de que esta ruta coincida con la vista Thymeleaf
     }
@@ -65,27 +68,22 @@ public class UsuarioController {
     @PostMapping("/save")
     public String save(@ModelAttribute("usuario") Usuario usuario, BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
-            // Si hay errores en el formulario, vuelve a mostrar el formulario
-            model.addAttribute("roles", rolService.ObtenerTodos()); // Recargar roles
-            model.addAttribute("estado", estadoServices.buscarPorId(2)); // Estado con ID 1
+            model.addAttribute("roles", rolService.ObtenerTodos());
+            model.addAttribute("estado", estadoServices.buscarPorId(1).orElse(null));
             model.addAttribute("error", "Usuario no creado por un error inesperado");
-            return "Usuario/create"; // Vista de creación del usuario
+            return "Usuario/create";
         }
 
-        // Asignar el estado automáticamente
-      //  Optional<Estado> estado = estadoServices.buscarPorId(1); // Obtener el estado con ID 1
-        //usuario.setEstado(estado.orElse(null)); // Asignar el estado al usuario
+        try {
+            usuario.setStatus(1); // Asignar estado activo
+            usuarioService.crearOEditar(usuario); // Guardar usuario
+            attributes.addFlashAttribute("msg", "Usuario creado correctamente");
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al crear el usuario: " + e.getMessage());
+            return "Usuario/create"; // Volver a mostrar el formulario en caso de error
+        }
 
-        // Asignar el estado automáticamente
-        Optional<Estado> estado = estadoServices.buscarPorId(1); // Obtener el estado con ID 1
-
-
-        // Crear o editar el usuario
-        usuarioService.crearOEditar(usuario);
-
-        // Agregar un mensaje de éxito y redirigir a la vista
-        attributes.addFlashAttribute("msg", "Usuario creado correctamente");
-        return "redirect:/Proyectos"; // Redirigir a la página de proyectos
+        return "redirect:/Proyectos"; // Redirigir a la vista de proyectos
     }
 
 
