@@ -21,5 +21,18 @@ public interface IProyectoService {
 
     List<Proyecto> getProyectosByUsuario(Usuario usuario);
 
+    List <Proyecto> obtenerProyectosCompletados ();
+
+    List <Proyecto> obtenerProyectosActivos ();
+
+    List <Proyecto> obtenerProyectosCancelados ();
+
+    List<Proyecto> findAllOrderedByNombre();
+
+    List<Proyecto> findAllOrderedByFechaFin();
+
+    List<Proyecto> findAllOrderedByPresupuesto();
+
+
 }
 

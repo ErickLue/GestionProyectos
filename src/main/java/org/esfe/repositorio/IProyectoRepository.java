@@ -10,4 +10,10 @@ import java.util.List;
 
 public interface IProyectoRepository extends JpaRepository<Proyecto, Integer> {
     List<Proyecto> findByUsuario(Usuario usuario);
+    List<Proyecto> findByEstado(String estado);
+
+    List<Proyecto> findAllByOrderByNombreAsc();
+    List<Proyecto> findAllByOrderByFechaFinAsc();
+    List<Proyecto> findAllByOrderByPresupuestoAsc();
+
 }
