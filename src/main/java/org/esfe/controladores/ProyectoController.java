@@ -232,10 +232,18 @@ public class ProyectoController {
     }
 
     @GetMapping("/cancelados")
-    public String obtenerProyectosCancelados(Model model) {
-        List<Proyecto> proyectosCancelados = proyectoService.obtenerProyectosCancelados();
+    public String mostrarProyectosCancelados(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        // Obtener el usuario autenticado
+        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Obtener proyectos completados del usuario
+        List<Proyecto> proyectosCancelados = proyectoService.getProyectosCanceladossPorUsuario(usuario);
+
+        // Agregar proyectos completados al modelo
         model.addAttribute("proyectosCancelados", proyectosCancelados);
-        return "Proyecto/cancelados";  // Nombre de tu plantilla Thymeleaf
+
+        return "Proyecto/cancelados"; // Asegúrate de que esta vista existe
     }
 
     @GetMapping("/order")

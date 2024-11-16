@@ -98,6 +98,11 @@
 
         }
 
+        @Override
+        public List<Proyecto> getProyectosCanceladossPorUsuario(Usuario usuario) {
+            return proyectoRepository.findByUsuarioAndEstado(usuario, "Cancelado");
+        }
+
 
     }
 

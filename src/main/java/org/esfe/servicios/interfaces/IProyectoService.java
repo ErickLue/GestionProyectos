@@ -35,6 +35,7 @@ public interface IProyectoService {
 
     List<Proyecto> getProyectosCompletadosPorUsuario(Usuario usuario);
 
+    List<Proyecto> getProyectosCanceladossPorUsuario(Usuario usuario);
 
 
 }
