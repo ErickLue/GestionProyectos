@@ -15,12 +15,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Bean
     public UserDetailsManager customUsers(DataSource dataSource) {
     JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);

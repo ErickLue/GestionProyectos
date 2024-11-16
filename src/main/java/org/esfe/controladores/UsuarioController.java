@@ -31,9 +31,6 @@ public class UsuarioController {
     @Autowired
     private IEstadoServices estadoServices;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
 
     @GetMapping("/login")
     public String mostrarFormularioDeLogin() {
@@ -76,6 +73,13 @@ public class UsuarioController {
 
         try {
             usuario.setStatus(1); // Asignar estado activo
+
+            // Agregar automáticamente {noop} a la contraseña si es necesario
+            String password = usuario.getContraseña();
+            if (password != null && !password.startsWith("{noop}")) {
+                usuario.setContraseña("{noop}" + password); // Prefijo {noop}
+            }
+
             usuarioService.crearOEditar(usuario); // Guardar usuario
             attributes.addFlashAttribute("msg", "Usuario creado correctamente");
         } catch (Exception e) {
