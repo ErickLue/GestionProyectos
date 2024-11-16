@@ -33,6 +33,9 @@ public interface IProyectoService {
 
     List<Proyecto> findAllOrderedByPresupuesto();
 
+    List<Proyecto> getProyectosCompletadosPorUsuario(Usuario usuario);
+
+
 
 }
 

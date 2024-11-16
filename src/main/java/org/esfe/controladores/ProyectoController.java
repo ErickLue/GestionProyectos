@@ -204,11 +204,20 @@ public class ProyectoController {
 
 
     @GetMapping("/completados")
-    public String mostrarProyectosCompletados(Model model) {
-        List<Proyecto> proyectosCompletados = proyectoService.obtenerProyectosCompletados();
+    public String mostrarProyectosCompletados(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        // Obtener el usuario autenticado
+        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Obtener proyectos completados del usuario
+        List<Proyecto> proyectosCompletados = proyectoService.getProyectosCompletadosPorUsuario(usuario);
+
+        // Agregar proyectos completados al modelo
         model.addAttribute("proyectosCompletados", proyectosCompletados);
-        return "Proyecto/completados";
+
+        return "Proyecto/completados"; // Asegúrate de que esta vista existe
     }
+
 
     @GetMapping("/activos")
     public String mostrarProyectosEnProgreso(Model model) {

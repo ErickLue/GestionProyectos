@@ -9,8 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IProyectoRepository extends JpaRepository<Proyecto, Integer> {
+    //Filtrar los proyectos segun el usuario autenticado
     List<Proyecto> findByUsuario(Usuario usuario);
+    //Filtrar los proyectos segun el estado
     List<Proyecto> findByEstado(String estado);
+    //Lista de proyectos cancelados segun el usuario autenticado
+    List<Proyecto> findByUsuarioAndEstado(Usuario usuario, String estado);
+
 
     List<Proyecto> findAllByOrderByNombreAsc();
     List<Proyecto> findAllByOrderByFechaFinAsc();

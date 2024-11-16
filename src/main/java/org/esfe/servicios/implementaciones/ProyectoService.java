@@ -79,17 +79,23 @@
 
         @Override
         public List<Proyecto> findAllOrderedByNombre() {
-            return proyectoRepository.findAllByOrderByNombreAsc(); // Asegúrate de tener un método en el repositorio
+            return proyectoRepository.findAllByOrderByNombreAsc();
         }
 
         @Override
         public List<Proyecto> findAllOrderedByFechaFin() {
-            return proyectoRepository.findAllByOrderByFechaFinAsc(); // Asegúrate de tener un método en el repositorio
+            return proyectoRepository.findAllByOrderByFechaFinAsc();
         }
 
         @Override
         public List<Proyecto> findAllOrderedByPresupuesto() {
-            return proyectoRepository.findAllByOrderByPresupuestoAsc(); // Asegúrate de tener un método en el repositorio
+            return proyectoRepository.findAllByOrderByPresupuestoAsc();
+        }
+
+        @Override
+        public List<Proyecto> getProyectosCompletadosPorUsuario(Usuario usuario) {
+            return proyectoRepository.findByUsuarioAndEstado(usuario, "Completado");
+
         }
 
 
