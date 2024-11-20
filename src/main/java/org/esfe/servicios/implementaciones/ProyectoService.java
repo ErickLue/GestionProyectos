@@ -62,35 +62,12 @@
             }
         }
 
-        @Override
-        public List<Proyecto> obtenerProyectosCompletados() {
-            return proyectoRepository.findByEstado("completado");
-        }
 
         @Override
         public List<Proyecto> obtenerProyectosActivos() {
             return proyectoRepository.findByEstado("activo");
         }
 
-        @Override
-        public List<Proyecto> obtenerProyectosCancelados() {
-            return proyectoRepository.findByEstado("cancelado");
-        }
-
-        @Override
-        public List<Proyecto> findAllOrderedByNombre() {
-            return proyectoRepository.findAllByOrderByNombreAsc();
-        }
-
-        @Override
-        public List<Proyecto> findAllOrderedByFechaFin() {
-            return proyectoRepository.findAllByOrderByFechaFinAsc();
-        }
-
-        @Override
-        public List<Proyecto> findAllOrderedByPresupuesto() {
-            return proyectoRepository.findAllByOrderByPresupuestoAsc();
-        }
 
         @Override
         public List<Proyecto> getProyectosCompletadosPorUsuario(Usuario usuario) {
@@ -103,6 +80,20 @@
             return proyectoRepository.findByUsuarioAndEstado(usuario, "Cancelado");
         }
 
+        @Override
+        public List<Proyecto> getProyectosCompletadosPorUsuarioOrderByNombre(Usuario usuario) {
+            return proyectoRepository.findByUsuarioAndEstadoOrderByNombreAsc(usuario, "Completado");
+        }
+
+        @Override
+        public List<Proyecto> getProyectosCompletadosPorUsuarioOrderByFechaFin(Usuario usuario) {
+            return proyectoRepository.findByUsuarioAndEstadoOrderByFechaFinAsc(usuario, "Completado");
+        }
+
+        @Override
+        public List<Proyecto> getProyectosCompletadosPorUsuarioOrderByPresupuesto(Usuario usuario) {
+            return proyectoRepository.findByUsuarioAndEstadoOrderByPresupuestoDesc(usuario, "Completado");
+        }
 
     }
 

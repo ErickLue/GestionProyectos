@@ -17,8 +17,8 @@ public interface IProyectoRepository extends JpaRepository<Proyecto, Integer> {
     List<Proyecto> findByUsuarioAndEstado(Usuario usuario, String estado);
 
 
-    List<Proyecto> findAllByOrderByNombreAsc();
-    List<Proyecto> findAllByOrderByFechaFinAsc();
-    List<Proyecto> findAllByOrderByPresupuestoAsc();
+    List<Proyecto> findByUsuarioAndEstadoOrderByNombreAsc(Usuario usuario, String estado);
+    List<Proyecto> findByUsuarioAndEstadoOrderByFechaFinAsc(Usuario usuario, String estado);
+    List<Proyecto> findByUsuarioAndEstadoOrderByPresupuestoDesc(Usuario usuario, String estado);
 
 }

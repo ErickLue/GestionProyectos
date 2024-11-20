@@ -122,3 +122,15 @@
 </script>
 </body>
 </html>
+<script>
+  function searchProjects() {
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+    const projectCards = document.querySelectorAll('#projectGrid .bg-white');  // Seleccionamos todas las tarjetas de proyectos
+
+    projectCards.forEach(card => {
+      const projectName = card.querySelector('h3').textContent.toLowerCase();  // Nombre del proyecto dentro de cada tarjeta
+      // Mostramos o ocultamos la tarjeta en función de si el nombre incluye el texto de búsqueda
+      card.style.display = projectName.includes(searchText) ? '' : 'none';
+    });
+  }
+</script>

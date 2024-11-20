@@ -2,10 +2,15 @@ package org.esfe.controladores;
 
 
 import org.esfe.modelos.Usuario;
+import org.esfe.servicios.implementaciones.UsuarioService;
 import org.esfe.servicios.interfaces.IEstadoServices;
 import org.esfe.servicios.interfaces.IRolService;
 import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,6 +95,13 @@ public class UsuarioController {
         return "redirect:/Proyectos"; // Redirigir a la vista de proyectos
     }
 
+    @GetMapping("/perfil")
+    public String mostrarPerfil(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        model.addAttribute("usuario", usuario); // Enviar usuario al modelo
+        return "perfil"; // Nombre de la vista Thymeleaf
+    }
 
 }
 
