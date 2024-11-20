@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "Tarea")
@@ -35,16 +33,6 @@ public class Tarea {
     @Transient
     private long diasLaborables;
 
-    // ...
-
-    public void setDiasLaborables(long diasLaborables) {
-        this.diasLaborables = diasLaborables;
-    }
-
-    public long getDiasLaborables() {
-        return diasLaborables;
-    }
-
     @NotNull(message = "La fecha de fin es requerida")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
@@ -56,14 +44,6 @@ public class Tarea {
     @ManyToOne
     @JoinColumn(name = "estadoId")
     private Estado estado;
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
 
     @ManyToOne
     @JoinColumn(name = "miembroEquipoId")
@@ -117,7 +97,6 @@ public class Tarea {
         this.fechaInicio = fechaInicio;
     }
 
-
     public Date getFechaFin() {
         return fechaFin;
     }
@@ -132,6 +111,22 @@ public class Tarea {
 
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
+    }
+
+    public void setDiasLaborables(long diasLaborables) {
+        this.diasLaborables = diasLaborables;
+    }
+
+    public long getDiasLaborables() {
+        return diasLaborables;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public Miembro getMiembroEquipo() {
