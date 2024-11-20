@@ -8,7 +8,9 @@ import org.esfe.servicios.interfaces.IProyectoService;
 import org.esfe.servicios.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,9 @@ import java.util.stream.IntStream;
 public class ProyectoController {
     private static String UPLOADED_FOLDER = "C:/imagenes_proyectos/"; // Ruta en el servidor donde se guardarán las imágenes
 
+    public ProyectoController(IProyectoRepository proyectoRepository) {
+        this.proyectoRepository = proyectoRepository;
+    }
 
     @Autowired
     private IProyectoService proyectoService;
@@ -100,21 +105,39 @@ public class ProyectoController {
                        @RequestParam(value = "file", required = false) MultipartFile file,
                        @AuthenticationPrincipal UserDetails userDetails) {
 
-        // Validaciones de fechas
-        if (proyecto.getFechaInicio() != null && proyecto.getFechaInicio().before(new Date())) {
-            result.rejectValue("fechaInicio", "error.proyecto", "La fecha de inicio no puede ser una fecha pasada");
-        }
-        if (proyecto.getFechaFin() != null && proyecto.getFechaFin().before(new Date())) {
-            result.rejectValue("fechaFin", "error.proyecto", "La fecha final no puede ser una fecha pasada");
-        }
-        if (proyecto.getFechaInicio() != null && proyecto.getFechaFin() != null && proyecto.getFechaFin().before(proyecto.getFechaInicio())) {
-            result.rejectValue("fechaFin", "error.proyecto", "La fecha final no puede ser anterior a la fecha de inicio");
+        // Determinar si es una edición o una creación
+        boolean esEdicion = proyecto.getProyecto_id() != null;
+
+        if (!esEdicion) {
+            // Validaciones específicas para creación
+            if (proyecto.getFechaInicio() != null && proyecto.getFechaInicio().before(new Date())) {
+                result.rejectValue("fechaInicio", "error.proyecto", "La fecha de inicio no puede ser una fecha pasada");
+            }
+            if (proyecto.getFechaFin() != null && proyecto.getFechaFin().before(new Date())) {
+                result.rejectValue("fechaFin", "error.proyecto", "La fecha final no puede ser una fecha pasada");
+            }
+        } else {
+            // Validaciones específicas para edición
+            Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyecto_id());
+            if (proyectoExistente.isPresent()) {
+                Date fechaInicioExistente = proyectoExistente.get().getFechaInicio();
+                if (proyecto.getFechaFin() != null && proyecto.getFechaFin().before(fechaInicioExistente)) {
+                    result.rejectValue("fechaFin", "error.proyecto",
+                            "La fecha final no puede ser anterior");
+                }
+            }
         }
 
+        // Si hay errores de validación, permanecer en la misma vista
         if (result.hasErrors()) {
             model.addAttribute("proyecto", proyecto);
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
-            return "Proyecto/edit";
+            model.addAttribute("esEdicion", esEdicion); // Indica si es edición o creación
+            if (result.hasErrors()) {
+                model.addAttribute("proyecto", proyecto);
+                model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+                return esEdicion ? "Proyecto/edit" : "Proyecto/create"; // Retorna la vista sin redirigir
+            }
         }
 
         // Obtener el usuario autenticado
@@ -133,14 +156,20 @@ public class ProyectoController {
                     Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                     proyecto.setImagen("/images/" + fileName);
                 } catch (IOException e) {
-                    attributes.addFlashAttribute("error", "No se pudo guardar la imagen.");
-                    return "redirect:/Proyectos";
+                    model.addAttribute("errorImagen", "No se pudo guardar la imagen.");
+                    model.addAttribute("proyecto", proyecto);
+                    model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+                    model.addAttribute("esEdicion", esEdicion);
+                    return "Proyecto/edit";
                 }
             } else {
-                attributes.addFlashAttribute("error", "Solo se permiten archivos de imagen.");
-                return "redirect:/Proyectos";
+                model.addAttribute("errorImagen", "Solo se permiten archivos de imagen.");
+                model.addAttribute("proyecto", proyecto);
+                model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+                model.addAttribute("esEdicion", esEdicion);
+                return "Proyecto/edit";
             }
-        } else if (proyecto.getProyecto_id() != null) {
+        } else if (esEdicion) {
             // Si no se sube una nueva imagen, mantener la existente
             Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyecto_id());
             proyectoExistente.ifPresent(p -> proyecto.setImagen(p.getImagen()));
@@ -149,11 +178,14 @@ public class ProyectoController {
         // Guardar el proyecto (creación o actualización)
         proyectoService.crearOEditar(proyecto);
 
-        attributes.addFlashAttribute("msg", proyecto.getProyecto_id() == null ?
-                "Proyecto creado correctamente" : "Proyecto actualizado correctamente");
+        // Mostrar mensaje de éxito
+        attributes.addFlashAttribute("msg", esEdicion ?
+                "Proyecto actualizado correctamente" : "Proyecto creado correctamente");
 
+        // Redirigir a la lista de proyectos si todo es correcto
         return "redirect:/Proyectos";
     }
+
 
 
 
@@ -238,48 +270,37 @@ public class ProyectoController {
         return "Proyecto/cancelados"; // Asegúrate de que esta vista existe
     }
 
-    //ORDENA LOS PROYECTOS SEGUN EL CRITERIO (POR FECHA DE FINALIZACION, NOMBRE, ETC)
     @GetMapping("/order")
-    public String mostrarProyectosCompletados(
-            @RequestParam(value = "filterBy", defaultValue = "fechaFin") String filterBy,
-            @AuthenticationPrincipal UserDetails userDetails,
-            Model model) {
+    public String mostrarProyectosCompletadosOrdenados(
+            @RequestParam(value = "filterBy", defaultValue = "nombre") String filterBy,
+            Model model,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
         // Obtener el usuario autenticado
         Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Filtrar y ordenar los proyectos según el criterio seleccionado
-        List<Proyecto> proyectosFiltrados;
+        // Obtener los proyectos completados ordenados según el criterio
+        List<Proyecto> proyectosCompletados;
+
         switch (filterBy) {
-            case "nombre":
-                proyectosFiltrados = proyectoRepository.findByUsuarioAndEstado(usuario, "Completado")
-                        .stream()
-                        .sorted(Comparator.comparing(Proyecto::getNombre))
-                        .toList();
+            case "fechaFin":
+                proyectosCompletados = proyectoService.getProyectosCompletadosPorUsuarioOrderByFechaFin(usuario);
                 break;
             case "presupuesto":
-                proyectosFiltrados = proyectoRepository.findByUsuarioAndEstado(usuario, "Completado")
-                        .stream()
-                        .sorted(Comparator.comparing(Proyecto::getPresupuesto).reversed())
-                        .toList();
+                proyectosCompletados = proyectoService.getProyectosCompletadosPorUsuarioOrderByPresupuesto(usuario);
                 break;
-            case "fechaFin":
+            case "nombre":
             default:
-                proyectosFiltrados = proyectoRepository.findByUsuarioAndEstado(usuario, "Completado")
-                        .stream()
-                        .sorted(Comparator.comparing(Proyecto::getFechaFin).reversed())
-                        .toList();
+                proyectosCompletados = proyectoService.getProyectosCompletadosPorUsuarioOrderByNombre(usuario);
                 break;
         }
 
-        // Agregar proyectos filtrados y ordenados al modelo
-        model.addAttribute("proyectosCompletados", proyectosFiltrados);
-        model.addAttribute("filterBy", filterBy); // Para mantener el criterio seleccionado en la vista
-
-        return "Proyecto/completados"; // Vista de proyectos completados
+        // Agregar los proyectos ordenados al modelo
+        model.addAttribute("proyectosCompletados", proyectosCompletados);
+        model.addAttribute("filterBy", filterBy);  // Para recordar el filtro actual en la vista
+        return "Proyecto/completados";  // Asegúrate de que esta vista existe
     }
-
 
     @GetMapping("/order/cancelados")
     public String mostrarProyectosCancelados(@RequestParam(value = "filterBy", defaultValue = "fechaInicio") String filterBy, Model model) {
@@ -320,6 +341,5 @@ public class ProyectoController {
         return usuarioService.findByCorreo(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
-
 
 }
