@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,8 +11,66 @@
     <link th:href="@{/css/style.css}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.6.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+   </head>
 <body>
+<div>
+    <!-- Barra de navegación -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg p-4 flex justify-between items-center">
+        <!-- Logo e ícono de inicio -->
+        <div class="flex items-center space-x-4">
+            <a href="/Proyectos" class="text-gray-600 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+                <!-- Botón Inicio -->
+                <button aria-label="Home">
+                    <i class="fas fa-home text-xl"></i>
+                </button>
+            </a>
+
+            <div class="flex items-center space-x-2">
+                <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*gl4msKUuyqy9CLg3FxzSvA.png" alt="Logo" class="w-8 h-8">
+                <span class="text-lg font-semibold">ProjectGalaxy</span>
+            </div>
+        </div>
+
+        <!-- Perfil de usuario e ícono de configuración -->
+        <div class="flex items-center space-x-4">
+            <!-- Perfil de usuario -->
+            <div class="relative group">
+                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-200 hover:text-blue-500">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" alt="Profile" class="w-8 h-8 rounded-full">
+                    <!-- Mostrar el nombre del usuario autenticado -->
+                    <span th:text="${usuario != null ? usuario.nombre : 'Invitado'}"></span>
+                </button>
+
+                <!-- Menú desplegable -->
+                <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 hidden group-hover:block">
+                    <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <!-- Información del usuario -->
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Email: <span th:text="${usuario != null ? usuario.correo : 'No disponible'}"></span></p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Nombre: <span th:text="${usuario != null ? usuario.nombre : 'No disponible'}"></span></p>
+                    </div>
+                    <!-- Enlace de logout -->
+                    <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700" th:href="@{/logout}">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Log Out
+                    </a>
+
+                    <!-- Formulario oculto para logout -->
+                    <form id="logout-form" th:action="@{/logout}" method="POST" style="display: none;">
+                        <!-- Token CSRF -->
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    </form>
+                </div>
+            </div>
+
+            <!-- Botón de Configuración -->
+            <button aria-label="Settings" class="text-gray-600 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+                <i class="fas fa-cogs text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+</div>
 <!-- <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark custom-nav"> -->
    <!-- Navbar Brand -->
 <!-- <a class="navbar-brand ps-3" href="#">ESFE</a> -->

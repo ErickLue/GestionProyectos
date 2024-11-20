@@ -97,8 +97,7 @@ public class ProyectoController {
                        BindingResult result,
                        Model model,
                        RedirectAttributes attributes,
-                       @RequestParam("file") MultipartFile file, // Asegúrate de que este es el parámetro de archivo
-
+                       @RequestParam(value = "file", required = false) MultipartFile file,
                        @AuthenticationPrincipal UserDetails userDetails) {
 
         // Validaciones de fechas
@@ -115,57 +114,50 @@ public class ProyectoController {
         if (result.hasErrors()) {
             model.addAttribute("proyecto", proyecto);
             model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
-            attributes.addFlashAttribute("error", "No se pudo crear debido a un error inesperado");
-            return "Proyecto/create";
+            return "Proyecto/edit";
         }
 
         // Obtener el usuario autenticado
         Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Asignar el usuario al proyecto
         proyecto.setUsuario(usuario);
 
-        // Aquí se maneja el archivo (imagen)
-        if (!file.isEmpty()) {
+        // Manejar la imagen solo si se subió un archivo
+        if (file != null && !file.isEmpty()) {
             String contentType = file.getContentType();
 
-            // Verificar que el archivo sea una imagen
             if (contentType != null && contentType.startsWith("image/")) {
                 try {
-                    // Generar un nombre único para la imagen
                     String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-
-                    // Ruta para almacenar la imagen en `resources/static/images`
                     Path path = Paths.get("src/main/resources/static/images/" + fileName);
-
-                    // Guardar el archivo en el directorio del proyecto
                     Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-                    // Establecer la URL de la imagen en el proyecto (se usará para acceder desde la vista)
                     proyecto.setImagen("/images/" + fileName);
                 } catch (IOException e) {
-                    e.printStackTrace();
                     attributes.addFlashAttribute("error", "No se pudo guardar la imagen.");
                     return "redirect:/Proyectos";
                 }
             } else {
-                // Si no es una imagen, agregar un mensaje de error
                 attributes.addFlashAttribute("error", "Solo se permiten archivos de imagen.");
                 return "redirect:/Proyectos";
             }
+        } else if (proyecto.getProyecto_id() != null) {
+            // Si no se sube una nueva imagen, mantener la existente
+            Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyecto_id());
+            proyectoExistente.ifPresent(p -> proyecto.setImagen(p.getImagen()));
         }
 
-
-        // Guardar el proyecto
+        // Guardar el proyecto (creación o actualización)
         proyectoService.crearOEditar(proyecto);
 
-        // Mensaje de éxitool
-        attributes.addFlashAttribute("msg", "Proyecto creado correctamente");
+        attributes.addFlashAttribute("msg", proyecto.getProyecto_id() == null ?
+                "Proyecto creado correctamente" : "Proyecto actualizado correctamente");
 
-        // Redirigir a la lista de proyectos
         return "redirect:/Proyectos";
     }
+
+
+
+
 
     @GetMapping("details/{id}")
     public String details(@PathVariable("id") Integer id, Model model) {
@@ -246,31 +238,49 @@ public class ProyectoController {
         return "Proyecto/cancelados"; // Asegúrate de que esta vista existe
     }
 
+    //ORDENA LOS PROYECTOS SEGUN EL CRITERIO (POR FECHA DE FINALIZACION, NOMBRE, ETC)
     @GetMapping("/order")
-    public String mostrarProyectosCompletados(@RequestParam(value = "filterBy", defaultValue = "fechaFin") String filterBy, Model model) {
-        List<Proyecto> proyectosCompletados;
+    public String mostrarProyectosCompletados(
+            @RequestParam(value = "filterBy", defaultValue = "fechaFin") String filterBy,
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model) {
 
-        // Filtrar solo los proyectos completados
-        proyectosCompletados = proyectoRepository.findByEstado("Completado");
+        // Obtener el usuario autenticado
+        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Ordenar los proyectos según el filtro recibido
+        // Filtrar y ordenar los proyectos según el criterio seleccionado
+        List<Proyecto> proyectosFiltrados;
         switch (filterBy) {
             case "nombre":
-                proyectosCompletados.sort(Comparator.comparing(Proyecto::getNombre));
+                proyectosFiltrados = proyectoRepository.findByUsuarioAndEstado(usuario, "Completado")
+                        .stream()
+                        .sorted(Comparator.comparing(Proyecto::getNombre))
+                        .toList();
                 break;
             case "presupuesto":
-                proyectosCompletados.sort(Comparator.comparing(Proyecto::getPresupuesto).reversed());
+                proyectosFiltrados = proyectoRepository.findByUsuarioAndEstado(usuario, "Completado")
+                        .stream()
+                        .sorted(Comparator.comparing(Proyecto::getPresupuesto).reversed())
+                        .toList();
                 break;
             case "fechaFin":
             default:
-                proyectosCompletados.sort(Comparator.comparing(Proyecto::getFechaFin).reversed());
+                proyectosFiltrados = proyectoRepository.findByUsuarioAndEstado(usuario, "Completado")
+                        .stream()
+                        .sorted(Comparator.comparing(Proyecto::getFechaFin).reversed())
+                        .toList();
                 break;
         }
 
-        model.addAttribute("proyectosCompletados", proyectosCompletados);
-        model.addAttribute("filterBy", filterBy);  // Para mantener el valor seleccionado
-        return "Proyecto/completados";  // La vista que muestra los proyectos completados
+        // Agregar proyectos filtrados y ordenados al modelo
+        model.addAttribute("proyectosCompletados", proyectosFiltrados);
+        model.addAttribute("filterBy", filterBy); // Para mantener el criterio seleccionado en la vista
+
+        return "Proyecto/completados"; // Vista de proyectos completados
     }
+
+
     @GetMapping("/order/cancelados")
     public String mostrarProyectosCancelados(@RequestParam(value = "filterBy", defaultValue = "fechaInicio") String filterBy, Model model) {
         List<Proyecto> proyectosCancelados;
@@ -310,5 +320,6 @@ public class ProyectoController {
         return usuarioService.findByCorreo(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
+
 
 }
