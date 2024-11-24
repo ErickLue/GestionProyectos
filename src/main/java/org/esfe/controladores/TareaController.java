@@ -173,4 +173,43 @@ public class TareaController {
             return "error"; // or return a specific error page
         }
     }
+
+    @GetMapping("/graficas")
+    public String graficas(Model model) {
+        try {
+            // Llama al método que calcula los porcentajes por estado
+            Map<String, Integer> porcentajePorEstado = tareaService.calcularPorcentajes();
+            model.addAttribute("porcentajePorEstado", porcentajePorEstado);
+
+            return "tarea/graficas"; // Retorna la nueva vista `graficas`
+        } catch (Exception e) {
+            logger.error("Error al calcular los porcentajes: {}", e.getMessage());
+            model.addAttribute("errorMessage", "Error al generar las gráficas. Intente de nuevo más tarde.");
+            return "error"; // Redirige a una página de error en caso de fallo
+        }
+    }
+
+    @GetMapping("/filtrar")
+    public String filtrarPorEstado(@RequestParam("estado") String estado, Model model) {
+        // Crear un mapa para normalizar los estados
+        Map<String, String> estadoMap = Map.of(
+                "EnProgreso", "En Progreso",
+                "Pendiente", "Pendiente",
+                "Completada", "Completada",
+                "Cancelada", "Cancelada"
+        );
+
+        // Obtener el estado normalizado
+        estado = estadoMap.getOrDefault(estado, estado); // Si no está en el mapa, usa el estado original
+
+        // Buscar las tareas
+        List<Tarea> tareasFiltradas = tareaService.buscarPorEstadoTarea(estado);
+
+        model.addAttribute("tareas", tareasFiltradas);
+        model.addAttribute("estadoSeleccionado", estado);
+        return "tarea/index";
+    }
+
+
+
 }

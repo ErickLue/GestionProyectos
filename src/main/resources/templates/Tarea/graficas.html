@@ -1,0 +1,112 @@
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <div class="container">
+        <h3 class="text-center mt-4">Porcentaje de Tareas por Estado</h3>
+
+        <!-- Contenedor de las gráficas -->
+        <div class="row mt-4">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3" th:each="entry : ${porcentajePorEstado}">
+                <div class="card">
+                    <div class="chart-container">
+                        <!-- Lienzo para el gráfico -->
+                        <canvas th:id="${'chart' + #strings.replace(entry.key, ' ', '')}"></canvas>
+                        <div class="chart-text" th:id="${'text' + #strings.replace(entry.key, ' ', '')}"></div>
+                    </div>
+                    <!-- Etiqueta del estado -->
+                    <div class="chart-label" th:text="${entry.key}"></div>
+                </div>
+                <!-- Dato oculto para inicializar el gráfico -->
+                <input type="hidden" th:id="${'data' + #strings.replace(entry.key, ' ', '')}" th:value="${entry.value}" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Estilos para las gráficas -->
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 150px;
+            margin: auto;
+        }
+
+        .chart-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+
+    <!-- Script para inicializar y configurar las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Procesar los elementos dinámicos para crear las gráficas
+            document.querySelectorAll('[id^="data"]').forEach(element => {
+                const state = element.id.replace('data', ''); // Obtener el estado del id
+                let data = parseInt(element.value); // Obtener el porcentaje de la tarea
+                if (isNaN(data)) data = 0;
+                data = Math.max(0, Math.min(100, data)); // Validar el rango de porcentaje
+
+                const colorMap = {
+                    "Pendiente": '#EE4E4E',
+                    "En Progreso": '#597445',
+                    "Completada": '#D37676',
+                    "Cancelada": '#dc3545'
+                };
+                const color = colorMap[state] || '#06D001'; // Color por defecto
+
+                // Configurar la gráfica
+                const ctx = document.getElementById('chart' + state).getContext('2d');
+                configChart(ctx, data, color, 'text' + state, state);
+            });
+        });
+
+        // Función para configurar la gráfica y manejar el clic para filtrar
+        function configChart(ctx, data, color, textElementId, state) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [data, 100 - data],
+                        backgroundColor: [color, '#e9ecef'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    cutout: '75%',
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    },
+                    onClick: function () {
+                        // Al hacer clic, redirige para filtrar las tareas
+                        window.location.href = `/tareas/filtrar?estado=${encodeURIComponent(state)}`;
+                    }
+                }
+            });
+
+            // Actualizar el texto del centro
+            const textElement = document.getElementById(textElementId);
+            if (textElement) {
+                textElement.innerText = `${data}%`;
+            }
+        }
+    </script>
+</div>
+</html>

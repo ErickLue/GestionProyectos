@@ -76,5 +76,10 @@ public class TareaService implements ITareaService {
 
         return diasLaborables;
     }
+
+    @Override
+    public List<Tarea> buscarPorEstadoTarea(String estado) {
+        return TareaRepository.findByEstadoTarea(estado);
+    }
 }
 
