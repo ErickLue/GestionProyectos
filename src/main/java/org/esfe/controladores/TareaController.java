@@ -95,6 +95,8 @@ public class TareaController {
         model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
         model.addAttribute("estadosTareas", EstadoTarea());
+        model.addAttribute("currentView", "crearProyecto");
+
         return "tarea/create";
     }
 

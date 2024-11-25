@@ -47,33 +47,57 @@ public class ProyectoController {
     @Autowired
     private IProyectoRepository proyectoRepository;
 
+
     @GetMapping
     public String index(Model model,
                         @RequestParam("page") Optional<Integer> page,
                         @RequestParam("size") Optional<Integer> size,
                         @RequestParam("sort") Optional<String> sort,
+                        @RequestParam(value = "estado", required = false) String estado,
                         @AuthenticationPrincipal UserDetails userDetails) {
-        int currentPage = page.orElse(1) - 1; // Si no está seteado, se asigna 0
-        int pageSize = size.orElse(5); // Tamaño de la página, se asigna 5
-        String sortField = sort.orElse("prioridad"); // Campo de ordenación predeterminado
 
+        // Definir valores predeterminados si los parámetros no están presentes
+        int currentPage = page.orElse(1) - 1;  // Página actual (inicia en 0)
+        int pageSize = size.orElse(5);  // Tamaño de la página
+        String sortField = sort.orElse("nombre");  // Ordenar por nombre por defecto
+
+        // Crear el Pageable para paginación y ordenamiento
         Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(sortField).ascending());
 
         // Obtener el usuario autenticado
         Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Obtener y filtrar los proyectos activos del usuario autenticado
-        List<Proyecto> proyectosActivos = proyectoService.getProyectosByUsuario(usuario)
-                .stream()
-                .filter(proyecto -> "Activo".equals(proyecto.getEstado()))
-                .collect(Collectors.toList());
+        // Obtener todos los proyectos del usuario sin filtro de estado o sort
+        List<Proyecto> proyectosFiltrados = proyectoService.getProyectosByUsuario(usuario);
 
-        // Paginar los proyectos activos del usuario
+        // Si el estado no es null ni vacío, filtrar los proyectos por estado
+        if (estado != null && !estado.isEmpty()) {
+            proyectosFiltrados = proyectosFiltrados.stream()
+                    .filter(proyecto -> estado.equals(proyecto.getEstado()))
+                    .collect(Collectors.toList());
+        }
+
+        // Ordenar los proyectos según el campo seleccionado (por nombre, fechaFin o presupuesto)
+        switch (sortField) {
+            case "fechaFin":
+                proyectosFiltrados.sort(Comparator.comparing(Proyecto::getFechaFin));
+                break;
+            case "presupuesto":
+                proyectosFiltrados.sort(Comparator.comparing(Proyecto::getPresupuesto));
+                break;
+            case "nombre":
+            default:
+                proyectosFiltrados.sort(Comparator.comparing(Proyecto::getNombre));
+                break;
+        }
+
+        // Paginar los proyectos filtrados y ordenados
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), proyectosActivos.size());
-        Page<Proyecto> paginatedProyectos = new PageImpl<>(proyectosActivos.subList(start, end), pageable, proyectosActivos.size());
+        int end = Math.min((start + pageable.getPageSize()), proyectosFiltrados.size());
+        Page<Proyecto> paginatedProyectos = new PageImpl<>(proyectosFiltrados.subList(start, end), pageable, proyectosFiltrados.size());
 
+        // Verificar si hay proyectos para mostrar
         if (paginatedProyectos != null && paginatedProyectos.hasContent()) {
             model.addAttribute("proyectos", paginatedProyectos);
             int totalPages = paginatedProyectos.getTotalPages();
@@ -85,15 +109,23 @@ public class ProyectoController {
                 model.addAttribute("currentPage", currentPage);
             }
         } else {
-            model.addAttribute("error", "No se encontraron proyectos activos.");
+            model.addAttribute("error", "No se encontraron proyectos con los filtros seleccionados.");
         }
 
-        return "Proyecto/index"; // Asegúrate de que la vista se llame correctamente
+        // Añadir al modelo los parámetros de estado y ordenamiento para mantenerlos en la vista
+        model.addAttribute("estado", estado);
+        model.addAttribute("sort", sortField);
+
+        // Retornar la vista con los proyectos
+        return "Proyecto/index";  // El nombre de la vista a devolver
     }
+
+
 
     @GetMapping("/create")
     public String create(Proyecto proyecto, Model model) {
         model.addAttribute("prioridades", obtenerPrioridadesOrdenadas());
+        model.addAttribute("currentView", "crearProyecto");
         return "Proyecto/create"; // Asegúrate de que esta ruta coincida con la vista Thymeleaf
     }
 
@@ -341,5 +373,6 @@ public class ProyectoController {
         return usuarioService.findByCorreo(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
+
 
 }

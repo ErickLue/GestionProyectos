@@ -14,7 +14,7 @@ import java.util.Set;
 public class Proyecto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer proyecto_id;
+    private Integer proyectoId;
 
     @NotBlank(message = "El nombre es requerido")
     private String nombre;
@@ -61,11 +61,11 @@ public class Proyecto {
     // Getters y Setters
 
     public Integer getProyecto_id() {
-        return proyecto_id;
+        return proyectoId;
     }
 
     public void setProyecto_id(Integer proyecto_id) {
-        this.proyecto_id = proyecto_id;
+        this.proyectoId = proyecto_id;
     }
 
     public String getNombre() {

@@ -76,5 +76,11 @@ public class TareaService implements ITareaService {
 
         return diasLaborables;
     }
+
+    @Override
+    public List<Tarea> obtenerTareasPorProyecto(Integer proyectoId) {
+        return TareaRepository.findByProyecto_ProyectoId(proyectoId);
+
+    }
 }
 

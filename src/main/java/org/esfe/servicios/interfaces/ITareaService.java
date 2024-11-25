@@ -23,4 +23,5 @@ public interface ITareaService  {
     Map<String, Integer> calcularPorcentajes();
 
     public long calcularDiasLaborables(Tarea tarea);
+    List<Tarea> obtenerTareasPorProyecto(Integer proyectoId);
 }
