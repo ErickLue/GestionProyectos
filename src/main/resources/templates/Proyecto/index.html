@@ -1,69 +1,198 @@
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layouts/_mainLayout">
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos Completados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
 
-<div layout:fragment="content">
-    <div th:if="${msg != null}">
-        <script>
-            Swal.fire({
-                title: "Confirmación",
-                text: '[[${msg}]]',
-                icon: "success"
-            });
-        </script>
-    </div>
-    <div th:if="${error != null}">
-        <script>
-            Swal.fire({
-                title: "Error",
-                text: '[[${error}]]',
-                icon: "error"
-            });
-        </script>
-    </div>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+<div class="min-h-screen">
+    <!-- Barra de navegación -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg p-4 flex justify-between items-center">
+        <!-- Logo e ícono de inicio -->
+        <div class="flex items-center space-x-4">
+            <a href="/Proyectos" class="text-gray-600 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+                <!-- Botón Inicio -->
+                <button aria-label="Home">
+                    <i class="fas fa-home text-xl"></i>
+                </button>
+            </a>
 
-    <h1>Listado de Proyectos</h1>
-    <a th:href="@{/Proyectos/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
+            <div class="flex items-center space-x-2">
+                <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*gl4msKUuyqy9CLg3FxzSvA.png" alt="Logo" class="w-8 h-8">
+                <span class="text-lg font-semibold">ProjectGalaxy</span>
+            </div>
+        </div>
 
-    <table class="custom-table mt-3">
-        <thead>
-        <tr class="head">
-            <th class="custom-th" style="border-radius: 10px 0 0 10px; height: 35px;">Nombre</th>
-            <th class="custom-th">Descripción</th>
-            <th class="custom-th">Presupuesto: (dólares)</th>
-            <th class="custom-th">Prioridad:</th>
-            <!-- <th>Fecha Inicio</th>
-            <th>Fecha Fin</th> -->
-            <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="tbody" th:each="item : ${proyectos}">
-            <td th:text="${item.nombre}"></td>
-            <td th:text="${item.descripcion}"></td>
-            <td th:text="${item.presupuesto}"></td>
-            <td th:text="${item.prioridad}"></td>
-            <!--<td th:text="${#dates.format(item.fechaInicio, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(item.fechaFin, 'yyyy-MM-dd')}"></td>-->
+        <!-- Perfil de usuario e ícono de configuración -->
+        <div class="flex items-center space-x-4">
+            <!-- Perfil de usuario -->
+            <div class="relative group">
+                <button class="flex items-center space-x-2 text-gray-600 dark:text-gray-200 hover:text-blue-500">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" alt="Profile" class="w-8 h-8 rounded-full">
+                    <!-- Mostrar el nombre del usuario autenticado -->
+                    <span th:text="${usuario != null ? usuario.nombre : 'Invitado'}"></span>
+                </button>
 
-            <td width="300px">
-                <a th:href="@{/Proyectos/details/{id}(id=${item.proyecto_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
-                <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
-                <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id = ${item.proyecto_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <!-- Menú desplegable -->
+                <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 hidden group-hover:block">
+                    <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <!-- Información del usuario -->
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Email: <span th:text="${usuario != null ? usuario.correo : 'No disponible'}"></span></p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Nombre: <span th:text="${usuario != null ? usuario.nombre : 'No disponible'}"></span></p>
+                    </div>
+                    <!-- Enlace de logout -->
+                    <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700" th:href="@{/logout}">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Log Out
+                    </a>
 
-    <nav aria-label="Page navigation example" style="margin-top:50px;">
-        <ul class="pagination" style="gap:5px">
-            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
-                   th:href="@{|/Proyectos?page=${pageNumber}|}"
-                   th:text="${pageNumber}">
-                </a>
-            </li>
-        </ul>
+                    <!-- Formulario oculto para logout -->
+                    <form id="logout-form" th:action="@{/logout}" method="POST" style="display: none;">
+                        <!-- Token CSRF -->
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    </form>
+                </div>
+            </div>
+
+            <!-- Botón de Configuración -->
+            <button aria-label="Settings" class="text-gray-600 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+                <i class="fas fa-cogs text-xl"></i>
+            </button>
+        </div>
     </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+            <!-- Filtros -->
+            <div class="mb-4">
+                <input type="text" id="searchInput" placeholder="Buscar proyecto..." class="border p-2 rounded w-full" />
+            </div>
+
+            <div class="flex space-x-4 mb-4">
+                <select id="filterByState" class="border p-2 rounded">
+                    <option value="all">Todos</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+
+                <select id="sortCriteria" class="border p-2 rounded">
+                    <option value="nombre">Ordenar por Nombre</option>
+                    <option value="fechaFin">Ordenar por Fecha de Fin</option>
+                    <option value="presupuesto">Ordenar por Presupuesto</option>
+                </select>
+            </div>
+
+            <!-- Contenido de los proyectos -->
+            <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Las tarjetas de proyecto se generarán dinámicamente con Thymeleaf -->
+                <div th:each="proyecto : ${proyectos}"
+                     class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-200"
+                     th:attr="data-nombre=${proyecto.nombre}, data-fecha-fin=${proyecto.fechaFin}, data-presupuesto=${proyecto.presupuesto}, data-estado=${proyecto.estado}">
+                    <a th:href="@{/Proyectos/details/{id}(id=${proyecto.proyecto_id})}" class="block">
+                        <div class="relative">
+                            <img th:src="${proyecto.imagen}" alt="Miniatura del proyecto" class="w-full h-48 object-cover">
+                            <div th:classappend="${proyecto.estado == 'Completado' ? 'bg-green-500' :
+                          proyecto.estado == 'Cancelado' ? 'bg-red-500' :
+                          proyecto.estado == 'Activo' ? 'bg-blue-500' : 'bg-gray-500'}
+                        + ' text-white px-3 py-1 rounded-full text-sm absolute top-4 right-4'"
+                                 th:text="${proyecto.estado}"></div>
+                        </div>
+                    </a>
+
+                    <div class="p-6">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white" th:text="${proyecto.nombre}">Nombre del Proyecto</h3>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4" th:text="${proyecto.descripcion}">Descripción del Proyecto</p>
+                        <div class="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+                            <div><span class="font-medium">Start Date:</span> <span th:text="${proyecto.fechaInicio}">Fecha de Inicio</span></div>
+                            <div><span class="font-medium">End Date:</span> <span th:text="${proyecto.fechaFin}">Fecha de Fin</span></div>
+                            <div><span class="font-medium">Budget:</span> <span th:text="${proyecto.presupuesto}">Presupuesto</span></div>
+                        </div>
+                        <div class="mt-4">
+                            <button onclick="confirmarCambioEstado(${proyecto.proyecto_id}, '${proyecto.estado}')" class="text-sm text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2">
+                                Cambiar Estado
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <a href="/Proyectos/create"
+       class="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition group">
+        <!-- Ícono de Crear -->
+        <i class="fas fa-plus text-xl"></i>
+        <!-- Tooltip (oculto por defecto, visible al pasar el mouse) -->
+        <span class="absolute bottom-full right-0 mb-2 w-32 text-sm text-center bg-gray-800 text-white p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            Crear Proyecto
+        </span>
+    </a>
 </div>
+
+<script>
+    // Obtener referencias a los elementos
+    const searchInput = document.getElementById('searchInput');
+    const filterByState = document.getElementById('filterByState');
+    const sortCriteria = document.getElementById('sortCriteria');
+    const projectGrid = document.getElementById('projectGrid');
+
+    // Obtener todas las tarjetas de proyectos al cargar la página
+    const projectCards = Array.from(document.querySelectorAll('.project-card'));
+
+    // Verifica si las tarjetas fueron cargadas
+    console.log('Tarjetas detectadas:', projectCards);
+
+    // Evento para aplicar los filtros cada vez que el usuario cambie el criterio
+    searchInput.addEventListener('input', applyFilters);
+    filterByState.addEventListener('change', applyFilters);
+    sortCriteria.addEventListener('change', applyFilters);
+
+    // Función que aplica los filtros y ordenación
+    function applyFilters() {
+        const searchText = searchInput.value.toLowerCase();
+        const filterState = filterByState.value;
+        const sortBy = sortCriteria.value;
+
+        console.log('Filtros aplicados:', { searchText, filterState, sortBy });
+
+        // Filtrar por estado y búsqueda
+        let filteredProjects = projectCards.filter(card => {
+            const projectName = card.getAttribute('data-nombre')?.toLowerCase() || '';
+            const projectState = card.getAttribute('data-estado') || '';
+
+            const matchesSearch = projectName.includes(searchText);
+            const matchesState = filterState === 'all' || projectState === filterState;
+
+            return matchesSearch && matchesState;
+        });
+
+        console.log('Proyectos filtrados:', filteredProjects);
+
+        // Ordenar los proyectos filtrados
+        filteredProjects.sort((a, b) => {
+            if (sortBy === 'nombre') {
+                return a.getAttribute('data-nombre').localeCompare(b.getAttribute('data-nombre'));
+            } else if (sortBy === 'fechaFin') {
+                const dateA = new Date(a.getAttribute('data-fecha-fin') || 0);
+                const dateB = new Date(b.getAttribute('data-fecha-fin') || 0);
+                return dateA - dateB;
+            } else if (sortBy === 'presupuesto') {
+                const budgetA = parseFloat(a.getAttribute('data-presupuesto')) || 0;
+                const budgetB = parseFloat(b.getAttribute('data-presupuesto')) || 0;
+                return budgetA - budgetB;
+            }
+        });
+
+        // Vaciar el grid y mostrar los proyectos filtrados y ordenados
+        projectGrid.innerHTML = '';
+        filteredProjects.forEach(project => projectGrid.appendChild(project));
+    }
+</script>
+</body>
+</html>

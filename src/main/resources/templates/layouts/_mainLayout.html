@@ -94,27 +94,23 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading text-white">Gestión de Proyectos</div>
-                    <a class="nav-link text-white" th:href="@{/Proyectos}">
-                        <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-list"></i></div>
-                        Proyectos
-                    </a>
-                    <a class="nav-link text-white" th:href="@{/tareas}">
+
+                    <a class="nav-link text-white" th:href="@{/tareas}" th:if="${currentView != 'crearProyecto' && currentView != 'crearTarea' && currentView != 'crearInforme'}">
                         <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-list-check"></i></div>
                         Tareas
                     </a>
-                    <a class="nav-link text-white" th:href="@{/informes}">
+
+                    <a class="nav-link text-white" th:href="@{/informes}" th:if="${currentView != 'crearProyecto' && currentView != 'crearTarea' && currentView != 'crearInforme'}">
                         <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-chart-bar"></i></div>
                         Informes
                     </a>
-                    <a class="nav-link text-white" th:href="@{/miembros}">
+
+                    <a class="nav-link text-white" th:href="@{/miembros}" th:if="${currentView != 'crearProyecto' && currentView != 'crearTarea' && currentView != 'crearInforme'}">
                         <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-users"></i></div>
                         Miembros
                     </a>
-                    <a class="nav-link text-white" th:href="@{/logout}">
-                        <div class="sb-nav-link-icon text-white"><i class="fa-solid fa-right-from-bracket"></i></div>
-                        Cerrar Sesión
-                    </a>
                 </div>
+
             </div>
             <div class="sb-sidenav-footer custom-nav">
                 <div class="small">Logged in as:</div>

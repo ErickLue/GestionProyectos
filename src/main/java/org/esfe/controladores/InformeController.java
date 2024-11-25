@@ -62,6 +62,7 @@ public class InformeController {
         model.addAttribute("estados", estadoServices.ObtenerTodos());
         model.addAttribute("proyectos", proyectoService.ObtenerTodos());
         model.addAttribute("miembros", miembroService.obtenerTodos());
+        model.addAttribute("currentView", "crearInforme");
         return "informe/create";
     }
 
