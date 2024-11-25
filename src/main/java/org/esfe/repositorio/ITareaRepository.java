@@ -8,4 +8,5 @@ import java.util.List;
 public interface ITareaRepository extends JpaRepository<Tarea, Integer> {
     List<Tarea> findByEstadoTarea(String estado);
 
+
 }

@@ -22,5 +22,7 @@ public interface ITareaService  {
 
     Map<String, Integer> calcularPorcentajes();
 
-    public long calcularDiasLaborables(Tarea tarea);
+     long calcularDiasLaborables(Tarea tarea);
+
+    List<Tarea> buscarPorEstadoTarea(String estado);
 }
