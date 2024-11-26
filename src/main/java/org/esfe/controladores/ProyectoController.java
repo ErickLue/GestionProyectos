@@ -138,7 +138,7 @@ public class ProyectoController {
                        @AuthenticationPrincipal UserDetails userDetails) {
 
         // Determinar si es una edición o una creación
-        boolean esEdicion = proyecto.getProyecto_id() != null;
+        boolean esEdicion = proyecto.getProyectoId() != null;
 
         if (!esEdicion) {
             // Validaciones específicas para creación
@@ -150,7 +150,7 @@ public class ProyectoController {
             }
         } else {
             // Validaciones específicas para edición
-            Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyecto_id());
+            Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyectoId());
             if (proyectoExistente.isPresent()) {
                 Date fechaInicioExistente = proyectoExistente.get().getFechaInicio();
                 if (proyecto.getFechaFin() != null && proyecto.getFechaFin().before(fechaInicioExistente)) {
@@ -203,7 +203,7 @@ public class ProyectoController {
             }
         } else if (esEdicion) {
             // Si no se sube una nueva imagen, mantener la existente
-            Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyecto_id());
+            Optional<Proyecto> proyectoExistente = proyectoService.buscarPorId(proyecto.getProyectoId());
             proyectoExistente.ifPresent(p -> proyecto.setImagen(p.getImagen()));
         }
 
@@ -252,7 +252,7 @@ public class ProyectoController {
 
     @PostMapping("/delete")
     public String delete(Proyecto proyecto, RedirectAttributes attributes) {
-        proyectoService.eliminarPorid(proyecto.getProyecto_id());
+        proyectoService.eliminarPorid(proyecto.getProyectoId());
         attributes.addFlashAttribute("msg", "Proyecto ha sido eliminada correctamente");
         return "redirect:/Proyectos";
     }

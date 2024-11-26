@@ -1,6 +1,8 @@
 package org.esfe.servicios.implementaciones;
 
+import org.esfe.modelos.Proyecto;
 import org.esfe.modelos.Tarea;
+import org.esfe.repositorio.IProyectoRepository;
 import org.esfe.repositorio.ITareaRepository;
 import org.esfe.servicios.interfaces.ITareaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.stream.Collectors;
 public class TareaService implements ITareaService {
     @Autowired
     private ITareaRepository TareaRepository;
+
+    @Autowired
+    private IProyectoRepository proyectoRepository;
 
     @Override
     public Page<Tarea> buscarTodosLospaginado(Pageable pageable) {
@@ -81,5 +86,14 @@ public class TareaService implements ITareaService {
     public List<Tarea> buscarPorEstadoTarea(String estado) {
         return TareaRepository.findByEstadoTarea(estado);
     }
+
+
+    @Override
+    public List<Tarea> obtenerTareasPorProyecto(Integer proyectoId) {
+        return TareaRepository.findByProyectoProyectoId(proyectoId);
+
+    }
+
+
 }
 

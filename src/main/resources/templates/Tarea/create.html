@@ -97,7 +97,7 @@
                                     <label for="proyecto" class="fw-bold" style="font-size:14px">Proyecto</label>
                                     <select class="form-control" th:field="*{proyecto}">
                                         <option value="" disabled selected>Seleccione un proyecto</option>
-                                        <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyecto_id}" th:text="${proyecto.nombre}"></option>
+                                        <option th:each="proyecto : ${proyectos}" th:value="${proyecto.proyectoId}" th:text="${proyecto.nombre}"></option>
                                     </select>
                                 </div>
                             </div>

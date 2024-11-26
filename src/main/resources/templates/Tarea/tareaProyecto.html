@@ -1,0 +1,25 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <h2>Tareas del Proyecto - </h2> <!--  Nombre del proyecto -->
+
+    <!-- Tabla de Tareas -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tarea : ${tareas}">
+            <td th:text="${tarea.nombre}"></td>
+            <td th:text="${tarea.descripcion}"></td>
+            <td th:text="${tarea.estado}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

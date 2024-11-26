@@ -92,7 +92,7 @@
                 <div th:each="proyecto : ${proyectos}"
                      class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-200"
                      th:attr="data-nombre=${proyecto.nombre}, data-fecha-fin=${proyecto.fechaFin}, data-presupuesto=${proyecto.presupuesto}, data-estado=${proyecto.estado}">
-                    <a th:href="@{/Proyectos/details/{id}(id=${proyecto.proyecto_id})}" class="block">
+                    <a th:href="@{/Proyectos/details/{id}(id=${proyecto.proyectoId})}" class="block">
                         <div class="relative">
                             <img th:src="${proyecto.imagen}" alt="Miniatura del proyecto" class="w-full h-48 object-cover">
                             <div th:classappend="${proyecto.estado == 'Completado' ? 'bg-green-500' :

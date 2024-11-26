@@ -60,13 +60,14 @@ public class Proyecto {
 
     // Getters y Setters
 
-    public Integer getProyecto_id() {
+    public Integer getProyectoId() {
         return proyectoId;
     }
 
-    public void setProyecto_id(Integer proyecto_id) {
-        this.proyectoId = proyecto_id;
+    public void setProyectoId(Integer proyectoId) {
+        this.proyectoId = proyectoId;
     }
+
 
     public String getNombre() {
         return nombre;

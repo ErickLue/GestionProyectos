@@ -3,6 +3,7 @@ package org.esfe.controladores;
 import org.esfe.modelos.Miembro;
 import org.esfe.modelos.Proyecto;
 import org.esfe.modelos.Tarea;
+import org.esfe.repositorio.IProyectoRepository;
 import org.esfe.servicios.interfaces.IEstadoServices;
 import org.esfe.servicios.interfaces.ITareaService;
 import org.esfe.servicios.interfaces.IProyectoService;
@@ -37,6 +38,9 @@ public class TareaController {
 
     @Autowired
     private IProyectoService proyectoService;
+
+    @Autowired
+    private IProyectoRepository proyectoRepository;
 
     @Autowired
     private IEstadoServices estadoServices;
@@ -211,7 +215,14 @@ public class TareaController {
         model.addAttribute("estadoSeleccionado", estado);
         return "tarea/index";
     }
+    @GetMapping("/Tproyecto/{id}")
+    public String obtenerTareasPorProyecto(@PathVariable("id") Integer id, Model model) {
+       List<Tarea> tareas = tareaService.obtenerTareasPorProyecto(id);  // Método en TareaService que obtiene tareas del proyecto
+        System.out.println("Tareas obtenidas: " + tareas);  // Verifica en los logs si las tareas se están obteniendo
+        System.out.println("id recibido: " + id);  // Verifica en los logs si las tareas se están obteniendo
 
-
+        model.addAttribute("tareas", tareas);
+        return "tarea/tareaProyecto";  // Vista que muestra las tareas del proyecto
+    }
 
 }

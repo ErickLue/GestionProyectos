@@ -38,7 +38,7 @@ public class Tarea {
     private Date fechaFin;
 
     @ManyToOne
-    @JoinColumn(name = "proyectoId")
+    @JoinColumn(name = "proyecto_id") // Nombre de la columna en la base de datos
     private Proyecto proyecto;
 
     @ManyToOne

@@ -1,5 +1,6 @@
 package org.esfe.servicios.interfaces;
 
+import org.esfe.modelos.Proyecto;
 import org.esfe.modelos.Tarea;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,4 +26,6 @@ public interface ITareaService  {
      long calcularDiasLaborables(Tarea tarea);
 
     List<Tarea> buscarPorEstadoTarea(String estado);
+
+    List<Tarea> obtenerTareasPorProyecto(Integer proyectoId);
 }

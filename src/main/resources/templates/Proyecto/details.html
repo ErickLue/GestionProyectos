@@ -1,41 +1,51 @@
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layouts/_mainLayout">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
 <div layout:fragment="content">
-    <div class="d-flex w-100 justify-content-center py-3 align-items-center vh-100">
-        <div class="d-flex w-100 h-100" style="border:1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
-            <div style="width: 50%">
-                <div class="row">
-            <a th:href="@{/Proyectos}" class="d-flex align-items-center h-4" style="gap:10px"><i class="fa-solid fa-arrow-left"></i>  Regresar</a>
-            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Nombre:</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.nombre}"></dd>
+    <div class="d-flex w-100 justify-content-center align-items-center py-5">
+        <div class="row w-100" style="border: 1px solid #E3E3E3; padding: 30px; border-radius: 20px;">
+            <!-- Información del Proyecto -->
+            <div class="col-md-6">
+                <a th:href="@{/Proyectos}" class="d-flex align-items-center mb-4" style="gap:10px">
+                    <i class="fa-solid fa-arrow-left"></i> Regresar
+                </a>
+                <dl class="row">
+                    <dt class="col-sm-3 fw-bold" style="font-size:14px">Nombre:</dt>
+                    <dd class="col-sm-9" th:text="${proyecto.nombre}"></dd>
 
-            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Descripción:</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.descripcion}"></dd>
+                    <dt class="col-sm-3 fw-bold" style="font-size:14px">Descripción:</dt>
+                    <dd class="col-sm-9" th:text="${proyecto.descripcion}"></dd>
 
-            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Presupuesto:</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.presupuesto}"></dd>
+                    <dt class="col-sm-3 fw-bold" style="font-size:14px">Presupuesto:</dt>
+                    <dd class="col-sm-9" th:text="${proyecto.presupuesto}"></dd>
 
-            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Prioridad:</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.prioridad}"></dd>
+                    <dt class="col-sm-3 fw-bold" style="font-size:14px">Prioridad:</dt>
+                    <dd class="col-sm-9" th:text="${proyecto.prioridad}"></dd>
 
-            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Fecha Inicio:</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.fechaInicio}"></dd>
+                    <dt class="col-sm-3 fw-bold" style="font-size:14px">Fecha Inicio:</dt>
+                    <dd class="col-sm-9" th:text="${proyecto.fechaInicio}"></dd>
 
-            <dt class = "col-sm-3 fw-bold" style="font-size:14px">Fecha Fin:</dt>
-            <dd class = "col-sm-10" th:text="${proyecto.fechaFin}"></dd>
-        </dl>
-                    <div class="d-flex" style="gap:30px">
-                    <a th:href="@{/Proyectos/edit/{proyecto_id} (proyecto_id=${proyecto.proyecto_id}) }" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
-                    <a th:href="@{/Proyectos/remove/{proyecto_id} (proyecto_id=${proyecto.proyecto_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+                    <dt class="col-sm-3 fw-bold" style="font-size:14px">Fecha Fin:</dt>
+                    <dd class="col-sm-9" th:text="${proyecto.fechaFin}"></dd>
+                </dl>
+
+                <div class="d-flex justify-content-start mb-4" style="gap:20px">
+                    <a th:href="@{/Proyectos/edit/{proyectoId} (proyectoId=${proyecto.proyectoId}) }" class="btn btn-info text-white">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </a>
+                    <a th:href="@{/Proyectos/remove/{proyectoId} (proyectoId=${proyecto.proyectoId})}" class="btn btn-danger text-white">
+                        <i class="fa-solid fa-trash"></i> Eliminar
+                    </a>
                 </div>
+
+                <a th:if="${proyecto.proyectoId != null}" th:href="@{/tareas/Tproyecto/{id}(id=${proyecto.proyectoId})}" class="btn btn-primary text-white">
+                    Ver Tareas del Proyecto
+                </a>
             </div>
-            </div>
-                <div style="width: 50%;" class="d-flex justify-content-center align-items-center">
-                    <img style="width: 450px; object-fit:cover" th:src="@{/assets/img/sapiens.png}">
+
+            <!-- Imagen del Proyecto -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img src="/assets/img/sapiens.png" alt="Imagen del Proyecto" style="width: 100%; max-width: 450px; object-fit:cover; border-radius: 10px;">
             </div>
         </div>
     </div>
 </div>
+</html>

@@ -15,7 +15,7 @@
             <div style="width: 50%;">
                 <h5 class="card-title">Editar Proyecto</h5>
                 <form th:action="@{/Proyectos/save}" th:object="${proyecto}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" th:field="*{proyecto_id}">
+                    <input type="hidden" th:field="*{proyectoId}">
 
                     <div class="row">
                         <div class="col-md-6">
