@@ -1,0 +1,127 @@
+/* Contenedor de las tarjetas */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Estilo base para las tarjetas */
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 10px;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* Título interactivo */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.card-title:hover {
+    color: #007bff;
+}
+
+/* Contenido de detalles de la tarjeta */
+.card-details {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    display: none; /* Oculto por defecto */
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Acciones dentro de la tarjeta */
+.card-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Botones personalizados */
+.custom-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.custom-btn.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-btn.primary {
+    background-color: #007bff;
+}
+
+.custom-btn.info {
+    background-color: #17a2b8;
+}
+
+.custom-btn.danger {
+    background-color: #dc3545;
+}
+
+.custom-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Botón desactivado */
+.custom-btn.primary-outline {
+    background-color: transparent;
+    border: 2px solid #007bff;
+    color: #007bff;
+}
+
+.custom-btn.primary-outline:hover {
+    background-color: #007bff;
+    color: white;
+}
+.h1 {
+     text-align: center;
+     font-family: 'Arial', sans-serif; /* O cualquier otra fuente que prefieras */
+     font-size: 1.3rem; /* Tamaño del texto */
+     color: #333; /* Color oscuro para buen contraste */
+     margin-top: 30px; /* Espacio superior */
+     margin-bottom: 20px; /* Espacio inferior */
+     text-transform: uppercase; /* Convierte el texto a mayúsculas */
+     letter-spacing: 2px; /* Espaciado entre letras */
+     padding: 10px; /* Relleno interno */
+     background: linear-gradient(90deg, #4CAF50, #8BC34A); /* Gradiente verde */
+     color: white; /* Color blanco para el texto */
+     border-radius: 5px; /* Bordes redondeados */
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra en el texto */
+ }
+ .card-details {
+             text-align: center; /* Centra todo el texto dentro de los detalles */
+         }
+
+ .card-details p {
+      margin: 10px 0; /* Espacio entre los párrafos */
+     }
+
+
