@@ -28,6 +28,6 @@ public class UsuarioGlobalController {
             return usuarioService.findByCorreo(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         }
-        return null; // Si no hay un usuario autenticado, devuelve null
+        return new Usuario(); // Si no hay un usuario autenticado, devuelve null
     }
 }

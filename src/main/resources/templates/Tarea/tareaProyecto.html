@@ -1,22 +1,31 @@
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tareas</title>
+</head>
 <body>
-<div class="container">
-    <h2>Tareas del Proyecto - </h2> <!--  Nombre del proyecto -->
+<div layout:fragment="content">
+    <h2>Tareas del Proyecto</h2> <!-- Nombre del proyecto -->
 
     <!-- Tabla de Tareas -->
-    <table class="table">
+    <table class="custom-table mt-3">
         <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Estado</th>
+        <tr class="head" style="border-radius: 10px 0 0 10px; height: 35px;">
+            <th class="custom-th">Nombre</th>
+            <th class="custom-th">Descripción</th>
+            <th class="custom-th">Estado</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="tarea : ${tareas}">
+        <tr class="tbody" th:each="tarea : ${tareas}">
             <td th:text="${tarea.nombre}"></td>
             <td th:text="${tarea.descripcion}"></td>
-            <td th:text="${tarea.estado}"></td>
+            <td th:text="${tarea.estadoTarea}"></td>
         </tr>
         </tbody>
     </table>

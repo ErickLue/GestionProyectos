@@ -221,7 +221,9 @@ public class TareaController {
         System.out.println("Tareas obtenidas: " + tareas);  // Verifica en los logs si las tareas se están obteniendo
         System.out.println("id recibido: " + id);  // Verifica en los logs si las tareas se están obteniendo
 
+
         model.addAttribute("tareas", tareas);
+        model.addAttribute("currentView", "tareaProyecto");
         return "tarea/tareaProyecto";  // Vista que muestra las tareas del proyecto
     }
 

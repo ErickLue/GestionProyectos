@@ -2,41 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crear Usuario</title>
+  <!-- Vinculamos el archivo CSS -->
+  <link rel="stylesheet" href="/css/usuarios.css">
 </head>
 <body>
-<h1>Crear Usuario</h1>
-<form action="#" th:action="@{/usuarios/save}" th:object="${usuario}" method="post">
-  <label for="nombre">Nombre:</label>
-  <input type="text" th:field="*{nombre}" id="nombre" name="nombre" />
-  <br/>
+<div class="form-container">
+  <h1>Crear Usuario</h1>
+  <form action="#" th:action="@{/usuarios/save}" th:object="${usuario}" method="post">
+    <label for="nombre">Nombre:</label>
+    <input type="text" th:field="*{nombre}" id="nombre" name="nombre" placeholder="Ingresa tu nombre" />
 
-  <label for="correo">Correo Electrónico:</label>
-  <input type="email" th:field="*{correo}" id="correo" name="correo" />
-  <br/>
+    <label for="correo">Correo Electrónico:</label>
+    <input type="email" th:field="*{correo}" id="correo" name="correo" placeholder="Ingresa tu correo" />
 
-  <label for="contraseña">Contraseña:</label>
-  <input type="password" th:field="*{contraseña}" id="contraseña" name="contraseña" />
-  <br/>
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" th:field="*{contraseña}" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" />
 
-  <label for="rol">Rol:</label>
-  <select th:field="*{rol}" id="rol" name="rol">
-    <option th:each="rol : ${roles}" th:value="${rol.rol_id}" th:text="${rol.nombre}"></option>
-  </select>
-  <br/>
+    <label for="rol">Rol:</label>
+    <select th:field="*{rol}" id="rol" name="rol">
+      <option th:each="rol : ${roles}" th:value="${rol.rol_id}" th:text="${rol.nombre}"></option>
+    </select>
 
-  <!-- Botón para guardar los datos -->
-  <button type="submit">Guardar</button>
-</form>
+    <button type="submit">Guardar</button>
+  </form>
 
-<!-- Manejo de errores -->
-<div th:if="${error}">
-  <p th:text="${error}"></p>
+  <!-- Mensaje de error -->
+  <div class="error" th:if="${error}" th:text="${error}"></div>
+
+  <!-- Mensaje de éxito -->
+  <div class="success" th:if="${msg}" th:text="${msg}"></div>
+
+  <!-- Enlace para volver -->
+  <a href="/" class="footer-link">Volver al inicio</a>
 </div>
-
-<div th:if="${msg}">
-  <p th:text="${msg}"></p>
-</div>
-
 </body>
 </html>
