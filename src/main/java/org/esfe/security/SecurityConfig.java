@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
               // las vistas públicas no requieren autenticación
                 .requestMatchers( "/login","/usuarios/create", "/usuarios/save").permitAll()
-                // todas las demás vistas requieren autenticación
+               // todas las demás vistas requieren autenticación
                 .anyRequest().authenticated());
         http.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"));
 

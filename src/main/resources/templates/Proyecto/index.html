@@ -6,6 +6,11 @@
     <title>Proyectos Completados</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Agregar JS de Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
@@ -90,16 +95,18 @@
             <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Las tarjetas de proyecto se generarán dinámicamente con Thymeleaf -->
                 <div th:each="proyecto : ${proyectos}"
-                     class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-200"
+                     class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-300"
                      th:attr="data-nombre=${proyecto.nombre}, data-fecha-fin=${proyecto.fechaFin}, data-presupuesto=${proyecto.presupuesto}, data-estado=${proyecto.estado}">
                     <a th:href="@{/Proyectos/details/{id}(id=${proyecto.proyectoId})}" class="block">
                         <div class="relative">
-                            <img th:src="${proyecto.imagen}" alt="Miniatura del proyecto" class="w-full h-48 object-cover">
+                            <img th:src="${proyecto.imagen}" alt="Miniatura del proyecto" class="w-full h-48 object-cover rounded-t-lg">
                             <div th:classappend="${proyecto.estado == 'Completado' ? 'bg-green-500' :
-                          proyecto.estado == 'Cancelado' ? 'bg-red-500' :
-                          proyecto.estado == 'Activo' ? 'bg-blue-500' : 'bg-gray-500'}
-                        + ' text-white px-3 py-1 rounded-full text-sm absolute top-4 right-4'"
-                                 th:text="${proyecto.estado}"></div>
+                                proyecto.estado == 'Cancelado' ? 'bg-red-500' :
+                                proyecto.estado == 'Activo' ? 'bg-blue-500' : 'bg-gray-500'}
+                                  + ' text-white px-4 py-2 rounded-full text-sm absolute top-4 right-4'"
+                                 th:text="${proyecto.estado}">
+
+                            </div>
                         </div>
                     </a>
 
@@ -108,17 +115,24 @@
                             <h3 class="text-xl font-semibold text-gray-800 dark:text-white" th:text="${proyecto.nombre}">Nombre del Proyecto</h3>
                         </div>
                         <p class="text-gray-600 dark:text-gray-300 mb-4" th:text="${proyecto.descripcion}">Descripción del Proyecto</p>
-                        <div class="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+                        <div class="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
                             <div><span class="font-medium">Start Date:</span> <span th:text="${proyecto.fechaInicio}">Fecha de Inicio</span></div>
                             <div><span class="font-medium">End Date:</span> <span th:text="${proyecto.fechaFin}">Fecha de Fin</span></div>
                             <div><span class="font-medium">Budget:</span> <span th:text="${proyecto.presupuesto}">Presupuesto</span></div>
                         </div>
-                        <div class="mt-4">
-                            <button onclick="confirmarCambioEstado(${proyecto.proyecto_id}, '${proyecto.estado}')" class="text-sm text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2">
-                                Cambiar Estado
-                            </button>
-                        </div>
 
+                        <!-- Formulario de cambio de estado -->
+                        <form th:action="@{/Proyectos/updateEstado/{id}(id=${proyecto.proyectoId})}" method="post">
+                            <div class="flex items-center gap-2 mb-4">
+                                <label for="estadoSelect" class="text-sm font-medium text-gray-700 dark:text-gray-200">Cambiar Estado:</label>
+                                <select name="nuevoEstado" class="form-select w-40 p-2 border border-gray-300 rounded-md hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                    <option th:value="Activo" th:selected="${proyecto.estado == 'Activo'}">Activo</option>
+                                    <option th:value="Completado" th:selected="${proyecto.estado == 'Completado'}">Completado</option>
+                                    <option th:value="Cancelado" th:selected="${proyecto.estado == 'Cancelado'}">Cancelado</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-all">Cambiar Estado</button>
+                        </form>
                     </div>
                 </div>
             </div>

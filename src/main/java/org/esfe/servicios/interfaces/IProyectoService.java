@@ -21,17 +21,17 @@ public interface IProyectoService {
 
     List<Proyecto> getProyectosByUsuario(Usuario usuario);
 
-    List <Proyecto> obtenerProyectosActivos ();
 
     List<Proyecto> getProyectosCompletadosPorUsuario(Usuario usuario);
 
-    List<Proyecto> getProyectosCanceladossPorUsuario(Usuario usuario);
 
     List<Proyecto> getProyectosCompletadosPorUsuarioOrderByNombre(Usuario usuario);
 
     List<Proyecto> getProyectosCompletadosPorUsuarioOrderByFechaFin(Usuario usuario);
 
     List<Proyecto> getProyectosCompletadosPorUsuarioOrderByPresupuesto(Usuario usuario);
+
+    Proyecto guardar(Proyecto proyecto);
 
 
 }
