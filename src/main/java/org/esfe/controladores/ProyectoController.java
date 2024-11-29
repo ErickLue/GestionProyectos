@@ -75,7 +75,7 @@ public class ProyectoController {
         if (estado != null && !estado.isEmpty()) {
             proyectosFiltrados = proyectosFiltrados.stream()
                     .filter(proyecto -> estado.equals(proyecto.getEstado()))
-                    .collect(Collectors.toList());
+               .collect(Collectors.toList());
         }
 
         // Ordenar los proyectos según el campo seleccionado (por nombre, fechaFin o presupuesto)
@@ -220,9 +220,6 @@ public class ProyectoController {
 
 
 
-
-
-
     @GetMapping("details/{id}")
     public String details(@PathVariable("id") Integer id, Model model) {
         Proyecto proyecto = proyectoService.buscarPorId(id).orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
@@ -274,33 +271,6 @@ public class ProyectoController {
         return "Proyecto/completados"; // Asegúrate de que esta vista existe
     }
 
-
-    @GetMapping("/activos")
-    public String mostrarProyectosEnProgreso(Model model) {
-        // Obtener los proyectos con estado "en progreso"
-        List<Proyecto> proyectosActivos = proyectoService.obtenerProyectosActivos();
-
-        // Agregar los proyectos en progreso al modelo
-        model.addAttribute("proyectosActivos", proyectosActivos);
-
-        // Retornar la vista para mostrar los proyectos en progreso
-        return "proyecto/activos";  // Vista que deberás crear para proyectos en progreso
-    }
-
-    @GetMapping("/cancelados")
-    public String mostrarProyectosCancelados(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        // Obtener el usuario autenticado
-        Usuario usuario = usuarioService.findByCorreo(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Obtener proyectos completados del usuario
-        List<Proyecto> proyectosCancelados = proyectoService.getProyectosCanceladossPorUsuario(usuario);
-
-        // Agregar proyectos completados al modelo
-        model.addAttribute("proyectosCancelados", proyectosCancelados);
-
-        return "Proyecto/cancelados"; // Asegúrate de que esta vista existe
-    }
 
     @GetMapping("/order")
     public String mostrarProyectosCompletadosOrdenados(
@@ -373,6 +343,38 @@ public class ProyectoController {
         return usuarioService.findByCorreo(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
+
+    @PostMapping("/updateEstado/{id}")
+    public String actualizarEstado(@PathVariable("id") Integer id,
+                                   @RequestParam("nuevoEstado") String nuevoEstado,
+                                   RedirectAttributes redirectAttributes) {
+        try {
+            // Buscar el proyecto por ID
+            Proyecto proyecto = proyectoService.buscarPorId(id)
+                    .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+            // Validar el nuevo estado
+            List<String> estadosValidos = Arrays.asList("Activo", "Completado", "Cancelado");
+            if (!estadosValidos.contains(nuevoEstado)) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Estado seleccionado no es válido.");
+                return "redirect:/Proyectos";
+            }
+
+            // Actualizar y guardar el estado del proyecto
+            proyecto.setEstado(nuevoEstado);
+            proyectoService.guardar(proyecto);
+
+            // Mensaje de éxito
+            redirectAttributes.addFlashAttribute("successMessage", "El estado del proyecto se actualizó correctamente.");
+        } catch (Exception e) {
+            // Capturar errores
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar el estado: " + e.getMessage());
+        }
+
+        return "redirect:/Proyectos";
+    }
+
+
 
 
 }

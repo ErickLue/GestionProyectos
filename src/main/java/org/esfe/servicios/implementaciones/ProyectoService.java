@@ -63,21 +63,11 @@ public class ProyectoService implements IProyectoService {
     }
 
 
-    @Override
-    public List<Proyecto> obtenerProyectosActivos() {
-        return proyectoRepository.findByEstado("activo");
-    }
-
 
     @Override
     public List<Proyecto> getProyectosCompletadosPorUsuario(Usuario usuario) {
         return proyectoRepository.findByUsuarioAndEstado(usuario, "Completado");
 
-    }
-
-    @Override
-    public List<Proyecto> getProyectosCanceladossPorUsuario(Usuario usuario) {
-        return proyectoRepository.findByUsuarioAndEstado(usuario, "Cancelado");
     }
 
     @Override
@@ -93,6 +83,12 @@ public class ProyectoService implements IProyectoService {
     @Override
     public List<Proyecto> getProyectosCompletadosPorUsuarioOrderByPresupuesto(Usuario usuario) {
         return proyectoRepository.findByUsuarioAndEstadoOrderByPresupuestoDesc(usuario, "Completado");
+    }
+
+    @Override
+    public Proyecto guardar(Proyecto proyecto) {
+        return proyectoRepository.save(proyecto); // Guarda el proyecto en la base de datos
+
     }
 
 }
