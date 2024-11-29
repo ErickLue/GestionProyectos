@@ -1,73 +1,70 @@
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layouts/_mainLayout">
-
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/inf.css">
+    <title>Listado de Tareas</title>
+</head>
+<body>
 <div layout:fragment="content">
-    <div class="w-100 vh-100 p-3" style="overflow-y:auto;">
-        <!-- Alertas -->
-        <div th:if="${msg != null}">
-            <script>
-                Swal.fire({
-                    title: "Confirmación",
-                    text: '[[${msg}]]',
-                    icon: "success"
-                });
-            </script>
-        </div>
-        <div th:if="${error != null}">
-            <script>
-                Swal.fire({
-                    title: "Error",
-                    text: '[[${error}]]',
-                    icon: "error"
-                });
-            </script>
-        </div>
+    <h1 style="text-align: center;" class="h1">Listado de Tareas</h1>
+    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+        <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
+    </div>
 
-            <a th:href="@{/tareas/create}" class="custom-btn ripple success"><i class="fa-solid fa-plus"></i></a>
+    <div class="cards-container">
+        <div th:each="item : ${tareas}" class="card">
+            <!-- Título de la tarjeta -->
+            <h2 th:text="${item.nombre}" class="card-title" onclick="toggleCardDetails(this)"></h2>
 
-            <!-- Tabla de Tareas -->
-            <table class="custom-table mt-3">
-                <thead>
-                <tr class="head" style="border-radius: 10px 0 0 10px; height: 35px;">
-                    <th class="custom-th">Nombre</th>
-                    <th class="custom-th">Descripción</th>
-                    <th class="custom-th">Proyecto</th>
-                    <th class="custom-th">Miembro</th>
-                    <th class="custom-th">Prioridad</th>
-                    <th class="custom-th">Días Laborables</th>
-                    <th class="custom-th" style="border-radius: 0 10px 10px 0; height: 35px;">Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="tbody" th:each="item : ${tareas}">
-                    <td th:text="${item.nombre}"></td>
-                    <td th:text="${item.descripcion}"></td>
-                    <td th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></td>
-                    <td th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></td>
-                    <td th:text="${item.prioridad}"></td>
-                    <td th:text="${item.diasLaborables}"></td>
-                    <td width="300px">
-                        <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
-                        <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
-                        <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <!-- Paginación -->
-            <nav aria-label="Page navigation example" style="margin-top:50px;">
-                <ul class="pagination" style="gap:5px">
-                    <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                        <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
-                           th:href="@{|/tareas?page=${pageNumber}|}"
-                           th:text="${pageNumber}">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <!-- Contenido oculto al cargar -->
+            <div class="card-details" style="display: none;">
+                <p><strong>Descripción:</strong> <span th:text="${item.descripcion}"></span></p>
+                <p><strong>Proyecto:</strong> <span th:text="${item.proyecto != null ? item.proyecto.nombre : 'Sin proyecto'}"></span></p>
+                <p><strong>Miembro:</strong> <span th:text="${item.miembroEquipo != null ? item.miembroEquipo.nombre : 'Sin miembro asignado'}"></span></p>
+                <p><strong>Prioridad:</strong> <span th:text="${item.prioridad}"></span></p>
+                <div class="card-actions">
+                    <a th:href="@{/tareas/details/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple primary"><i class="fa-solid fa-eye"></i></a>
+                    <a th:href="@{/tareas/edit/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple info"><i class="fa-solid fa-pen"></i></a>
+                    <a th:href="@{/tareas/remove/{tarea_id} (tarea_id = ${item.tarea_id})}" class="custom-btn ripple danger"><i class="fa-solid fa-trash"></i></a>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <nav aria-label="Page navigation example" style="margin-top:50px;">
+        <ul class="pagination" style="gap:5px">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a th:class="${pageNumber == currentPage + 1} ? 'custom-btn ripple primary' : 'custom-btn ripple primary-outline'"
+                   th:href="@{|/tareas?page=${pageNumber}|}"
+                   th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Script para mostrar/ocultar detalles de una tarjeta -->
+    <script>
+        function toggleCardDetails(cardTitleElement) {
+            const cardDetails = cardTitleElement.nextElementSibling; // Selecciona el contenido de detalles
+            const allCardDetails = document.querySelectorAll('.card-details');
+
+            // Oculta todos los detalles menos el seleccionado
+            allCardDetails.forEach(details => {
+                if (details !== cardDetails) {
+                    details.style.display = 'none';
+                }
+            });
+
+            // Alterna el estado de visibilidad del contenido seleccionado
+            if (cardDetails.style.display === 'none' || cardDetails.style.display === '') {
+                cardDetails.style.display = 'block';
+            } else {
+                cardDetails.style.display = 'none';
+            }
+        }
+    </script>
+
 </div>
+</body>
 </html>
